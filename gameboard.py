@@ -27,7 +27,7 @@ class gameBoard:
 
 
 	def populateList():
-		with open ("/Users/it/Desktop/Classbook/masterClassList.txt", "r") as myfile:
+		with open ("C:/Users/c_r672/Documents/GitHub/Guess-Who/characterList.txt", "r") as myfile:
 			for j in range(0, 23):
 				for i in range(0, 8):
 					for line in myfile:
