@@ -64,6 +64,9 @@ class gameBoard:
 	def getCharacter(self, num):
 		return self.characterList[num]
 
+	def getCharacterList(self):
+		return self.characterList
+
 	def makeGuess(character):
 		if(selectedCharacter == character):
 			return true
