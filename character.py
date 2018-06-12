@@ -9,6 +9,7 @@ class Character:
 	cheeks = False
 	smile = False
 	hairColor = '' 
+	isActive = True
 
 	def __init__(self, name, female, hat, glasses, beard, mustache, cheeks, smile, hairColor):
 		self.name = name
@@ -20,5 +21,10 @@ class Character:
 		self.cheeks = cheeks
 		self.smile = smile
 		self.hairColor = hairColor
+		self.isActive = True 
 
+	def isActive():
+		return isActive
 
+	def toggleActive():
+		isActive = not isActive
