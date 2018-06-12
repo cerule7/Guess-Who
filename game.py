@@ -6,8 +6,10 @@ class Game:
 
 	def __init__():
 		name = input("Enter p1 name")
-		p1 = new Player(self, name, new Gameboard(), np.random.randint(0, 23))
+		sel = np.random.randint(0, 23)
+		p1 = new Player(self, name, new Gameboard(self, sel), sel)
 		print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getSelected()).getName())
 		name = input("Enter p2 name")
-		p2 = new Player(self, name, new Gameboard(), np.random.randint(0, 23))
+		sel = np.random.randint(0, 23)
+		p2 = new Player(self, name, new Gameboard(self, sel), sel)
 		print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getSelected()).getName())
