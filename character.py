@@ -23,11 +23,14 @@ class Character:
 		self.hairColor = hairColor
 		self.isActive = True 
 
-	def isActive():
-		return isActive
-
 	def toggleActive():
 		isActive = not isActive
 
-	def getName():
-		return name
+	def isActive():
+		return isActive
+
+	def hasAttribute(attribute):
+		if(attribute.equals('female')): 
+			return hat 
+		if(attribute.equals('hat')): 
+			return hat 
