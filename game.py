@@ -1,22 +1,19 @@
 import numpy as np
+from player import Player
+from gameboard import Gameboard
 
 class Game:
 	
 	numTurns = 0
-	p1 = null
-	p2 = null
-	gameOver = False
-
-	def __init__():
-		name = input("Enter p1 name")
-		sel = np.random.randint(0, 23)
-		p1 = new Player(self, name, new Gameboard(self, sel), sel)
-		print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getSelected()).getName())
-		name = input("Enter p2 name")
-		sel = np.random.randint(0, 23)
-		p2 = new Player(self, name, new Gameboard(self, sel), sel)
-		print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getSelected()).getName())
-		main()
+	name = input("Enter p1 name")
+	sel = np.random.randint(0, 23)
+	p1 = Player(self, name, Gameboard(self, sel), sel)
+	print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getSelected()).getName())
+	name = input("Enter p2 name")
+	sel = np.random.randint(0, 23)
+	p2 = Player(self, name, Gameboard(self, sel), sel)
+	print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getSelected()).getName())
+	main()
 
 	def main(): 
 		while(not gameOver):
