@@ -42,13 +42,6 @@ class Game:
 						p2.getBoard().askQ(attribute, p1.getBoard())
 						p2.getBoard().printBoard()
 					else:
-<<<<<<< HEAD
-						p1.setScore(p1.getScore() + 1)
-					gameOver = True
-			numTurns += 1
-			print("TURNS: " + str(numTurns))
-		
-=======
 						#character guesses end game
 						guess = input("Name?")
 						if(p1.getSelected == guess):
@@ -57,7 +50,6 @@ class Game:
 							p1.setScore(p1.getScore() + 1)
 						gameOver = True
 				numTurns += 1
-			print(str(numTurns))
->>>>>>> master
+			print("TURNS: " + str(numTurns))
 
 	main()
