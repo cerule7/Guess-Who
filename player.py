@@ -10,17 +10,20 @@ class Player:
 		self.name = name
 		self.selectedCharacter = selectedCharacter
 
-	def getName():
-		return name
+	def getName(self):
+		return self.name
 
 	def getSelected():
-		return selectedCharacter
+		return self.selectedCharacter
 
-	def getBoard():
-		return gameboard
+	def getBoard(self):
+		return self.gameboard
 
-	def setScore(score):
+	def setScore(self, score):
 		self.score = score
+
+	def getScore(self):
+		return self.score
 
 	def setSelected(num):
 		selectedCharacter = num 
