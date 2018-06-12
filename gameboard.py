@@ -72,6 +72,7 @@ class gameBoard:
 	def askQ(self, attribute, otherBoard):
 		if(attribute == 'hairColor'):
 			attribute = input("Which hair color?")
+		#if the other player's selected character DOES have the attribute, flip over ones that don't
 		if(self.characterList[otherBoard.getSelected()].hasAttribute(attribute)):
 			for i in range(0, 23):
 				if(not self.characterList[i].hasAttribute(attribute) and self.characterList[i].isitActive()):

@@ -32,7 +32,7 @@ class Character:
 		return self.isActive
 
 	def toggleActive():
-		isActive = not isActive
+		self.isActive = not self.isActive
 
 	def hasAttribute(self, attribute):
 		if(attribute == 'isFemale'): 

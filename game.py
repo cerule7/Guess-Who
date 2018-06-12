@@ -46,6 +46,7 @@ class Game:
 						p1.setScore(p1.getScore() + 1)
 					gameOver = True
 			numTurns += 1
-		print(str(numTurns))
+			print("TURNS: " + str(numTurns))
+		
 
 	main()
