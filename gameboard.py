@@ -19,5 +19,17 @@ class gameBoard:
 	def askQ(attribute):
 		for i in range(0, 23):
 			if(not characterList[i].hasAttribute(attribute) && characterList[i].isActive()):
-				charactersList[i] = charactersList[i].toggleActive()
+				characterList[i] = characterList[i].toggleActive()
 
+	def printBoard():
+		for i in range(0, 23):
+			print(characterList[i].getName() + " " + characterList[i].isActive()  + "\n")
+
+
+	def populateList():
+		with open ("/Users/it/Desktop/Classbook/masterClassList.txt", "r") as myfile:
+			for j in range(0, 23):
+				for i in range(0, 8):
+					for line in myfile:
+
+			characterList[j] = new Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
