@@ -35,7 +35,20 @@ class Character:
 		isActive = not isActive
 
 	def hasAttribute(attribute):
-		if(attribute.equals('female')): 
-			return hat 
-		if(attribute.equals('hat')): 
-			return hat 
+		if(attribute.equals('isFemale')): 
+			return isFemale 
+		if(attribute.equals('hasHat')): 
+			return hasHat 
+		if(attribute.equals('hasGlasses')): 
+			return hasGlasses 
+		if(attribute.equals('hasBeard')): 
+			return hasBeard 
+		if(attribute.equals('hasMustache')): 
+			return hasMustache 
+		if(attribute.equals('hasRosyCheeks')): 
+			return hasRosyCheeks 
+		if(attribute.equals('isSmiling')): 
+			return isSmiling 
+		if(attribute.equals('isBald')): 
+			return isBald 
+		return hairColor.equals(attribute)

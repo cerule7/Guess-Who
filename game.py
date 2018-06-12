@@ -3,6 +3,9 @@ import numpy as np
 class Game:
 	
 	numTurns = 0
+	p1 = null
+	p2 = null
+	gameOver = False
 
 	def __init__():
 		name = input("Enter p1 name")
@@ -13,3 +16,36 @@ class Game:
 		sel = np.random.randint(0, 23)
 		p2 = new Player(self, name, new Gameboard(self, sel), sel)
 		print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getSelected()).getName())
+		main()
+
+	def main(): 
+		while(not gameOver):
+			#p1 gets even turns 
+			if(numTurns % 2 == 0):
+				action = input("P1: Ask question or guess character? (0 or 1)")
+				if(action == 0):
+					attribute = input("Which attribute?")
+					p1.getBoard().askQ(attribute, p2.getBoard())
+					p1.getBoard().printBoard()
+				else:
+					#character guesses end game
+					if(p2.getSelected == guess):
+						p1.setScore(p1.getScore() + 1)
+					else:
+						p2.setScore(p2.getScore() + 1)
+					gameOver = True
+			else: 
+				action = input("P2: Ask question or guess character? (0 or 1)")
+				if(action == 0):
+					attribute = input("Which attribute?")
+					p2.getBoard().askQ(attribute, p1.getBoard())
+					p2.getBoard().printBoard()
+				else:
+					#character guesses end game
+					if(p1.getSelected == guess):
+						p2.setScore(p2.getScore() + 1)
+					else:
+						p1.setScore(p1.getScore() + 1)
+					gameOver = True
+			turns += 1
+		print(str(numTurns))
