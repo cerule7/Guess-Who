@@ -1,43 +1,13 @@
+import myFile
+from character import Character 
+
 class gameBoard:
 
 	characterList = []
 	selectedCharacter = 0 
 
-	def __init__(self, selectedCharacter):
-		populateList()
-		self.selected
-		Character = selectedCharacter
-
-	def getSelected():
-		return selectedCharacter
-
-	def getCharacter(num):
-		return characterList[num]
-
-	def makeGuess(character):
-		if(selectedCharacter == character):
-			return true
-		return false 
-
-	def askQ(attribute, otherBoard):
-		if(attribute.equals('hairColor')):
-			attribute = input("Which hair color?")
-		if(otherBoard.getSelected().hasAttribute()):
-			for i in range(0, 23):
-				if(not characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
-					characterList[i] = characterList[i].toggleActive()
-		else: 
-			for i in range(0, 23):
-				if(characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
-					characterList[i] = characterList[i].toggleActive()
-
-	def printBoard():
-		for i in range(0, 23):
-			print(characterList[i].getName() + " " + characterList[i].isActive()  + "\n")
-
-
 	def populateList():
-
+		characterList = []
 		myFile = open("characterList.txt", "r")
 		for j in range(24):
 			
@@ -82,5 +52,38 @@ class gameBoard:
 			hairColor = line
 
 			characterList[j] = Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
+		return characterList
 
+	characterList = populateList()
+
+	def __init__(self, selectedCharacter):
+		self.selected
+		Character = selectedCharacter
+
+	def getSelected():
+		return selectedCharacter
+
+	def getCharacter(num):
+		return characterList[num]
+
+	def makeGuess(character):
+		if(selectedCharacter == character):
+			return true
+		return false 
+
+	def askQ(attribute, otherBoard):
+		if(attribute.equals('hairColor')):
+			attribute = input("Which hair color?")
+		if(otherBoard.getSelected().hasAttribute()):
+			for i in range(0, 23):
+				if(not characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
+					characterList[i] = characterList[i].toggleActive()
+		else: 
+			for i in range(0, 23):
+				if(characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
+					characterList[i] = characterList[i].toggleActive()
+
+	def printBoard():
+		for i in range(0, 23):
+			print(characterList[i].getName() + " " + characterList[i].isActive()  + "\n")
 
