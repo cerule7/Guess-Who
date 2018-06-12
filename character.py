@@ -1,33 +1,35 @@
 class Character:
 	
 	name = ''
-	female = False
-	hat = False
-	glasses = False
-	beard = False
-	mustache = False
-	cheeks = False
-	smile = False
+	isFemale = False
+	hasHat = False
+	hasGlasses = False
+	hasBeard = False
+	hasMustache = False
+	hasRosyCheeks = False
+	isSmiling = False
+	isBald = False
 	hairColor = '' 
 	isActive = True
 
-	def __init__(self, name, female, hat, glasses, beard, mustache, cheeks, smile, hairColor):
+	def __init__(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor):
 		self.name = name
-		self.female = female
-		self.hat = hat
-		self.glasses = glasses
-		self.beard = beard
-		self.mustache = mustache
-		self.cheeks = cheeks
-		self.smile = smile
+		self.isFemale = isFemale
+		self.hasHat = hasHat
+		self.hasGlasses = hasGlasses
+		self.hasBeard = hasBeard
+		self.hasMustache = hasMustache
+		self.hasRosyCheeks = hasRosyCheeks
+		self.isSmiling = isSmiling
+		self.isBald = isBald
 		self.hairColor = hairColor
 		self.isActive = True 
 
-	def toggleActive():
-		isActive = not isActive
-
 	def isActive():
 		return isActive
+
+	def toggleActive():
+		isActive = not isActive
 
 	def hasAttribute(attribute):
 		if(attribute.equals('female')): 
