@@ -28,3 +28,6 @@ class Character:
 
 	def toggleActive():
 		isActive = not isActive
+
+	def getName():
+		return name
