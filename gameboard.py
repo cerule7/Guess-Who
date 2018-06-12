@@ -1,3 +1,5 @@
+import myFile
+
 class gameBoard:
 
 	characterList = []
@@ -24,11 +26,11 @@ class gameBoard:
 			attribute = input("Which hair color?")
 		if(otherBoard.getSelected().hasAttribute()):
 			for i in range(0, 23):
-				if(not characterList[i].hasAttribute(attribute) && characterList[i].isActive()):
+				if(not characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
 					characterList[i] = characterList[i].toggleActive()
 		else: 
 			for i in range(0, 23):
-				if(characterList[i].hasAttribute(attribute) && characterList[i].isActive()):
+				if(characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
 					characterList[i] = characterList[i].toggleActive()
 
 	def printBoard():
@@ -38,7 +40,7 @@ class gameBoard:
 
 	def populateList():
 
-		myFile open ("characterList.txt", "r")
+		myFile open("characterList.txt", "r")
 		for j in range(24):
 			
 			line = myFile.next()

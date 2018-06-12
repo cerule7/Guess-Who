@@ -1,6 +1,6 @@
 class Player:
 
-	gameboard = null
+	gameboard = ''
 	score = 0 
 	name = ''
 	selectedCharacter = 0
