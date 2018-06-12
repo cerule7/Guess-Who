@@ -35,10 +35,52 @@ class gameBoard:
 		for i in range(0, 23):
 			print(characterList[i].getName() + " " + characterList[i].isActive()  + "\n")
 
+
 	def populateList():
-		with open ("C:/Users/c_r672/Documents/GitHub/Guess-Who/characterList.txt", "r") as myfile:
-			for j in range(0, 23):
-				for i in range(0, 8):
-					for line in myfile:
+
+		myFile open ("characterList.txt", "r")
+		for j in range(24):
+			
+			line = myFile.next()
+			line.rstrip()
+			name = line
+
+			line = myFile.next()
+			line.rstrip()
+			isFemale = line
+
+			line = myFile.next()
+			line.rstrip()
+			hasHat = line
+
+			line = myFile.next()
+			line.rstrip()
+			hasGlasses = line
+
+			line = myFile.next()
+			line.rstrip()
+			hasBeard = line
+
+			line = myFile.next()
+			line.rstrip()
+			hasMustache = line
+
+			line = myFile.next()
+			line.rstrip()
+			hasRosyCheeks = line
+
+			line = myFile.next()
+			line.rstrip()
+			isSmiling = line
+
+			line = myFile.next()
+			line.rstrip()
+			isBald = line
+
+			line = myFile.next()
+			line.rstrip()
+			hairColor = line
 
 			characterList[j] = new Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
+
+
