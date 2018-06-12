@@ -1,5 +1,3 @@
-import myFile
-
 class gameBoard:
 
 	characterList = []
@@ -40,7 +38,7 @@ class gameBoard:
 
 	def populateList():
 
-		myFile open("characterList.txt", "r")
+		myFile = open("characterList.txt", "r")
 		for j in range(24):
 			
 			line = myFile.next()
@@ -83,6 +81,6 @@ class gameBoard:
 			line.rstrip()
 			hairColor = line
 
-			characterList[j] = new Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
+			characterList[j] = Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
 
 
