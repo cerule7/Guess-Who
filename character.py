@@ -52,3 +52,15 @@ class Character:
 		if(attribute.equals('isBald')): 
 			return isBald 
 		return hairColor.equals(attribute)
+
+	def printCharacter():
+		print("This character's name is: ", name)
+		print("Their attributes are as follows:")
+		print("\t", ("Female" if isFemale else "Male"))
+		print("\t", ("Has a hat" if hasHat else "Is un-hatted"))
+		print("\t", ("Has glasses" if hasGlasses else "Has good vision"))
+		print("\t", ("Has a beard" if hasBeard else "Has a clean chin"))
+		print("\t", ("Has a mustache" if hasMustache else "No fur under their nose"))
+		print("\t", ("Has red cheeks" if hasRosyCheeks else "Doesn't look embarrased"))
+		print("\t", ("Looks happy" if isSmiling else "Looks like a sad sack of shit"))
+		print("\t", ("Has a chrome dome" if isBald else "Has a shaggy head of hair"))
