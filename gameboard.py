@@ -1,4 +1,3 @@
-import myFile
 from character import Character 
 
 class gameBoard:
@@ -11,79 +10,78 @@ class gameBoard:
 		myFile = open("characterList.txt", "r")
 		for j in range(24):
 			
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			name = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			isFemale = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hasHat = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hasGlasses = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hasBeard = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hasMustache = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hasRosyCheeks = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			isSmiling = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			isBald = line
 
-			line = myFile.next()
+			line = myFile.readline()
 			line.rstrip()
 			hairColor = line
 
-			characterList[j] = Character(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor)
+			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor))
 		return characterList
 
 	characterList = populateList()
 
 	def __init__(self, selectedCharacter):
-		self.selected
-		Character = selectedCharacter
+		self.selectedCharacter = selectedCharacter
 
-	def getSelected():
-		return selectedCharacter
+	def getSelected(self):
+		return self.selectedCharacter
 
-	def getCharacter(num):
-		return characterList[num]
+	def getCharacter(self, num):
+		return self.characterList[num]
 
 	def makeGuess(character):
 		if(selectedCharacter == character):
 			return true
 		return false 
 
-	def askQ(attribute, otherBoard):
-		if(attribute.equals('hairColor')):
+	def askQ(self, attribute, otherBoard):
+		if(attribute == 'hairColor'):
 			attribute = input("Which hair color?")
-		if(otherBoard.getSelected().hasAttribute()):
+		if(self.characterList[otherBoard.getSelected()].hasAttribute(attribute)):
 			for i in range(0, 23):
-				if(not characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
-					characterList[i] = characterList[i].toggleActive()
+				if(not self.characterList[i].hasAttribute(attribute) and self.characterList[i].isitActive()):
+					self.characterList[i] = self.characterList[i].toggleActive()
 		else: 
 			for i in range(0, 23):
-				if(characterList[i].hasAttribute(attribute) and characterList[i].isActive()):
-					characterList[i] = characterList[i].toggleActive()
+				if(self.characterList[i].hasAttribute(attribute) and self.characterList[i].isitActive()):
+					self.characterList[i] = self.characterList[i].toggleActive()
 
-	def printBoard():
+	def printBoard(self):
 		for i in range(0, 23):
-			print(characterList[i].getName() + " " + characterList[i].isActive()  + "\n")
+			print(self.characterList[i].getName() + " " + str(self.characterList[i].isitActive())  + "\n")
 
