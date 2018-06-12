@@ -25,6 +25,9 @@ class Character:
 		self.hairColor = hairColor
 		self.isActive = True 
 
+	def getName():
+		return name
+
 	def isActive():
 		return isActive
 

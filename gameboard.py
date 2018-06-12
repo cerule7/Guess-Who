@@ -5,7 +5,11 @@ class gameBoard:
 
 	def __init__(self, selectedCharacter):
 		populateList()
-		self.selectedCharacter = selectedCharacter
+		self.selected
+		Character = selectedCharacter
+
+	def getCharacter(num):
+		return characterList[num]
 
 	def makeGuess(character):
 		if(selectedCharacter == character):
