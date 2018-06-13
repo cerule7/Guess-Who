@@ -58,6 +58,9 @@ class gameBoard:
 	def __init__(self, selectedCharacter):
 		self.selectedCharacter = selectedCharacter
 
+	def getBoard(self):
+		return self
+
 	def getSelected(self):
 		return self.selectedCharacter
 
@@ -75,16 +78,25 @@ class gameBoard:
 	def askQ(self, attribute, otherBoard):
 		if(attribute == 'hairColor'):
 			attribute = input("Which hair color?")
-		if(self.characterList[otherBoard.getSelected()].hasAttribute(attribute)):
-			for i in range(0, 23):
-				if(not self.characterList[i].hasAttribute(attribute) and self.characterList[i].isitActive()):
-					self.characterList[i] = self.characterList[i].toggleActive()
+		#if the other player's selected character DOES have the attribute, flip over ones that don't
+		guess = bool(self.characterList[otherBoard.getSelected()].hasAttribute(attribute))
+		if guess:
+			for i in range(0, 24):
+				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
+				if bool(hasAttribute is False):
+					print("FLIPPED " + self.characterList[i].getName())
+					self.characterList[i].toggleActive()
 		else: 
-			for i in range(0, 23):
-				if(self.characterList[i].hasAttribute(attribute) and self.characterList[i].isitActive()):
-					self.characterList[i] = self.characterList[i].toggleActive()
+			for i in range(0, 24):
+				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
+				if bool(hasAttribute is True):
+					print("FLIPPED " + self.characterList[i].getName())
+					self.characterList[i].toggleActive()
+		return self.characterList
+
+	def updateList(self, list):
+		self.characterList = list
 
 	def printBoard(self):
-		for i in range(0, 23):
+		for i in range(0, len(self.characterList)):
 			print(self.characterList[i].getName() + " " + str(self.characterList[i].isitActive())  + "\n")
-
