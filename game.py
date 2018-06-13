@@ -26,6 +26,10 @@ class Game:
 					attribute = input("Which attribute?")
 					p1.getBoard().updateList(p1.getBoard().askQ(attribute, p2.getBoard()))
 					p1.getBoard().printBoard()
+					#if there is only one character left, auto-win
+					if(p1.getBoard().isOneLeft()):
+						p1.setScore(p1.getScore() + 1)
+						gameOver = True
 				else:
 					#character guesses end game
 					guess = input("Name?")
@@ -42,6 +46,10 @@ class Game:
 					attribute = input("Which attribute?")
 					p1.getBoard().updateList(p2.getBoard().askQ(attribute, p1.getBoard()))
 					p2.getBoard().printBoard()
+					#if there is only one character left, auto-win
+					if(p2.getBoard().isOneLeft()):
+						p2.setScore(p2.getScore() + 1)
+						gameOver = True
 				else:
 					#character guesses end game
 					guess = input("Name?")
