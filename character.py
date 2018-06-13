@@ -23,7 +23,7 @@ class Character:
 		self.isSmiling = isSmiling
 		self.isBald = isBald
 		self.hairColor = hairColor
-		self.isActive = True 
+		self.isActive = True
 
 	def getName(self):
 		return self.name
@@ -31,26 +31,26 @@ class Character:
 	def isitActive(self):
 		return self.isActive
 
-	def toggleActive():
-		self.isActive = not self.isActive
+	def toggleActive(self):
+		self.isActive = False
 
 	def hasAttribute(self, attribute):
 		if(attribute == 'isFemale'): 
-			return self.isFemale 
+			return eval(self.isFemale)
 		if(attribute == 'hasHat'): 
-			return self.hasHat 
+			return eval(self.hasHat)
 		if(attribute == 'hasGlasses'): 
-			return self.hasGlasses 
+			return eval(self.hasGlasses)
 		if(attribute == 'hasBeard'): 
-			return self.hasBeard 
+			return eval(self.hasBeard)
 		if(attribute == 'hasMustache'): 
-			return self.hasMustache 
+			return eval(self.hasMustache)
 		if(attribute == 'hasRosyCheeks'): 
-			return self.hasRosyCheeks 
+			return eval(self.hasRosyCheeks)
 		if(attribute == 'isSmiling'): 
-			return self.isSmiling 
+			return eval(self.isSmiling)
 		if(attribute == 'isBald'): 
-			return self.isBald 
+			return eval(self.isBald)
 		return (self.hairColor == attribute)
 
 	def printCharacter(self):
@@ -64,3 +64,4 @@ class Character:
 		print("\t", "Has red cheeks: ", self.hasRosyCheeks)
 		print("\t", "Looks happy: ", self.isSmiling)
 		print("\t", "Has a chrome dome: ", self.isBald)
+		print("\t", "Hair color: ", self.hairColor)
