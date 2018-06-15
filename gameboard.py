@@ -11,43 +11,43 @@ class gameBoard:
 		for j in range(24):
 			
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			name = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			isFemale = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hasHat = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hasGlasses = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hasBeard = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hasMustache = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hasRosyCheeks = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			isSmiling = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			isBald = line
 
 			line = myFile.readline()
-			line.rstrip()
+			line = line.strip()
 			hairColor = line
 
 			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor))
