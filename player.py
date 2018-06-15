@@ -19,6 +19,9 @@ class Player:
 	def getBoard(self):
 		return self.gameboard
 
+	def setBoard(self, board):
+		self.gameboard = board
+
 	def setScore(self, score):
 		self.score = score
 

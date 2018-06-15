@@ -23,7 +23,7 @@ class Character:
 		self.isSmiling = isSmiling
 		self.isBald = isBald
 		self.hairColor = hairColor
-		self.isActive = True 
+		self.isActive = True
 
 	def getName(self):
 		return self.name
@@ -31,36 +31,37 @@ class Character:
 	def isitActive(self):
 		return self.isActive
 
-	def toggleActive():
-		isActive = not isActive
+	def toggleActive(self):
+		self.isActive = False
 
 	def hasAttribute(self, attribute):
 		if(attribute == 'isFemale'): 
-			return self.isFemale 
+			return eval(self.isFemale)
 		if(attribute == 'hasHat'): 
-			return self.hasHat 
+			return eval(self.hasHat)
 		if(attribute == 'hasGlasses'): 
-			return self.hasGlasses 
+			return eval(self.hasGlasses)
 		if(attribute == 'hasBeard'): 
-			return self.hasBeard 
+			return eval(self.hasBeard)
 		if(attribute == 'hasMustache'): 
-			return self.hasMustache 
+			return eval(self.hasMustache)
 		if(attribute == 'hasRosyCheeks'): 
-			return self.hasRosyCheeks 
+			return eval(self.hasRosyCheeks)
 		if(attribute == 'isSmiling'): 
-			return self.isSmiling 
+			return eval(self.isSmiling)
 		if(attribute == 'isBald'): 
-			return self.isBald 
+			return eval(self.isBald)
 		return (self.hairColor == attribute)
 
-	def printCharacter():
-		print("This character's name is: ", name)
+	def printCharacter(self):
+		print("This character's name is: ", self.name)
 		print("Their attributes are as follows:")
-		print("\t", ("Female" if isFemale else "Male"))
-		print("\t", ("Has a hat" if hasHat else "Is un-hatted"))
-		print("\t", ("Has glasses" if hasGlasses else "Has good vision"))
-		print("\t", ("Has a beard" if hasBeard else "Has a clean chin"))
-		print("\t", ("Has a mustache" if hasMustache else "No fur under their nose"))
-		print("\t", ("Has red cheeks" if hasRosyCheeks else "Doesn't look embarrased"))
-		print("\t", ("Looks happy" if isSmiling else "Looks like a sad sack of shit"))
-		print("\t", ("Has a chrome dome" if isBald else "Has a shaggy head of hair"))
+		print("\t", "Female: ", self.isFemale)
+		print("\t", "Has a hat: ", self.hasHat)
+		print("\t", "Has glasses: ", self.hasGlasses)
+		print("\t", "Has a beard: ", self.hasBeard)
+		print("\t", "Has a mustache: ", self.hasMustache)
+		print("\t", "Has red cheeks: ", self.hasRosyCheeks)
+		print("\t", "Looks happy: ", self.isSmiling)
+		print("\t", "Has a chrome dome: ", self.isBald)
+		print("\t", "Hair color: ", self.hairColor)
