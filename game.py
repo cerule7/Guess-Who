@@ -49,6 +49,8 @@ def getAction(i, player, otherplayer):
 		guess = input("Name?")
 		oChar = otherplayer.getBoard().getCharacter(otherplayer.getBoard().getSelected())
 		name = oChar.getName()
+		print([name])
+		print([guess])
 		if(str(name) == str(guess)):
 			print("CORRECT GUESS")
 			player.setScore(player.getScore() + 1)
