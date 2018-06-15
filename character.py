@@ -13,7 +13,7 @@ class Character:
 	isActive = True
 
 	def __init__(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor):
-		self.name = name
+		self.name = str(name)
 		self.isFemale = isFemale
 		self.hasHat = hasHat
 		self.hasGlasses = hasGlasses
@@ -26,7 +26,7 @@ class Character:
 		self.isActive = True
 
 	def getName(self):
-		return self.name
+		return str(self.name)
 
 	def isitActive(self):
 		return self.isActive
