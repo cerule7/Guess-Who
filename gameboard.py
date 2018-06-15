@@ -4,6 +4,7 @@ class gameBoard:
 
 	characterList = []
 	selectedCharacter = 0 
+	totFlips = 0
 
 	def populateList():
 		characterList = []
@@ -100,6 +101,17 @@ class gameBoard:
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
 		return self.characterList
+	
+	# Compares the total number of flips with the last recorded number
+	def flippedLast(self):
+		currentTot = 0
+		for char in self.characterList:
+			currentTot += not char.isActive
+		
+		currentTot -= self.totFlips
+		self.totFlips += currentTot
+		
+		return currentTot
 
 	def updateList(self, list):
 		self.characterList = list
@@ -107,3 +119,11 @@ class gameBoard:
 	def printBoard(self):
 		for i in range(0, len(self.characterList)):
 			print(self.characterList[i].getName() + " " + str(self.characterList[i].isitActive())  + "\n")
+			
+	# Allows for the reseting of a game board
+	def resetBoard(self):
+		self.selectedCharacter = 0
+		self.totFlips = 0
+		for character in self.characterList:
+			character.isActive = True
+			
