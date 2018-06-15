@@ -13,7 +13,7 @@ class Player:
 	def getName(self):
 		return self.name
 
-	def getSelected():
+	def getSelected(self):
 		return self.selectedCharacter
 
 	def getBoard(self):
