@@ -83,8 +83,6 @@ class gameBoard:
 		return false 
 
 	def askQ(self, attribute, otherBoard):
-		if(attribute == 'hairColor'):
-			attribute = input("Which hair color?")
 		#if the other player's selected character DOES have the attribute, flip over ones that don't
 		guess = bool(self.characterList[otherBoard.getSelected()].hasAttribute(attribute))
 		if guess:
@@ -100,6 +98,21 @@ class gameBoard:
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
 		return self.characterList
+
+	def askHairColor(self, i, otherBoard):
+		color = ''
+		if i == '13':
+			color = 'black'
+		if i == '14':
+			color = 'red'
+		if i == '15':
+			color = 'white'
+		if i == '16':
+			color == 'blonde'
+		else:
+			color == 'brown'
+		return self.askQ(color, otherBoard)
+
 
 	def updateList(self, list):
 		self.characterList = list
