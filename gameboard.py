@@ -88,13 +88,13 @@ class gameBoard:
 		if guess:
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
-				if bool(hasAttribute is False):
+				if bool(hasAttribute is False) and self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
 		else: 
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
-				if bool(hasAttribute is True):
+				if bool(hasAttribute is True) and self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
 		return self.characterList
