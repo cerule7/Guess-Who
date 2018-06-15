@@ -17,9 +17,10 @@ def main():
 		if(numTurns % 2 == 0):
 			action = input("P1: Ask question or guess character? (1 or 2-17)")
 			if(action == '1'):
-				gameOver == True
+				p1 = getAction(action, p1, p2)
+				gameOver = True
 			#for debug
-			if(action == '-1'):
+			elif(action == '-1'):
 				quit()
 			else:
 				p1 = getAction(action, p1, p2)
@@ -27,9 +28,10 @@ def main():
 		else: 
 			action = input("P2: Ask question or guess character? (1 or 2-17)")
 			if(action == '1'):
-				gameOver == True
+				p2 = getAction(action, p2, p1)
+				gameOver = True
 			#for debug
-			if(action == '-1'):
+			elif(action == '-1'):
 				quit()
 			else:
 				p2 = getAction(action, p2, p1)
@@ -44,11 +46,17 @@ def getAction(i, player, otherplayer):
 		quit()
 	#guess specific characater
 	if i == '1':
-		guess = input("Name?")
-		if(otherplayer.getSelected() == guess):
-				player.setScore(player.getScore() + 1)
+		guess = input("Name?").rstrip()
+		oChar = otherplayer.getBoard().getCharacter(otherplayer.getBoard().getSelected())
+		print("OCHAR NAME " + oChar.getName())
+		print(str(oChar.getName()) == guess)
+		if(oChar.getName() == guess):
+			print("CORRECT GUESS")
+			player.setScore(player.getScore() + 1)
 		else:
-				otherplayer.setScore(otherplayer.getScore() + 1)
+			print("INCORRECT GUESS")
+			otherplayer.setScore(otherplayer.getScore() + 1)
+		return 
 	#y/n questions
 	if i == '2':
 		player.getBoard().updateList(player.getBoard().askQ('isFemale', otherplayer.getBoard()))
