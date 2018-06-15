@@ -84,5 +84,10 @@ def getAction(i, player, otherplayer):
 		player.getBoard().updateList(characterlist)
 	return player
 
+print("TURNS: " + str(numTurns))
+print("Player 1: " + str(p1.getScore()))
+print("Player 2: " + str(p2.getScore()))
+print(gameOver)
+
 #runs the game
 main()
