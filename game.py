@@ -20,6 +20,7 @@ class Game:
 			#p1 gets even turns 
 			if(numTurns % 2 == 0):
 				action = input("P1: Ask question or guess character? (0 or 1)")
+				#for debug
 				if(action == '-1'):
 					quit()
 				if(action == '0'):
@@ -40,6 +41,7 @@ class Game:
 					gameOver = True
 			else: 
 				action = input("P2: Ask question or guess character? (0 or 1)")
+				#for debug
 				if(action == '-1'):
 					quit()
 				if(action == '0'):
