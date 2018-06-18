@@ -4,11 +4,13 @@ from gameboard import gameBoard
 
 def main(): 
 	sel = np.random.randint(0, 24)
-	p1 = Player("PLAYER 1", gameBoard(sel), sel)
-	print(p1.getName() + " selected " + p1.getBoard().getCharacter(sel).getName())
-	sel = np.random.randint(0, 24)
-	p2 = Player("PLAYER 2", gameBoard(sel), sel)
-	print(p2.getName() + " selected " + p2.getBoard().getCharacter(sel).getName())
+	g1 = gameBoard(sel)
+	p1 = Player("PLAYER 1", g1, sel)
+	print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getBoard().getSelected()).getName())
+	j = np.random.randint(0, 24)
+	g2 = gameBoard(j)
+	p2 = Player("PLAYER 2", g2, j)
+	print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getBoard().getSelected()).getName())
 	numTurns = 0
 	gameOver = False
 
@@ -24,6 +26,12 @@ def main():
 				quit()
 			else:
 				p1 = getAction(action, p1, p2)
+				print('P1 ACTIVE: ' + str(p1.getBoard().numberActive()))
+				print('P2 ACTIVE: ' + str(p2.getBoard().numberActive()))
+				if(p1.getBoard().isOneLeft()):
+					p1.setScore(p1.getScore() + 1)
+					print("PLAYER 1 WINS")
+					gameOver = True
 		else: 
 			action = int(input("P2: action?"))
 			if(action >= 0 and action < 24):
@@ -34,17 +42,24 @@ def main():
 				quit()
 			else:
 				p2 = getAction(action, p2, p1)
+				print("P1 ACTIVE: " + str(p1.getBoard().numberActive()))
+				print("P2 ACTIVE: " + str(p2.getBoard().numberActive()))
+				if(p2.getBoard().isOneLeft()):
+					p2.setScore(p2.getScore() + 1)
+					print("PLAYER 2 WINS")
+					gameOver = True
 		numTurns += 1
 		print("TURNS: " + str(numTurns))
 
 def getAction(i, player, otherplayer):
 	#each number corresponds to an action 
 	#auto quit (debug only)
+	print("the player is " + player.getName())
+	print("the other player is " + otherplayer.getName())
 	if i == -1: 
 		quit()
 	#guess specific character
 	if i >= 0 and i < 24:
-		print(str(otherplayer.getBoard().getSelected()))
 		if(i == otherplayer.getBoard().getSelected()):
 			print("CORRECT GUESS")
 			player.setScore(player.getScore() + 1)
