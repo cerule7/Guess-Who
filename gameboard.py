@@ -127,7 +127,6 @@ class gameBoard:
 			color == 'brown'
 		return self.askQ(color, otherBoard)
 
-
 	def updateList(self, list):
 		self.characterList = list
 
