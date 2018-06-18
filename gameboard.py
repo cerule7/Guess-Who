@@ -58,19 +58,12 @@ class gameBoard:
 	def getBoard(self):
 		return self
 
-	def isOneLeft(self):
-		j = 24
-		for i in range(0,24):
-			if(self.characterList[i].isitActive()):
-				j -= 1
-		return bool(j == 1)
-
 	def numberActive(self):
 		j = 0
-		for i in range(0,24):
+		for i in range(0, 24):
 			if(self.characterList[i].isitActive()):
 				j += 1
-		return j
+		return int(j)
 
 	def getSelected(self):
 		return self.selectedCharacter
