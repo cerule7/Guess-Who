@@ -15,23 +15,23 @@ def main():
 	while(gameOver == False):
 		#p1 gets even turns 
 		if(numTurns % 2 == 0):
-			action = input("P1: Ask question or guess character? (1 or 2-17)")
-			if(action == '1'):
+			action = int(input("P1: action?"))
+			if(action >= 0 and action < 24):
 				p1 = getAction(action, p1, p2)
 				gameOver = True
 			#for debug
-			elif(action == '-1'):
+			elif(action == -1):
 				quit()
 			else:
 				p1 = getAction(action, p1, p2)
 				p1.getBoard().printBoard()
 		else: 
-			action = input("P2: Ask question or guess character? (1 or 2-17)")
-			if(action == '1'):
+			action = int(input("P2: action?"))
+			if(action >= 0 and action < 24):
 				p2 = getAction(action, p2, p1)
 				gameOver = True
 			#for debug
-			elif(action == '-1'):
+			elif(action == -1):
 				quit()
 			else:
 				p2 = getAction(action, p2, p1)
