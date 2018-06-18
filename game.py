@@ -28,7 +28,7 @@ def main():
 				p1 = getAction(action, p1, p2)
 				print('P1 ACTIVE: ' + str(p1.getBoard().numberActive()))
 				print('P2 ACTIVE: ' + str(p2.getBoard().numberActive()))
-				if(p1.getBoard().isOneLeft()):
+				if(p1.getBoard().numberActive() <= 1):
 					p1.setScore(p1.getScore() + 1)
 					print("PLAYER 1 WINS")
 					gameOver = True
@@ -44,7 +44,7 @@ def main():
 				p2 = getAction(action, p2, p1)
 				print("P1 ACTIVE: " + str(p1.getBoard().numberActive()))
 				print("P2 ACTIVE: " + str(p2.getBoard().numberActive()))
-				if(p2.getBoard().isOneLeft()):
+				if(p2.getBoard().numberActive() <= 1):
 					p2.setScore(p2.getScore() + 1)
 					print("PLAYER 2 WINS")
 					gameOver = True
