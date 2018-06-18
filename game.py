@@ -24,7 +24,6 @@ def main():
 				quit()
 			else:
 				p1 = getAction(action, p1, p2)
-				p1.getBoard().printBoard()
 		else: 
 			action = int(input("P2: action?"))
 			if(action >= 0 and action < 24):
@@ -35,17 +34,17 @@ def main():
 				quit()
 			else:
 				p2 = getAction(action, p2, p1)
-				p2.getBoard().printBoard()
 		numTurns += 1
 		print("TURNS: " + str(numTurns))
 
 def getAction(i, player, otherplayer):
 	#each number corresponds to an action 
 	#auto quit (debug only)
-	if i == '-1': 
+	if i == -1: 
 		quit()
 	#guess specific character
 	if i >= 0 and i < 24:
+		print(str(otherplayer.getBoard().getSelected()))
 		if(i == otherplayer.getBoard().getSelected()):
 			print("CORRECT GUESS")
 			player.setScore(player.getScore() + 1)
@@ -54,38 +53,33 @@ def getAction(i, player, otherplayer):
 			otherplayer.setScore(otherplayer.getScore() + 1)
 		return 
 	#y/n questions
-	if i == '24':
+	if i == 24:
 		player.getBoard().updateList(player.getBoard().askQ('isFemale', otherplayer.getBoard()))
-	if i == '25':
+	if i == 25:
 		player.getBoard().updateList(player.getBoard().askQ('hasHat', otherplayer.getBoard()))
-	if i == '26':
+	if i == 26:
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '27':
+	if i == 27:
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '28':
+	if i == 28:
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
-	if i == '29':
+	if i == 29:
 		player.getBoard().updateList(player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard()))
-	if i == '30':
+	if i == 30:
 		player.getBoard().updateList(player.getBoard().askQ('isSmiling', otherplayer.getBoard()))
-	if i == '31':
+	if i == 31:
 		player.getBoard().updateList(player.getBoard().askQ('isBald', otherplayer.getBoard()))
-	if i == '32':
+	if i == 32:
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '33':
+	if i == 33:
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '34':
+	if i == 34:
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
 	#hair colors
 	else:
 		characterlist = player.getBoard().askHairColor(i, otherplayer.getBoard())
 		player.getBoard().updateList(characterlist)
 	return player
-
-print("TURNS: " + str(numTurns))
-print("Player 1: " + str(p1.getScore()))
-print("Player 2: " + str(p2.getScore()))
-print(gameOver)
 
 #runs the game
 main()
