@@ -44,11 +44,9 @@ def getAction(i, player, otherplayer):
 	#auto quit (debug only)
 	if i == '-1': 
 		quit()
-	#guess specific characater
-	if i == '1':
-		guess = input("Name?").strip()
-		oChar = otherplayer.getBoard().getCharacter(otherplayer.getBoard().getSelected())
-		if(oChar.getName() == guess):
+	#guess specific character
+	if i >= 0 and i < 24:
+		if(i == otherplayer.getBoard().getSelected()):
 			print("CORRECT GUESS")
 			player.setScore(player.getScore() + 1)
 		else:
@@ -56,27 +54,27 @@ def getAction(i, player, otherplayer):
 			otherplayer.setScore(otherplayer.getScore() + 1)
 		return 
 	#y/n questions
-	if i == '2':
+	if i == '24':
 		player.getBoard().updateList(player.getBoard().askQ('isFemale', otherplayer.getBoard()))
-	if i == '3':
+	if i == '25':
 		player.getBoard().updateList(player.getBoard().askQ('hasHat', otherplayer.getBoard()))
-	if i == '4':
+	if i == '26':
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '5':
+	if i == '27':
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '6':
+	if i == '28':
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
-	if i == '7':
+	if i == '29':
 		player.getBoard().updateList(player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard()))
-	if i == '8':
+	if i == '30':
 		player.getBoard().updateList(player.getBoard().askQ('isSmiling', otherplayer.getBoard()))
-	if i == '9':
+	if i == '31':
 		player.getBoard().updateList(player.getBoard().askQ('isBald', otherplayer.getBoard()))
-	if i == '10':
+	if i == '32':
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '11':
+	if i == '33':
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '12':
+	if i == '34':
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
 	#hair colors
 	else:
