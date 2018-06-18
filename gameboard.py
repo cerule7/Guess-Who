@@ -6,7 +6,7 @@ class gameBoard:
 	selectedCharacter = 0 
 	totFlips = 0
 
-	def populateList():
+	def __init__(self, selectedCharacter):
 		characterList = []
 		myFile = open("characterList.txt", "r")
 		for j in range(24):
@@ -52,24 +52,18 @@ class gameBoard:
 			hairColor = line
 
 			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor))
-		return characterList
-
-	characterList = populateList()
-	for char in characterList:
-		char.printCharacter()
-
-	def __init__(self, selectedCharacter):
+		self.characterList = characterList
 		self.selectedCharacter = selectedCharacter
 
 	def getBoard(self):
 		return self
 
-	def isOneLeft(self):
-		j = 24
-		for i in range(0,24):
+	def numberActive(self):
+		j = 0
+		for i in range(0, 24):
 			if(self.characterList[i].isitActive()):
-				j -= 1
-		return bool(j == 1)
+				j += 1
+		return int(j)
 
 	def getSelected(self):
 		return self.selectedCharacter
@@ -79,11 +73,6 @@ class gameBoard:
 
 	def getCharacterList(self):
 		return self.characterList
-
-	def makeGuess(character):
-		if(selectedCharacter == character):
-			return true
-		return false 
 
 	def askQ(self, attribute, otherBoard):
 		#if the other player's selected character DOES have the attribute, flip over ones that don't
@@ -115,13 +104,13 @@ class gameBoard:
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == '35':
+		if i == 35:
 			color = 'black'
-		if i == '36':
+		if i == 36:
 			color = 'red'
-		if i == '37':
+		if i == 37:
 			color = 'white'
-		if i == '38':
+		if i == 38:
 			color == 'blonde'
 		else:
 			color == 'brown'

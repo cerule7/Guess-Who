@@ -4,11 +4,13 @@ from gameboard import gameBoard
 
 def main(): 
 	sel = np.random.randint(0, 24)
-	p1 = Player("PLAYER 1", gameBoard(sel), sel)
-	print(p1.getName() + " selected " + p1.getBoard().getCharacter(sel).getName())
-	sel = np.random.randint(0, 24)
-	p2 = Player("PLAYER 2", gameBoard(sel), sel)
-	print(p2.getName() + " selected " + p2.getBoard().getCharacter(sel).getName())
+	g1 = gameBoard(sel)
+	p1 = Player("PLAYER 1", g1, sel)
+	print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getBoard().getSelected()).getName())
+	j = np.random.randint(0, 24)
+	g2 = gameBoard(j)
+	p2 = Player("PLAYER 2", g2, j)
+	print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getBoard().getSelected()).getName())
 	numTurns = 0
 	gameOver = False
 
@@ -24,7 +26,12 @@ def main():
 				quit()
 			else:
 				p1 = getAction(action, p1, p2)
-				p1.getBoard().printBoard()
+				print('P1 ACTIVE: ' + str(p1.getBoard().numberActive()))
+				print('P2 ACTIVE: ' + str(p2.getBoard().numberActive()))
+				if(p1.getBoard().numberActive() <= 1):
+					p1.setScore(p1.getScore() + 1)
+					print("PLAYER 1 WINS")
+					gameOver = True
 		else: 
 			action = int(input("P2: action?"))
 			if(action >= 0 and action < 24):
@@ -35,14 +42,21 @@ def main():
 				quit()
 			else:
 				p2 = getAction(action, p2, p1)
-				p2.getBoard().printBoard()
+				print("P1 ACTIVE: " + str(p1.getBoard().numberActive()))
+				print("P2 ACTIVE: " + str(p2.getBoard().numberActive()))
+				if(p2.getBoard().numberActive() <= 1):
+					p2.setScore(p2.getScore() + 1)
+					print("PLAYER 2 WINS")
+					gameOver = True
 		numTurns += 1
 		print("TURNS: " + str(numTurns))
 
 def getAction(i, player, otherplayer):
 	#each number corresponds to an action 
 	#auto quit (debug only)
-	if i == '-1': 
+	print("the player is " + player.getName())
+	print("the other player is " + otherplayer.getName())
+	if i == -1: 
 		quit()
 	#guess specific character
 	if i >= 0 and i < 24:
@@ -54,38 +68,33 @@ def getAction(i, player, otherplayer):
 			otherplayer.setScore(otherplayer.getScore() + 1)
 		return 
 	#y/n questions
-	if i == '24':
+	if i == 24:
 		player.getBoard().updateList(player.getBoard().askQ('isFemale', otherplayer.getBoard()))
-	if i == '25':
+	if i == 25:
 		player.getBoard().updateList(player.getBoard().askQ('hasHat', otherplayer.getBoard()))
-	if i == '26':
+	if i == 26:
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '27':
+	if i == 27:
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '28':
+	if i == 28:
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
-	if i == '29':
+	if i == 29:
 		player.getBoard().updateList(player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard()))
-	if i == '30':
+	if i == 30:
 		player.getBoard().updateList(player.getBoard().askQ('isSmiling', otherplayer.getBoard()))
-	if i == '31':
+	if i == 31:
 		player.getBoard().updateList(player.getBoard().askQ('isBald', otherplayer.getBoard()))
-	if i == '32':
+	if i == 32:
 		player.getBoard().updateList(player.getBoard().askQ('hasGlasses', otherplayer.getBoard()))
-	if i == '33':
+	if i == 33:
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
-	if i == '34':
+	if i == 34:
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
 	#hair colors
 	else:
 		characterlist = player.getBoard().askHairColor(i, otherplayer.getBoard())
 		player.getBoard().updateList(characterlist)
 	return player
-
-print("TURNS: " + str(numTurns))
-print("Player 1: " + str(p1.getScore()))
-print("Player 2: " + str(p2.getScore()))
-print(gameOver)
 
 #runs the game
 main()
