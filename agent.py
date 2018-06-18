@@ -5,12 +5,13 @@ class Agent(Player):
 
 	gameboard = ''
 	score = 0 
-	name = 'Skynet'
+	name = 'Randbot: '
 	selectedCharacter = 0
 
-	def __init__(self, gameboard, selectedCharacter):
+	def __init__(self, name, gameboard, selectedCharacter):
 		self.gameboard = gameboard
 		self.selectedCharacter = selectedCharacter
+		self.name += name
 	
 	# Makes a random choice
 	# 24 < choice > -1 for random character
@@ -29,14 +30,15 @@ class Agent(Player):
 	
 	# Makes a random number to make a binary choice 
 	def chooseRandom(self):
-		action = ""
-		
-		if random.randint(0, 2) == 1:
-			action = "trait"
-		else:
-			action = "character"
-		
-		return action
+		return "trait"
+# 		action = ""
+#    		
+# 		if random.randint(0, 2) == 1:
+# 			action = "trait"
+# 		else:
+# 			action = "character"
+#    		
+# 		return action
 
 
 #===============================================================================
