@@ -15,7 +15,7 @@ def main():
 	gameOver = False
 
 	while(gameOver == False):
-		#p1 gets even turns 
+		#p1 gets even turns
 		if(numTurns % 2 == 0):
 			action = int(input("P1: action?"))
 			if(action >= 0 and action < 24):
@@ -54,8 +54,6 @@ def main():
 def getAction(i, player, otherplayer):
 	#each number corresponds to an action 
 	#auto quit (debug only)
-	print("the player is " + player.getName())
-	print("the other player is " + otherplayer.getName())
 	if i == -1: 
 		quit()
 	#guess specific character
