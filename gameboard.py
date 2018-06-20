@@ -77,21 +77,25 @@ class gameBoard:
 	def askQ(self, attribute, otherBoard):
 		#if the other player's selected character DOES have the attribute, flip over ones that don't
 		guess = bool(self.characterList[otherBoard.getSelected()].hasAttribute(attribute))
+		numFlipped = 0 
 		if guess:
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
 				if bool(hasAttribute is False) and self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
+					numFlipped += 1
 		else: 
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
 				if bool(hasAttribute is True) and self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
-		return self.characterList
+					numFlipped += 1
+		return self.characterList, numFlipped
 	
 	def binarySearch(self, binaryPositions, otherBoard):
+		numFlipped = 0 
 		m = int((binaryPositions[0] + binaryPositions[1]) / 2)
 		selPos = int(otherBoard.getSelected())
 		print("GUESS " + str(m) + " SEL " + str(selPos))
@@ -100,19 +104,22 @@ class gameBoard:
 				if i != selPos and self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
+					numFlipped += 1
 		elif m > selPos:
 			for i in range(m, 24):
 				if self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
+					numFlipped += 1
 			binaryPositions[1] = m - 1
 		else:
 			for i in range(0, m):
 				if self.characterList[i].isitActive():
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
+					numFlipped += 1
 			binaryPositions[0] = m + 1
-		return binaryPositions, self.characterList
+		return binaryPositions, self.characterList, numFlipped
 
 	# Compares the total number of flips with the last recorded number
 	def flippedLast(self):
@@ -127,13 +134,13 @@ class gameBoard:
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == 36:
+		if i == 33:
 			color = 'black'
-		if i == 37:
+		if i == 34:
 			color = 'red'
-		if i == 38:
+		if i == 35:
 			color = 'white'
-		if i == 39:
+		if i == 36:
 			color == 'blonde'
 		else:
 			color == 'brown'
