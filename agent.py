@@ -8,12 +8,14 @@ class Agent(Player):
 	name = 'Randbot: '
 	selectedCharacter = 0
 	listGuesses = 0
+	binaryPositions = [0, 23] #left, right
 
 	def __init__(self, name, gameboard, selectedCharacter):
 		self.gameboard = gameboard
 		self.selectedCharacter = selectedCharacter
 		self.name += name
 		self.listGuesses = []
+		self.binaryPositions = [0, 23] 
 	
 	# Makes a random choice
 	# 24 < choice > -1 for random character
@@ -67,7 +69,10 @@ class Agent(Player):
 
 #===============================================================================
 #	Unmodified methods
-
+#
+#	def getBinaryPositions(self):
+#		return self.binaryPositions
+#
 # 	def getName(self):
 # 		return self.name
 # 

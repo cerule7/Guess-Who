@@ -4,11 +4,19 @@ class Player:
 	score = 0 
 	name = ''
 	selectedCharacter = 0
+	binaryPositions = [0, 23] #left, right
 
 	def __init__(self, name, gameboard, selectedCharacter):
 		self.gameboard = gameboard
 		self.name = name
 		self.selectedCharacter = selectedCharacter
+		self.binaryPositions = [0, 23]
+
+	def getBinaryPositions(self):
+		return self.binaryPositions
+
+	def setBinaryPositions(self, newBin):
+		self.binaryPositions = newBin 
 
 	def getName(self):
 		return self.name

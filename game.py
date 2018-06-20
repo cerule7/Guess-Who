@@ -11,16 +11,23 @@ def main():
 	print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getBoard().getSelected()).getName())
 	j = np.random.randint(0, 24)
 	g2 = gameBoard(j)
+	#p2 = Player("PLAYER 2", g2, j)
 	p2 = Agent("Alex", g2, j)
 	print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getBoard().getSelected()).getName())
 	numTurns = 0
+
+	p1turns = 0
+	p2turns = 0 
+
 	gameOver = False
 
 	while(gameOver == False):
 		#p1 gets even turns
 		if(numTurns % 2 == 0):
-			print(p1.getName() + " is guessing")
-			action = p1.guessRandom()
+			p1turns += 1
+			action = 35
+			print(p1.getName() + " is guessing" + str(action))
+			#action = int(input("ACTION 1-40"))
 			if(action >= 0 and action < 24):
 				p1 = getAction(action, p1, p2)
 				gameOver = True
@@ -36,8 +43,10 @@ def main():
 					print("PLAYER 1 WINS")
 					gameOver = True
 		else: 
-			print(p2.getName() + " is guessing")
-			action = p2.guessRandom()
+			p2turns += 1
+			action = 35
+			print(p2.getName() + " is guessing" + str(action))
+			#action = int(input("ACTION 1-40"))
 			if(action >= 0 and action < 24):
 				p2 = getAction(action, p2, p1)
 				gameOver = True
@@ -53,7 +62,9 @@ def main():
 					print("PLAYER 2 WINS")
 					gameOver = True
 		numTurns += 1
-		print("TURNS: " + str(numTurns))
+		print("TOTAL TURNS: " + str(numTurns))
+		print("p1 TURNS: " + str(p1turns))
+		print("p2 TURNS: " + str(p2turns))
 
 def getAction(i, player, otherplayer):
 	#each number corresponds to an action 
@@ -92,6 +103,11 @@ def getAction(i, player, otherplayer):
 		player.getBoard().updateList(player.getBoard().askQ('hasBeard', otherplayer.getBoard()))
 	if i == 34:
 		player.getBoard().updateList(player.getBoard().askQ('hasMustache', otherplayer.getBoard()))
+	#binary search
+	if i == 35:
+		binaryPositions, characterlist = player.getBoard().binarySearch(player.getBinaryPositions(), otherplayer.getBoard())
+		player.getBoard().updateList(characterlist)
+		player.setBinaryPositions(binaryPositions)
 	#hair colors
 	else:
 		characterlist = player.getBoard().askHairColor(i, otherplayer.getBoard())

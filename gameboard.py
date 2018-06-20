@@ -91,6 +91,29 @@ class gameBoard:
 					self.characterList[i].toggleActive()
 		return self.characterList
 	
+	def binarySearch(self, binaryPositions, otherBoard):
+		m = int((binaryPositions[0] + binaryPositions[1]) / 2)
+		selPos = int(otherBoard.getSelected())
+		print("GUESS " + str(m) + " SEL " + str(selPos))
+		if m == selPos:
+			for i in range(0, 24):
+				if i != selPos and self.characterList[i].isitActive():
+					print("FLIPPED " + self.characterList[i].getName())
+					self.characterList[i].toggleActive()
+		elif m > selPos:
+			for i in range(m, 24):
+				if self.characterList[i].isitActive():
+					print("FLIPPED " + self.characterList[i].getName())
+					self.characterList[i].toggleActive()
+			binaryPositions[1] = m - 1
+		else:
+			for i in range(0, m):
+				if self.characterList[i].isitActive():
+					print("FLIPPED " + self.characterList[i].getName())
+					self.characterList[i].toggleActive()
+			binaryPositions[0] = m + 1
+		return binaryPositions, self.characterList
+
 	# Compares the total number of flips with the last recorded number
 	def flippedLast(self):
 		currentTot = 0
@@ -104,13 +127,13 @@ class gameBoard:
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == 35:
-			color = 'black'
 		if i == 36:
-			color = 'red'
+			color = 'black'
 		if i == 37:
-			color = 'white'
+			color = 'red'
 		if i == 38:
+			color = 'white'
+		if i == 39:
 			color == 'blonde'
 		else:
 			color == 'brown'
