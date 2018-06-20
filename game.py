@@ -1,15 +1,17 @@
 import numpy as np
 from player import Player
 from gameboard import gameBoard
+from agent import Agent
 
 def main(): 
 	sel = np.random.randint(0, 24)
 	g1 = gameBoard(sel)
-	p1 = Player("PLAYER 1", g1, sel)
+	#p1 = Player("PLAYER 1", g1, sel)
+	p1 = Agent("Charlie", g1, sel)
 	print(p1.getName() + " selected " + p1.getBoard().getCharacter(p1.getBoard().getSelected()).getName())
 	j = np.random.randint(0, 24)
 	g2 = gameBoard(j)
-	p2 = Player("PLAYER 2", g2, j)
+	p2 = Agent("Alex", g2, j)
 	print(p2.getName() + " selected " + p2.getBoard().getCharacter(p2.getBoard().getSelected()).getName())
 	numTurns = 0
 	gameOver = False
@@ -17,7 +19,8 @@ def main():
 	while(gameOver == False):
 		#p1 gets even turns
 		if(numTurns % 2 == 0):
-			action = int(input("P1: action?"))
+			print(p1.getName() + " is guessing")
+			action = p1.guessRandom()
 			if(action >= 0 and action < 24):
 				p1 = getAction(action, p1, p2)
 				gameOver = True
@@ -33,7 +36,8 @@ def main():
 					print("PLAYER 1 WINS")
 					gameOver = True
 		else: 
-			action = int(input("P2: action?"))
+			print(p2.getName() + " is guessing")
+			action = p2.guessRandom()
 			if(action >= 0 and action < 24):
 				p2 = getAction(action, p2, p1)
 				gameOver = True
@@ -96,3 +100,4 @@ def getAction(i, player, otherplayer):
 
 #runs the game
 main()
+
