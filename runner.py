@@ -1,4 +1,4 @@
-import Game
+from game import Game
 
-g = Game(self)
+g = Game()
 g.main()
