@@ -25,6 +25,7 @@ class Game:
 		numTurns = 0 
 		self.state = 'START'
 		self.numFlipped = 0
+		self.numTurns = 0
 
 	def getState(self):
 		if(self.state == 'WIN' or self.state == 'LOST'):
@@ -65,7 +66,7 @@ class Game:
 		self.numFlipped = 0
 		if i == 24:
 			characterList, self.numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
-			player.getBoard().updateList(characterList
+			player.getBoard().updateList(characterList)
 		if i == 25:
 			characterList, self.numFlipped = player.getBoard().askQ('hasHat', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
@@ -110,7 +111,7 @@ class Game:
 			#self.p1 gets even turns
 			if(self.numTurns % 2 == 0):
 				p1turns += 1
-				action = 35
+				action = 32
 				print(self.p1.getName() + " is guessing" + str(action))
 				#action = int(input("ACTION 1-40"))
 				if(action >= 0 and action < 24):
@@ -130,7 +131,7 @@ class Game:
 						gameOver = True
 			else: 
 				p2turns += 1
-				action = 35
+				action = 32
 				print(self.p2.getName() + " is guessing" + str(action))
 				#action = int(input("ACTION 1-40"))
 				if(action >= 0 and action < 24):
