@@ -7,11 +7,13 @@ class Agent(Player):
 	score = 0 
 	name = 'Randbot: '
 	selectedCharacter = 0
+	listGuesses = 0
 
 	def __init__(self, name, gameboard, selectedCharacter):
 		self.gameboard = gameboard
 		self.selectedCharacter = selectedCharacter
 		self.name += name
+		self.listGuesses = []
 	
 	# Makes a random choice
 	# 24 < choice > -1 for random character
@@ -23,9 +25,31 @@ class Agent(Player):
 		
 		if action == "trait":
 			choice = random.randint(24, 40)
+			
+			newChoice = False
+			if choice not in self.listGuesses:
+				newChoice = True
+				
+			while not newChoice:
+				choice = random.randint(24, 40)
+				
+				if choice not in self.listGuesses:
+					newChoice = True
+			
 		else:
 			choice = random.randint(0, 24)
+			
+			newChoice = False
+			if choice not in self.listGuesses:
+				newChoice = True
+				
+			while not newChoice:
+				choice = random.randint(0, 24)
+				
+				if choice not in self.listGuesses:
+					newChoice = True
 		
+		self.listGuesses.append(choice)
 		return choice
 	
 	# Makes a random number to make a binary choice 
