@@ -1,0 +1,2 @@
+from gym_guesswho.envs.guesswho_env import GuesswhoEnv
+from gym_guesswho.envs.guesswho_extrahard_env import GuesswhoExtraHardEnv
