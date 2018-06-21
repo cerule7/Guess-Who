@@ -19,21 +19,21 @@ class Agent(Player):
 	
 	# Makes a random choice
 	# 24 < choice > -1 for random character
-	# 40 < choice > 23 for random trait
+	# 37 < choice > 23 for random trait
 	def guessRandom(self):
 		choice = -1
 		
 		action = self.chooseRandom()
 		
 		if action == "trait":
-			choice = random.randint(24, 40)
+			choice = random.randint(24, 37)
 			
 			newChoice = False
 			if choice not in self.listGuesses:
 				newChoice = True
 				
 			while not newChoice:
-				choice = random.randint(24, 40)
+				choice = random.randint(24, 37)
 				
 				if choice not in self.listGuesses:
 					newChoice = True

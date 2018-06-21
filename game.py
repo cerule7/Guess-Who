@@ -26,6 +26,21 @@ class Game:
 		self.numFlipped = 0
 		self.numTurns = 0
 
+	# Resets game 
+	def resetBoard(self):
+		i = np.random.randint(0, 24)
+		j = np.random.randint(0, 24)
+		self.p1.selectedCharacter = i
+		self.p2.selectedCharacter = j
+		g1 = gameBoard(i)
+		g2 = gameBoard(j)
+		self.p1.setBoard(g1)
+		self.p2.setBoard(g2)
+		self.numTurns = 0
+		self.status = 'START'
+		self.numFlipped = 0
+
+
 	def step(self): #returns status 
 		if(self.status == 'WIN' or self.status == 'LOST'):
 			return status
