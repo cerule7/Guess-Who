@@ -153,7 +153,7 @@ class gameBoard:
 		for i in range(0, len(self.characterList)):
 			print(self.characterList[i].getName() + " " + str(self.characterList[i].isitActive())  + "\n")
 			
-	# Allows for the reseting of a game board
+	# Resets game board
 	def resetBoard(self):
 		self.selectedCharacter = 0
 		self.totFlips = 0

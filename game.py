@@ -8,7 +8,7 @@ class Game:
 	p1 = None
 	p2 = None
 	numTurns = 0
-	state = ''
+	status = ''
 	numFlipped = 0
 
 	def __init__(self):
@@ -22,17 +22,20 @@ class Game:
 		#self.p2 = Player("PLAYER 2", g2, j)
 		self.p2 = Agent("Alex", g2, j)
 		print(self.p2.getName() + " selected " + self.p2.getBoard().getCharacter(self.p2.getBoard().getSelected()).getName())
-		numTurns = 0 
-		self.state = 'START'
+		self.status = 'START'
 		self.numFlipped = 0
 		self.numTurns = 0
 
-	def getState(self):
-		if(self.state == 'WIN' or self.state == 'LOST'):
-			return state
+	def step(self): #returns status 
+		if(self.status == 'WIN' or self.status == 'LOST'):
+			return status
 		else:
 			return str(self.numFlipped)
 
+	def getState(self):
+		m = self.p1.gameBoard().numberActive()
+		n = self.p2.gameBoard().numberActive()
+		return [m, n, (self.numTurns % 2 == 0)]
 
 	def getAction(self, i):
 		if self.numTurns % 2 == 0:
@@ -51,16 +54,16 @@ class Game:
 				print("CORRECT GUESS")
 				player.setScore(player.getScore() + 1)
 				if numTurns % 2 == 0:
-					self.state = 'WON'
+					self.status = 'WON'
 				else:
-					self.state = 'LOST'
+					self.status = 'LOST'
 			else:
 				print("INCORRECT GUESS")
 				otherplayer.setScore(otherplayer.getScore() + 1)
 				if numTurns % 2 == 0:
-					self.state = 'LOST'
+					self.status = 'LOST'
 				else:
-					self.state = 'WON'
+					self.status = 'WON'
 			return 
 		#y/n questions
 		self.numFlipped = 0
@@ -127,7 +130,7 @@ class Game:
 					if(self.p1.getBoard().numberActive() <= 1):
 						self.p1.setScore(self.p1.getScore() + 1)
 						print("PLAYER 1 WINS")
-						self.state = 'WON'
+						self.status = 'WON'
 						gameOver = True
 			else: 
 				p2turns += 1
@@ -147,7 +150,7 @@ class Game:
 					if(self.p2.getBoard().numberActive() <= 1):
 						self.p2.setScore(self.p2.getScore() + 1)
 						print("PLAYER 2 WINS")
-						self.state = 'LOST'
+						self.status = 'LOST'
 						gameOver = True
 			self.numTurns += 1
 			print("TOTAL TURNS: " + str(self.numTurns))
