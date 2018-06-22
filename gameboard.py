@@ -46,12 +46,32 @@ class gameBoard:
 			line = myFile.readline()
 			line = line.strip()
 			isBald = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBlueEyes = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBigNose = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBigMouth = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasEarrings = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasButtchin = line
 
 			line = myFile.readline()
 			line = line.strip()
 			hairColor = line
 
-			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor))
+			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hasBlueEyes, hasBigNose, hasBigMouth, hasEarrings, hasButtchin, hairColor))
 		self.characterList = characterList
 		self.selectedCharacter = selectedCharacter
 
@@ -122,6 +142,7 @@ class gameBoard:
 		return binaryPositions, self.characterList, numFlipped
 
 	# Compares the total number of flips with the last recorded number
+	# May be obsolete 
 	def flippedLast(self):
 		currentTot = 0
 		for char in self.characterList:
@@ -131,16 +152,25 @@ class gameBoard:
 		self.totFlips += currentTot
 		
 		return currentTot
+	
+	def getActiveCharacters(self):
+		activeList = []
+		
+		for character in self.characterList:
+			if character.isActive == True:
+				activeList.append(character)
+				
+		return activeList
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == 33:
+		if i == 38:
 			color = 'black'
-		if i == 34:
+		if i == 39:
 			color = 'red'
-		if i == 35:
+		if i == 40:
 			color = 'white'
-		if i == 36:
+		if i == 41:
 			color == 'blonde'
 		else:
 			color == 'brown'
