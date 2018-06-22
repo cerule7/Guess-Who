@@ -106,23 +106,8 @@ class Game:
 		if i == 31:
 			characterList, self.numFlipped = player.getBoard().askQ('isBald', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
-		if i == 32:
-			characterList, self.numFlipped = player.getBoard().askQ('hasBlueEyes', otherplayer.getBoard())
-			player.getBoard().updateList(characterList)
-		if i == 33:
-			characterList, self.numFlipped = player.getBoard().askQ('hasBigNose', otherplayer.getBoard())
-			player.getBoard().updateList(characterList)
-		if i == 34:
-			characterList, self.numFlipped = player.getBoard().askQ('hasBigMouth', otherplayer.getBoard())
-			player.getBoard().updateList(characterList)
-		if i == 35:
-			characterList, self.numFlipped = player.getBoard().askQ('hasEarrings', otherplayer.getBoard())
-			player.getBoard().updateList(characterList)
-		if i == 36:
-			characterList, self.numFlipped = player.getBoard().askQ('hasButtchin', otherplayer.getBoard())
-			player.getBoard().updateList(characterList)
 		#binary search
-		if i == 37:
+		if i == 32:
 			binaryPositions, characterlist, self.numFlipped = player.getBoard().binarySearch(player.getBinaryPositions(), otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
 			player.setBinaryPositions(binaryPositions)
@@ -144,9 +129,9 @@ class Game:
 			#self.p1 gets even turns
 			if(self.numTurns % 2 == 0):
 				p1turns += 1
-				#action = 37
+				action = 32
 				print(self.p1.getName() + " is guessing" + str(action))
-				action = int(input("ACTION 1-42"))
+				#action = int(input("ACTION 1-40"))
 				if(action >= 0 and action < 24):
 					self.getAction(action)
 					gameOver = True
@@ -164,9 +149,9 @@ class Game:
 						gameOver = True
 			else: 
 				p2turns += 1
-				action = 37
-				#print(self.p2.getName() + " is guessing" + str(action))
-				action = int(input("ACTION 1-42"))
+				action = 32
+				print(self.p2.getName() + " is guessing" + str(action))
+				#action = int(input("ACTION 1-40"))
 				if(action >= 0 and action < 24):
 					self.getAction(action)
 					gameOver = True
