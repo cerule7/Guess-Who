@@ -1,14 +1,18 @@
 import gym
+import numpy as np
 from gym import error, spaces, utils
 from gym.utils import seeding
 import os, subprocess, time, signal
+from gym.envs.guesswho.game import Game
 
 class GuesswhoEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        self.action_space = spaces.Tuple(spaces.Discrete(37)) #the 37 actions 
-        self.observation_space = spaces.Box(low=0, high=24, shape=3) #idk how this works yet
+        self.action_space = spaces.Discrete(37) #the 37 actions 
+        low = np.zeros(2, dtype=int)
+        high = np.array((24, 24), dtype=int)
+        self.observation_space = spaces.Box(low, high)
         self.status = 'START' #inital status 
         self.game = Game() #game object 
 
@@ -17,18 +21,24 @@ class GuesswhoEnv(gym.Env):
         self.status = self.game.step()  #update status
         reward = self._get_reward()  #reward from action
         ob = self.game.getState()  #state observation 
-        episode_over = (self.status == 'LOST' or self.status == 'WON') #end episode if game over 
+        episode_over = (self.status == 'LOST' or self.status == 'WON')
+        print("OVER? " + str(episode_over)) #end episode if game over 
         return ob, reward, episode_over, {} #the {} is a dictionary that can contain debug info 
+
+    def _seed(self, seed):
+        np.random.seed
 
     def _reset(self):
         self.status = 'START'
         self.game.resetBoard()
+        print(self.game.getState())
+        return self.game.getState()
 
     def _render(self, mode='human', close=False):
         pass
 
     def _take_action(self, action):
-        self.game.getAction(action)
+        self.game.oneTurn(action)
 
     def _get_reward(self):
         #Reward given for flipping tiles or winning
