@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
 from gym.envs.guesswho.agent import Agent
@@ -26,6 +27,14 @@ class Game:
 		self.numFlipped = 0
 		self.numTurns = 0
 		self.gameOver = False
+		#isFemale to hasButtchin + the five hair colors + m + n 
+		self.selTraits = np.zeros(20)
+
+	def updateSelTraits(self, i, correct):
+		if correct is False:
+			self.selTraits[i] = -1
+		else:
+			self.selTraits[i] = 1
 
 	# Resets game 
 	def resetBoard(self):
@@ -41,6 +50,7 @@ class Game:
 		self.status = 'START'
 		self.numFlipped = 0
 		self.gameOver = False
+		self.selTraits = np.zeros(20)
 		print("RESET BOARD")
 
 
@@ -52,9 +62,9 @@ class Game:
 			return str(self.numFlipped)
 
 	def getState(self):
-		m = self.p1.getBoard().numberActive()
-		n = self.p2.getBoard().numberActive()
-		return m, n
+		self.selTraits[18] = self.p1.getBoard().numberActive()
+		self.selTraits[19] = self.p2.getBoard().numberActive()
+		return self.selTraits
 
 	def getAction(self, i, pturn):
 		if pturn:
@@ -88,29 +98,96 @@ class Game:
 		elif i == 24:
 			characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isFemale'):
+				self.updateSelTraits(0, True)
+			elif pturn:
+				self.updateSelTraits(0, False)
 		elif i == 25:
 			characterList, numFlipped = player.getBoard().askQ('hasHat', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasHat'):
+				self.updateSelTraits(1, True)
+			elif pturn:
+				self.updateSelTraits(1, False)
 		elif i == 26:
 			characterList, numFlipped = player.getBoard().askQ('hasGlasses', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasGlasses'):
+				self.updateSelTraits(2, True)
+			elif pturn:
+				self.updateSelTraits(2, False)
 		elif i == 27:
 			characterList, numFlipped = player.getBoard().askQ('hasBeard', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBeard'):
+				self.updateSelTraits(3, True)
+			elif pturn:
+				self.updateSelTraits(3, False)
 		elif i == 28:
 			characterList, numFlipped = player.getBoard().askQ('hasMustache', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasMustache'):
+				self.updateSelTraits(4, True)
+			elif pturn:
+				self.updateSelTraits(4, False)
 		elif i == 29:
 			characterList, numFlipped = player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasRosyCheeks'):
+				self.updateSelTraits(5, True)
+			elif pturn:
+				self.updateSelTraits(5, False)
 		elif i == 30:
 			characterList, numFlipped = player.getBoard().askQ('isSmiling', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isSmiling'):
+				self.updateSelTraits(6, True)
+			elif pturn:
+				self.updateSelTraits(6, False)
 		elif i == 31:
 			characterList, numFlipped = player.getBoard().askQ('isBald', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
-		#binary search
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isBald'):
+				self.updateSelTraits(7, True)
+			elif pturn:
+				self.updateSelTraits(7, False)
 		elif i == 32:
+			characterList, numFlipped = player.getBoard().askQ('hasBlueEyes', otherplayer.getBoard())
+			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBlueEyes'):
+				self.updateSelTraits(8, True)
+			elif pturn:
+				self.updateSelTraits(8, False)
+		elif i == 33:
+			characterList, numFlipped = player.getBoard().askQ('hasBigNose', otherplayer.getBoard())
+			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigNose'):
+				self.updateSelTraits(9, True)
+			elif pturn:
+				self.updateSelTraits(9, False)
+		elif i == 34:
+			characterList, numFlipped = player.getBoard().askQ('hasBigMouth', otherplayer.getBoard())
+			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigMouth'):
+				self.updateSelTraits(10, True)
+			elif pturn:
+				self.updateSelTraits(10, False)
+		elif i == 35:
+			characterList, numFlipped = player.getBoard().askQ('hasEarrings', otherplayer.getBoard())
+			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasEarrings'):
+				self.updateSelTraits(11, True)
+			elif pturn:
+				self.updateSelTraits(11, False)
+		elif i == 36:
+			characterList, numFlipped = player.getBoard().askQ('hasButtchin', otherplayer.getBoard())
+			player.getBoard().updateList(characterList)
+			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasButtchin'):
+				self.updateSelTraits(12, True)
+			elif pturn:
+				self.updateSelTraits(12, False)
+		#binary search
+		elif i == 37:
 			binaryPositions, characterlist, numFlipped = player.getBoard().binarySearch(player.getBinaryPositions(), otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
 			player.setBinaryPositions(binaryPositions)
@@ -118,6 +195,31 @@ class Game:
 		else:
 			characterlist, numFlipped = player.getBoard().askHairColor(i, otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
+			if i == 38:
+				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('black'):
+					self.updateSelTraits(13, True)
+				elif pturn:
+					self.updateSelTraits(13, False)
+			if i == 39:
+				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('red'):
+					self.updateSelTraits(14, True)
+				elif pturn:
+					self.updateSelTraits(14, False)
+			if i == 40:
+				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('white'):
+					self.updateSelTraits(15, True)
+				elif pturn:
+					self.updateSelTraits(15, False)
+			if i == 41:
+				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('blonde'):
+					self.updateSelTraits(16, True)
+				elif pturn:
+					self.updateSelTraits(16, False)
+			else:
+				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('brown'):
+					self.updateSelTraits(17, True)
+				elif pturn:
+					self.updateSelTraits(17, False)
 		if pturn:
 			self.p1 = player
 			self.numFlipped = numFlipped
@@ -146,9 +248,8 @@ class Game:
 				self.gameOver = True
 		if(not self.gameOver):
 			#the agent goes 
-			action = 32
+			action = random.randint(24, 42)
 			print(self.p2.getName() + " is guessing" + str(action))
-			#action = int(input("ACTION 1-40"))
 			if(action >= 0 and action < 24):
 				self.getAction(action, pturn=False)
 				self.gameOver = True

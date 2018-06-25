@@ -3,7 +3,7 @@ from gym.envs.guesswho.character import Character
 class gameBoard:
 
 	characterList = []
-	selectedCharacter = 0 
+	selectedCharacter = 0
 	totFlips = 0
 
 	def __init__(self, selectedCharacter):
@@ -46,12 +46,32 @@ class gameBoard:
 			line = myFile.readline()
 			line = line.strip()
 			isBald = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBlueEyes = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBigNose = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasBigMouth = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasEarrings = line
+			
+			line = myFile.readline()
+			line = line.strip()
+			hasButtchin = line
 
 			line = myFile.readline()
 			line = line.strip()
 			hairColor = line
 
-			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hairColor))
+			characterList.append(Character(name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hasBlueEyes, hasBigNose, hasBigMouth, hasEarrings, hasButtchin, hairColor))
 		self.characterList = characterList
 		self.selectedCharacter = selectedCharacter
 
@@ -77,7 +97,7 @@ class gameBoard:
 	def askQ(self, attribute, otherBoard):
 		#if the other player's selected character DOES have the attribute, flip over ones that don't
 		guess = bool(self.characterList[otherBoard.getSelected()].hasAttribute(attribute))
-		numFlipped = 0 
+		numFlipped = 0
 		if guess:
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
@@ -135,16 +155,16 @@ class gameBoard:
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == 33:
+		if i == 38:
 			color = 'black'
-		if i == 34:
+		elif i == 39:
 			color = 'red'
-		if i == 35:
+		elif i == 40:
 			color = 'white'
-		if i == 36:
-			color == 'blonde'
+		elif i == 41:
+			color = 'blonde'
 		else:
-			color == 'brown'
+			color = 'brown'
 		return self.askQ(color, otherBoard)
 
 	def updateList(self, list):
