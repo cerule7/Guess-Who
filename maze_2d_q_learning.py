@@ -68,8 +68,6 @@ def simulate():
 
             if env.status == 'WON':
                 num_streaks += 1
-                y_axis.append(num_streaks)
-                x_axis.append(episode)
 
             if done:
                 print("Episode %d finished after %f time steps with total reward = %f (streak %d)."
@@ -83,6 +81,8 @@ def simulate():
         # Update parameters
         explore_rate = get_explore_rate(episode)
         learning_rate = get_learning_rate(episode)
+        y_axis.append(num_streaks)
+        x_axis.append(episode)
     return x_axis, y_axis
 
 
@@ -166,21 +166,14 @@ if __name__ == "__main__":
     '''
     Begin simulation
     '''
-    #recording_folder = "/tmp/maze_q_learning"
 
-    #if ENABLE_RECORDING:
-    #    env.monitor.start(recording_folder, force=True)
+    NUM_EPISODES = 1000
+    for i in range(0, 10): 
+        x_axis, y_axis = simulate()
+        l = 'try #: '+ str(i)
+        plt.plot(x_axis, y_axis, label=l)
 
-    #if ENABLE_RECORDING:
-    #    env.monitor.close()
-
-
-    NUM_EPISODES = 500
-    x_axis1, y_axis1 = simulate()
-    x_axis2, y_axis2 = simulate()
-
-    plt.plot(x_axis1, y_axis1)
-    plt.plot(x_axis2, y_axis2)
+    plt.legend()
     plt.ylabel('Number of Wins')
     plt.xlabel('Number of Episodes')
     plt.show()

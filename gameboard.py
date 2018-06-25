@@ -165,13 +165,13 @@ class gameBoard:
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
-		if i == 38:
+		if i == 14:
 			color = 'black'
-		elif i == 39:
+		elif i == 15:
 			color = 'red'
-		elif i == 40:
+		elif i == 16:
 			color = 'white'
-		elif i == 41:
+		elif i == 17:
 			color = 'blonde'
 		else:
 			color = 'brown'

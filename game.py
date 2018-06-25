@@ -78,108 +78,108 @@ class Game:
 		if i == -1:
 			quit()
 		#guess specific character
-		elif i >= 0 and i < 24:
-			if(i == otherplayer.getBoard().getSelected()):
-				print("CORRECT GUESS")
-				player.setScore(player.getScore() + 1)
-				if pturn:
-					self.status = 'WON'
-				else:
-					self.status = 'LOST'
-			else:
-				print("INCORRECT GUESS")
-				otherplayer.setScore(otherplayer.getScore() + 1)
-				if pturn:
-					self.status = 'LOST'
-				else:
-					self.status = 'WON'
-			return 
+		# elif i >= 0 and i < 24:
+		# 	if(i == otherplayer.getBoard().getSelected()):
+		# 		print("CORRECT GUESS")
+		# 		player.setScore(player.getScore() + 1)
+		# 		if pturn:
+		# 			self.status = 'WON'
+		# 		else:
+		# 			self.status = 'LOST'
+		# 	else:
+		# 		print("INCORRECT GUESS")
+		# 		otherplayer.setScore(otherplayer.getScore() + 1)
+		# 		if pturn:
+		# 			self.status = 'LOST'
+		# 		else:
+		# 			self.status = 'WON'
+		# 	return 
 		#y/n questions
-		elif i == 24:
+		elif i == 0:
 			characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isFemale'):
 				self.updateSelTraits(0, True)
 			elif pturn:
 				self.updateSelTraits(0, False)
-		elif i == 25:
+		elif i == 1:
 			characterList, numFlipped = player.getBoard().askQ('hasHat', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasHat'):
 				self.updateSelTraits(1, True)
 			elif pturn:
 				self.updateSelTraits(1, False)
-		elif i == 26:
+		elif i == 2:
 			characterList, numFlipped = player.getBoard().askQ('hasGlasses', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasGlasses'):
 				self.updateSelTraits(2, True)
 			elif pturn:
 				self.updateSelTraits(2, False)
-		elif i == 27:
+		elif i == 3:
 			characterList, numFlipped = player.getBoard().askQ('hasBeard', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBeard'):
 				self.updateSelTraits(3, True)
 			elif pturn:
 				self.updateSelTraits(3, False)
-		elif i == 28:
+		elif i == 4:
 			characterList, numFlipped = player.getBoard().askQ('hasMustache', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasMustache'):
 				self.updateSelTraits(4, True)
 			elif pturn:
 				self.updateSelTraits(4, False)
-		elif i == 29:
+		elif i == 5:
 			characterList, numFlipped = player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasRosyCheeks'):
 				self.updateSelTraits(5, True)
 			elif pturn:
 				self.updateSelTraits(5, False)
-		elif i == 30:
+		elif i == 6:
 			characterList, numFlipped = player.getBoard().askQ('isSmiling', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isSmiling'):
 				self.updateSelTraits(6, True)
 			elif pturn:
 				self.updateSelTraits(6, False)
-		elif i == 31:
+		elif i == 7:
 			characterList, numFlipped = player.getBoard().askQ('isBald', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isBald'):
 				self.updateSelTraits(7, True)
 			elif pturn:
 				self.updateSelTraits(7, False)
-		elif i == 32:
+		elif i == 8:
 			characterList, numFlipped = player.getBoard().askQ('hasBlueEyes', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBlueEyes'):
 				self.updateSelTraits(8, True)
 			elif pturn:
 				self.updateSelTraits(8, False)
-		elif i == 33:
+		elif i == 9:
 			characterList, numFlipped = player.getBoard().askQ('hasBigNose', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigNose'):
 				self.updateSelTraits(9, True)
 			elif pturn:
 				self.updateSelTraits(9, False)
-		elif i == 34:
+		elif i == 10:
 			characterList, numFlipped = player.getBoard().askQ('hasBigMouth', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigMouth'):
 				self.updateSelTraits(10, True)
 			elif pturn:
 				self.updateSelTraits(10, False)
-		elif i == 35:
+		elif i == 11:
 			characterList, numFlipped = player.getBoard().askQ('hasEarrings', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasEarrings'):
 				self.updateSelTraits(11, True)
 			elif pturn:
 				self.updateSelTraits(11, False)
-		elif i == 36:
+		elif i == 12:
 			characterList, numFlipped = player.getBoard().askQ('hasButtchin', otherplayer.getBoard())
 			player.getBoard().updateList(characterList)
 			if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasButtchin'):
@@ -187,30 +187,31 @@ class Game:
 			elif pturn:
 				self.updateSelTraits(12, False)
 		#binary search
-		elif i == 37:
+		elif i == 13:
 			binaryPositions, characterlist, numFlipped = player.getBoard().binarySearch(player.getBinaryPositions(), otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
+			print("BINARY POS: " + binaryPositions)
 			player.setBinaryPositions(binaryPositions)
 		#hair colors
 		else:
 			characterlist, numFlipped = player.getBoard().askHairColor(i, otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
-			if i == 38:
+			if i == 14:
 				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('black'):
 					self.updateSelTraits(13, True)
 				elif pturn:
 					self.updateSelTraits(13, False)
-			if i == 39:
+			if i == 15:
 				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('red'):
 					self.updateSelTraits(14, True)
 				elif pturn:
 					self.updateSelTraits(14, False)
-			if i == 40:
+			if i == 16:
 				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('white'):
 					self.updateSelTraits(15, True)
 				elif pturn:
 					self.updateSelTraits(15, False)
-			if i == 41:
+			if i == 17:
 				if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('blonde'):
 					self.updateSelTraits(16, True)
 				elif pturn:
@@ -231,11 +232,11 @@ class Game:
 	def oneTurn(self, action): 
 		#the bot/player goes 
 		print(self.p1.getName() + " is guessing" + str(action))
-		if(action >= 0 and action < 24):
-			self.getAction(action, pturn=True)
-			self.gameOver = True
+		#if(action >= 0 and action < 24):
+		#	self.getAction(action, pturn=True)
+		#	self.gameOver = True
 		#for debug
-		elif(action == -1):
+		if(action == -1):
 			quit()
 		else:
 			self.getAction(action, pturn=True)
@@ -248,13 +249,13 @@ class Game:
 				self.gameOver = True
 		if(not self.gameOver):
 			#the agent goes 
-			action = random.randint(24, 42)
+			action = 13
 			print(self.p2.getName() + " is guessing" + str(action))
-			if(action >= 0 and action < 24):
-				self.getAction(action, pturn=False)
-				self.gameOver = True
+			#if(action >= 0 and action < 24):
+			#	self.getAction(action, pturn=False)
+			#	self.gameOver = True
 			#for debug
-			elif(action == -1):
+			if(action == -1):
 				quit()
 			else:
 				self.getAction(action, pturn=False)
