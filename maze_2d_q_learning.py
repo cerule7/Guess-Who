@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import math
 import random
-
+from matplotlib import pyplot as plt
 import gym
 
 def simulate():
@@ -11,7 +11,8 @@ def simulate():
     learning_rate = get_learning_rate(0)
     explore_rate = get_explore_rate(0)
     discount_factor = 0.99
-
+    x_axis = []
+    y_axis = []
     num_streaks = 0
 
     for episode in range(NUM_EPISODES):
@@ -52,7 +53,7 @@ def simulate():
                 print("Best Q: %f" % best_q)
                 print("Explore rate: %f" % explore_rate)
                 print("Learning rate: %f" % learning_rate)
-                print("Streaks: %d" % num_streaks)
+                print("Wins: %d" % num_streaks)
                 print("")
 
             elif DEBUG_MODE == 1:
@@ -61,13 +62,14 @@ def simulate():
                     print("t = %d" % t)
                     print("Explore rate: %f" % explore_rate)
                     print("Learning rate: %f" % learning_rate)
-                    print("Streaks: %d" % num_streaks)
+                    print("Wins: %d" % num_streaks)
                     print("Total reward: %f" % total_reward)
                     print("")
 
             if env.status == 'WON':
                 num_streaks += 1
-
+                y_axis.append(num_streaks)
+                x_axis.append(episode)
 
             if done:
                 print("Episode %d finished after %f time steps with total reward = %f (streak %d)."
@@ -78,13 +80,11 @@ def simulate():
                 print("Episode %d timed out at %d with total reward = %f."
                       % (episode, t, total_reward))
 
-        # It's considered done when it's solved over 120 times consecutively
-        if num_streaks > STREAK_TO_END:
-            break
-
         # Update parameters
         explore_rate = get_explore_rate(episode)
         learning_rate = get_learning_rate(episode)
+    return x_axis, y_axis
+
 
 
 def select_action(state, explore_rate):
@@ -109,15 +109,15 @@ def state_to_bucket(state):
     bucket_indice = []
     for i in range(len(state)):
         if state[i] <= STATE_BOUNDS[i][0]:
-            bucket_index = 0
+            bucket_index = -1
         elif state[i] >= STATE_BOUNDS[i][1]:
             bucket_index = NUM_BUCKETS[i] - 1
         else:
             # Mapping the state bounds to the bucket array
             bound_width = STATE_BOUNDS[i][1] - STATE_BOUNDS[i][0]
-            offset = (NUM_BUCKETS[i]-1)*STATE_BOUNDS[i][0]/bound_width
-            scaling = (NUM_BUCKETS[i]-1)/bound_width
-            bucket_index = int(round(scaling*state[i] - offset))
+            offset = (NUM_BUCKETS[i] - 1) * STATE_BOUNDS[i][0] / bound_width
+            scaling = (NUM_BUCKETS[i] - 1) / bound_width
+            bucket_index = int(round(scaling * state[i] - offset))
         bucket_indice.append(bucket_index)
     return tuple(bucket_indice)
 
@@ -132,6 +132,7 @@ if __name__ == "__main__":
     '''
     # Number of discrete states (bucket) per state dimension
     MAZE_SIZE = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
+    print("SIZE : " + str(MAZE_SIZE))
     NUM_BUCKETS = MAZE_SIZE  # one bucket per grid
 
     # Number of discrete actions
@@ -149,7 +150,7 @@ if __name__ == "__main__":
     '''
     Defining the simulation related constants
     '''
-    NUM_EPISODES = 800
+
     MAX_T = 100
     STREAK_TO_END = 100
     SOLVED_T = np.prod(MAZE_SIZE, dtype=int)
@@ -173,4 +174,21 @@ if __name__ == "__main__":
     #if ENABLE_RECORDING:
     #    env.monitor.close()
 
-    simulate()
+
+    NUM_EPISODES = 500
+    x_axis1, y_axis1 = simulate()
+    x_axis2, y_axis2 = simulate()
+
+    plt.plot(x_axis1, y_axis1)
+    plt.plot(x_axis2, y_axis2)
+    plt.ylabel('Number of Wins')
+    plt.xlabel('Number of Episodes')
+    plt.show()
+
+    #s = np.zeros(20, dtype=int)
+    #s[0] = 1
+    #s[19] = 24
+    #s[18] = 24
+    #s = state_to_bucket(s)
+    #action = int(np.argmax(q_table[s]))
+    #print(str(action))
