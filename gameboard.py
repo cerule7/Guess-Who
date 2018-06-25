@@ -143,6 +143,7 @@ class gameBoard:
 		return binaryPositions, self.characterList, numFlipped
 
 	# Compares the total number of flips with the last recorded number
+	# May be obsolete 
 	def flippedLast(self):
 		currentTot = 0
 		for char in self.characterList:
@@ -152,6 +153,15 @@ class gameBoard:
 		self.totFlips += currentTot
 		
 		return currentTot
+	
+	def getActiveCharacters(self):
+		activeList = []
+		
+		for character in self.characterList:
+			if character.isActive == True:
+				activeList.append(character)
+				
+		return activeList
 
 	def askHairColor(self, i, otherBoard):
 		color = ''

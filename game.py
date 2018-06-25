@@ -265,6 +265,5 @@ class Game:
 					print("PLAYER 2 WINS")
 					self.status = 'LOST'
 					self.gameOver = True
-
 			self.numTurns += 1
 			print("TOTAL TURNS: " + str(self.numTurns))
