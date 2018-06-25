@@ -174,6 +174,7 @@ if __name__ == "__main__":
         plt.plot(x_axis, y_axis, label=l)
 
     plt.legend()
+
     plt.ylabel('Number of Wins')
     plt.xlabel('Number of Episodes')
     plt.show()
