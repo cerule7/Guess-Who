@@ -10,13 +10,14 @@ def simulate():
     # Instantiating the learning related parameters
     learning_rate = get_learning_rate(0)
     explore_rate = get_explore_rate(0)
+    epcount = 0
     discount_factor = 0.99
     x_axis = []
     y_axis = []
     num_streaks = 0
 
     for episode in range(NUM_EPISODES):
-
+        epcount += 1
         # Reset the environment
         obv = env.reset()
 
@@ -81,8 +82,8 @@ def simulate():
         # Update parameters
         explore_rate = get_explore_rate(episode)
         learning_rate = get_learning_rate(episode)
-        y_axis.append(num_streaks)
-        x_axis.append(episode)
+        y_axis.append(num_streaks / epcount)
+        x_axis.append(episode) 
     return x_axis, y_axis
 
 
@@ -144,7 +145,6 @@ if __name__ == "__main__":
     Learning related constants
     '''
     MIN_EXPLORE_RATE = 0.001
-    MIN_LEARNING_RATE = 0.2
     DECAY_FACTOR = np.prod(MAZE_SIZE, dtype=float) / 10.0
 
     '''
@@ -166,15 +166,17 @@ if __name__ == "__main__":
     '''
     Begin simulation
     '''
-
-    NUM_EPISODES = 1000
-    for i in range(0, 10): 
+    MIN_LEARNING_RATE = 0.01
+    NUM_EPISODES = 10000
+    
+    for i in range(0, 10):
+        MIN_LEARNING_RATE += 0.1
         x_axis, y_axis = simulate()
-        l = 'try #: '+ str(i)
+        l = 'learning rate: ' + str(MIN_LEARNING_RATE)
         plt.plot(x_axis, y_axis, label=l)
 
     plt.legend()
-    plt.ylabel('Number of Wins')
+    plt.ylabel('Win / Loss Ratio')
     plt.xlabel('Number of Episodes')
     plt.show()
 
