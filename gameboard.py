@@ -1,14 +1,14 @@
-from character import Character 
+from gym.envs.guesswho.character import Character
 
 class gameBoard:
 
 	characterList = []
-	selectedCharacter = 0 
+	selectedCharacter = 0
 	totFlips = 0
 
 	def __init__(self, selectedCharacter):
 		characterList = []
-		myFile = open("characterList.txt", "r")
+		myFile = open("C:/Users/c_r672/AppData/Local/Continuum/anaconda3/Lib/site-packages/gym/envs/guesswho/characterList.txt", "r")
 		for j in range(24):
 			
 			line = myFile.readline()
@@ -97,7 +97,7 @@ class gameBoard:
 	def askQ(self, attribute, otherBoard):
 		#if the other player's selected character DOES have the attribute, flip over ones that don't
 		guess = bool(self.characterList[otherBoard.getSelected()].hasAttribute(attribute))
-		numFlipped = 0 
+		numFlipped = 0
 		if guess:
 			for i in range(0, 24):
 				hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
@@ -112,6 +112,7 @@ class gameBoard:
 					print("FLIPPED " + self.characterList[i].getName())
 					self.characterList[i].toggleActive()
 					numFlipped += 1
+		print("ASKQ NUMFLIPPED " + str(numFlipped))
 		return self.characterList, numFlipped
 	
 	def binarySearch(self, binaryPositions, otherBoard):
@@ -142,7 +143,6 @@ class gameBoard:
 		return binaryPositions, self.characterList, numFlipped
 
 	# Compares the total number of flips with the last recorded number
-	# May be obsolete 
 	def flippedLast(self):
 		currentTot = 0
 		for char in self.characterList:
@@ -152,28 +152,19 @@ class gameBoard:
 		self.totFlips += currentTot
 		
 		return currentTot
-	
-	def getActiveCharacters(self):
-		activeList = []
-		
-		for character in self.characterList:
-			if character.isActive == True:
-				activeList.append(character)
-				
-		return activeList
 
 	def askHairColor(self, i, otherBoard):
 		color = ''
 		if i == 38:
 			color = 'black'
-		if i == 39:
+		elif i == 39:
 			color = 'red'
-		if i == 40:
+		elif i == 40:
 			color = 'white'
-		if i == 41:
-			color == 'blonde'
+		elif i == 41:
+			color = 'blonde'
 		else:
-			color == 'brown'
+			color = 'brown'
 		return self.askQ(color, otherBoard)
 
 	def updateList(self, list):

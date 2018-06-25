@@ -16,7 +16,6 @@ class Character:
 	hasButtchin = False
 	hairColor = '' 
 	isActive = True
-	
 
 	def __init__(self, name, isFemale, hasHat, hasGlasses, hasBeard, hasMustache, hasRosyCheeks, isSmiling, isBald, hasBlueEyes, hasBigNose, hasBigMouth, hasEarrings, hasButtchin, hairColor):
 		self.name = str(name)
@@ -74,7 +73,6 @@ class Character:
 			return eval(self.hasButtchin)
 		return (self.hairColor == attribute)
 
-# Debug print of all characters attributes, not updated with the 5 new attributes
 	def printCharacter(self):
 		print("This character's name is: ", self.name)
 		print("Their attributes are as follows:")
