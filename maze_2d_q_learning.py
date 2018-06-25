@@ -175,7 +175,7 @@ if __name__ == "__main__":
     #    env.monitor.close()
 
 
-    NUM_EPISODES = 500
+    NUM_EPISODES = 10000
     x_axis1, y_axis1 = simulate()
     x_axis2, y_axis2 = simulate()
 
