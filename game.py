@@ -44,6 +44,8 @@ class Game:
 		self.p2.selectedCharacter = j
 		g1 = gameBoard(i)
 		g2 = gameBoard(j)
+		self.p1.setBinaryPositions([0, 23])
+		self.p2.setBinaryPositions([0, 23])
 		self.p1.setBoard(g1)
 		self.p2.setBoard(g2)
 		self.numTurns = 0
