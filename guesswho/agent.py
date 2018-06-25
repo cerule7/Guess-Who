@@ -26,14 +26,14 @@ class Agent(Player):
 		action = self.chooseRandom()
 		
 		if action == "trait":
-			choice = random.randint(24, 37)
+			choice = random.randint(24, 42)
 			
 			newChoice = False
 			if choice not in self.listGuesses:
 				newChoice = True
 				
 			while not newChoice:
-				choice = random.randint(24, 37)
+				choice = random.randint(24, 42)
 				
 				if choice not in self.listGuesses:
 					newChoice = True
