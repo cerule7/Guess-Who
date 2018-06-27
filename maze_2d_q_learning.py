@@ -144,8 +144,7 @@ if __name__ == "__main__":
     '''
     Learning related constants
     '''
-    MIN_EXPLORE_RATE = 0.001
-    DECAY_FACTOR = np.prod(MAZE_SIZE, dtype=float) / 10.0
+    #DECAY_FACTOR = np.prod(MAZE_SIZE, dtype=float) / 10.0
 
     '''
     Defining the simulation related constants
@@ -156,7 +155,6 @@ if __name__ == "__main__":
     SOLVED_T = np.prod(MAZE_SIZE, dtype=int)
     DEBUG_MODE = 2
     RENDER_MAZE = True
-    ENABLE_RECORDING = True
 
     '''
     Creating a Q-Table for each state-action pair
@@ -166,13 +164,14 @@ if __name__ == "__main__":
     '''
     Begin simulation
     '''
-    MIN_LEARNING_RATE = 0.01
+    MIN_LEARNING_RATE = 0.8
     NUM_EPISODES = 10000
+    MIN_EXPLORE_RATE = 0.8
+    DECAY_FACTOR = 0.61
     
     for i in range(0, 10):
-        MIN_LEARNING_RATE += 0.1
         x_axis, y_axis = simulate()
-        l = 'learning rate: ' + str(MIN_LEARNING_RATE)
+        l = 'try number: ' + str(i)
         plt.plot(x_axis, y_axis, label=l)
 
     plt.legend()
