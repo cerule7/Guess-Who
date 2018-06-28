@@ -9,7 +9,7 @@ class GuesswhoEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        self.action_space = spaces.Discrete(19) #the 42 actions 
+        self.action_space = spaces.Discrete(19) #the 20 questions 
         low = np.zeros(20, dtype=int)
         for i in range(0, 18): 
             low[i] = -1
@@ -31,6 +31,9 @@ class GuesswhoEnv(gym.Env):
         print("OVER? " + str(episode_over)) #end episode if game over 
         return ob, reward, episode_over, {} #the {} is a dictionary that can contain debug info 
 
+    def getState(self):
+        return self.game.getState()
+
     def _seed(self, seed):
         np.random.seed
 
@@ -50,7 +53,16 @@ class GuesswhoEnv(gym.Env):
         #Reward given for flipping tiles or winning
         if self.status == 'WON':
             return 50
-        elif self.status == 'LOST' or self.status == 'START':
+        elif self.status == 'LOST':
+            return -50
+        elif self.status == 'START':
             return 0
         else:
-            return int(self.status)
+            i = int(self.status)
+            if(i <= 0):
+                return -10
+            else:
+                return i
+
+    def close(self):
+        quit()
