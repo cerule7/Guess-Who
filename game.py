@@ -69,6 +69,7 @@ class Game:
 		return self.selTraits
 
 	def getAction(self, i, pturn):
+		i = int(i)
 		if pturn:
 			player = self.p1
 			otherplayer = self.p2
@@ -77,7 +78,7 @@ class Game:
 			otherplayer = self.p1
 		#each number corresponds to an action 
 		#auto quit (debug only)
-		if i == -1:
+		if i == -100:
 			quit()
 		#guess specific character
 		# elif i >= 0 and i < 24:
@@ -192,7 +193,6 @@ class Game:
 		elif i == 13:
 			binaryPositions, characterlist, numFlipped = player.getBoard().binarySearch(player.getBinaryPositions(), otherplayer.getBoard())
 			player.getBoard().updateList(characterlist)
-			print("BINARY POS: " + binaryPositions)
 			player.setBinaryPositions(binaryPositions)
 		#hair colors
 		else:
@@ -233,12 +233,14 @@ class Game:
 
 	def oneTurn(self, action): 
 		#the bot/player goes 
-		print(self.p1.getName() + " is guessing" + str(action))
+		print(str(action))
+		action = abs(int(action))
+		print(self.p1.getName() + " is guessing " + str(action))
 		#if(action >= 0 and action < 24):
 		#	self.getAction(action, pturn=True)
 		#	self.gameOver = True
 		#for debug
-		if(action == -1):
+		if(action == -100):
 			quit()
 		else:
 			self.getAction(action, pturn=True)
