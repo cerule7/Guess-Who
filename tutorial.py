@@ -5,6 +5,7 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 import pickle
+import _thread as thread
 
 # Hyper Parameters
 BATCH_SIZE = 32
@@ -142,11 +143,12 @@ dqn = DQN()
 dqn = loadDQN()
 
 for j in range(0, 1):#0):
-    x_axis, y_axis = simulate(10000)
+    x_axis, y_axis = simulate(100000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis,label=l)
 
-saveDQN(dqn)
+thread.start_new_thread(saveDQN, (dqn,))
+#saveDQN(dqn)
 
 plt.legend()
 plt.ylabel('winloss ratio %')
