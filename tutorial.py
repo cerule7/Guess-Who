@@ -139,7 +139,6 @@ def simulate(i):
 
 keyIn = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
 if keyIn == 1:
-    #dqn = DQN()
     dqn = loadDQN()
 else:
     dqn = DQN()
