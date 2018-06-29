@@ -137,13 +137,15 @@ def simulate(i):
             x_axis.append(i_episode) 
     return x_axis, y_axis
 
-
-dqn = DQN()
-
-dqn = loadDQN()
+keyIn = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
+if keyIn == 1:
+    #dqn = DQN()
+    dqn = loadDQN()
+else:
+    dqn = DQN()
 
 for j in range(0, 1):#0):
-    x_axis, y_axis = simulate(100000)
+    x_axis, y_axis = simulate(10000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis,label=l)
 
