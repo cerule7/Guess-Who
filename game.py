@@ -233,6 +233,7 @@ class Game:
 
 	def oneTurn(self, action): 
 		#the bot/player goes 
+		print(str(action))
 		action = abs(int(action))
 		print(self.p1.getName() + " is guessing " + str(action))
 		#if(action >= 0 and action < 24):
@@ -252,7 +253,7 @@ class Game:
 				self.gameOver = True
 		if(not self.gameOver):
 			#the agent goes 
-			action = random.randint(0, 18)
+			action = 13
 			print(self.p2.getName() + " is guessing" + str(action))
 			#if(action >= 0 and action < 24):
 			#	self.getAction(action, pturn=False)
