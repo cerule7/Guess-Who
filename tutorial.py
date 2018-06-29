@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 import gym
 import matplotlib.pyplot as plt
+import pickle
 
 # Hyper Parameters
 BATCH_SIZE = 32
@@ -17,6 +18,7 @@ env = env.unwrapped
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(), int) else env.action_space.sample().shape     # to confirm the shape
+FILENAME = 'DQN'
 
 
 class Net(nn.Module):
@@ -86,7 +88,23 @@ class DQN(object):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
+        
+def saveDQN(deeQueEnn):
+        
+        outfile = open(FILENAME, 'wb')
+        
+        pickle.dump(deeQueEnn, outfile)
+        outfile.close()
+        
+def loadDQN():
+        
+        infile = open(FILENAME, 'rb')
+        
+        deeQueEnn = pickle.load(infile)
+        infile.close()
+        
+        return deeQueEnn
+        
 def simulate(i):
     x_axis = []
     wins = 0
@@ -121,10 +139,14 @@ def simulate(i):
 
 dqn = DQN()
 
-for j in range(0, 10):
-    x_axis, y_axis = simulate(100000)
+dqn = loadDQN()
+
+for j in range(0, 1):#0):
+    x_axis, y_axis = simulate(10000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis,label=l)
+
+saveDQN(dqn)
 
 plt.legend()
 plt.ylabel('winloss ratio %')
