@@ -133,7 +133,7 @@ def simulate(i):
 
             s = s_
         if i_episode != 0:
-            y_axis.append((wins / i_episode) * 100)
+            y_axis.append((wins / i_episode))
             x_axis.append(i_episode) 
     return x_axis, y_axis
 
@@ -151,6 +151,6 @@ thread.start_new_thread(saveDQN, (dqn,))
 #saveDQN(dqn)
 
 plt.legend()
-plt.ylabel('winloss ratio %')
+plt.ylabel('win-loss ratio')
 plt.xlabel('Number of Episodes')
 plt.show()
