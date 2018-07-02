@@ -8,7 +8,7 @@ class gameBoard:
 
 	def __init__(self, selectedCharacter):
 		characterList = []
-		myFile = open("characterList.txt", "r")
+		myFile = open("C:/Users/c_r672/AppData/Local/Continuum/anaconda3/Lib/site-packages/gym/envs/guesswho/characterList.txt", "r")
 		for j in range(24):
 			
 			line = myFile.readline()
