@@ -14,7 +14,7 @@ WINDOWS 64-BIT INSTRUCTIONS
 			register(
 	    		id='Guesswho-v0',
 	    		entry_point='gym.envs.guesswho:GuesswhoEnv',
-	    	)
-	    -- Also create a folder called 'guesswho' and copy the contents of the GitHub repo to it
+	    		)
+		-- Also create a folder called 'guesswho' and copy the contents of the GitHub repo to it
 
 	After doing all these steps, you should be able to run the tutorial.py in the original GitHub repo folder. Doing this will run the training/data collection
