@@ -4,6 +4,8 @@ import torch.nn.functional as F
 import numpy as np
 import gym
 import matplotlib.pyplot as plt
+import pickle
+import _thread as thread
 
 # Hyper Parameters
 BATCH_SIZE = 32
@@ -17,6 +19,7 @@ env = env.unwrapped
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(), int) else env.action_space.sample().shape     # to confirm the shape
+FILENAME = 'DQN'
 
 
 class Net(nn.Module):
@@ -86,7 +89,23 @@ class DQN(object):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
+        
+def saveDQN(deeQueEnn):
+        
+        outfile = open(FILENAME, 'wb')
+        
+        pickle.dump(deeQueEnn, outfile)
+        outfile.close()
+        
+def loadDQN():
+        
+        infile = open(FILENAME, 'rb')
+        
+        deeQueEnn = pickle.load(infile)
+        infile.close()
+        
+        return deeQueEnn
+        
 def simulate(i):
     x_axis = []
     wins = 0
@@ -114,19 +133,25 @@ def simulate(i):
 
             s = s_
         if i_episode != 0:
-            y_axis.append((wins / i_episode) * 100)
+            y_axis.append((wins / i_episode))
             x_axis.append(i_episode) 
     return x_axis, y_axis
 
+keyIn = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
+if keyIn == 1:
+    dqn = loadDQN()
+else:
+    dqn = DQN()
 
-dqn = DQN()
-
-for j in range(0, 10):
-    x_axis, y_axis = simulate(100000)
+for j in range(0, 1):#0):
+    x_axis, y_axis = simulate(10000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis,label=l)
 
+thread.start_new_thread(saveDQN, (dqn,))
+#saveDQN(dqn)
+
 plt.legend()
-plt.ylabel('winloss ratio %')
+plt.ylabel('win-loss ratio')
 plt.xlabel('Number of Episodes')
 plt.show()
