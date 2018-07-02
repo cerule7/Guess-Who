@@ -11,6 +11,7 @@ class Game:
 	numTurns = 0
 	status = ''
 	numFlipped = 0
+	agentType = ''
 
 	def __init__(self):
 		sel = np.random.randint(0, 24)
@@ -29,6 +30,10 @@ class Game:
 		self.gameOver = False
 		#isFemale to hasButtchin + the five hair colors + m + n 
 		self.selTraits = np.zeros(21)
+
+	def setAgentType(self, agentType):
+		self.agentType = agentType 
+		print("AGENT TYPE IS " + self.agentType)
 
 	def updateSelTraits(self, i, correct):
 		if correct is False:
@@ -67,14 +72,14 @@ class Game:
 		self.selTraits[18] = self.p1.getBoard().numberActive()
 		self.selTraits[19] = self.p2.getBoard().numberActive()
 		n = int(self.p1.getBoard().numberActive())
-		m = int(self.p2.getBoard().numberActive())
+		m = int(self.p2.getBoard().numberActive()) #swap these when binary search is p1
 
 		#in the weeds (player one)
-		if (n >= (2**(self.numTurns + 1)) + 1) and ((2**self.numTurns) + 1 <= m) and (m <= (2**(self.numTurns + 1))):
-			self.selTraits[20] = 1
-		#upper hand (player one)
-		elif ((2**self.numTurns) + 1 <= n) and (n <= (2**(self.numTurns + 1))) and (m >= (2**(self.numTurns)) + 1):
+		if m > n:
 			self.selTraits[20] = -1
+		#upper hand (player one)
+		elif n > n:
+			self.selTraits[20] = 1
 		else:
 			self.selTraits[20] = 0
 		return self.selTraits
@@ -225,7 +230,99 @@ class Game:
 		else:
 			self.p2 = player
 
-	def oneTurn(self, action): 
+	def agentPlay(self, action):
+		action = abs(int(action))
+		print("THE QNN is guessing " + str(action))
+		#for debug
+		self.getAction(action, pturn=True)
+		print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
+		print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
+		if(self.p1.getBoard().numberActive() <= 1):
+			self.p1.setScore(self.p1.getScore() + 1)
+			print("PLAYER 1 WINS")
+			self.status = 'WON'
+			self.gameOver = True
+		#player 2 goes 
+		if self.gameOver != True:
+			if(self.agentType == 'random'):
+				action = random.randint(0, 18)
+			elif(self.agentType == 'demo'):
+				action = int(input('enter a # (0-18): '))
+			else:
+				action = 13
+			print(self.p2.getName() + " is guessing" + str(action))
+			self.getAction(action, pturn=False)
+			print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
+			print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
+			if(self.p2.getBoard().numberActive() <= 1):
+				self.p2.setScore(self.p2.getScore() + 1)
+				print("PLAYER 2 WINS")
+				self.status = 'LOST'
+				self.gameOver = True
+			self.numTurns += 1
+			print("TOTAL TURNS: " + str(self.numTurns))
+
+	def randomasP1(self, action):
+		a = random.randint(0, 18)
+		print("RANDOM BOT is guessing " + str(a))
+		#for debug
+		self.getAction(a, pturn=True)
+		print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
+		print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
+		if(self.p1.getBoard().numberActive() <= 1):
+			self.p1.setScore(self.p1.getScore() + 1)
+			print("PLAYER 1 WINS")
+			self.status = 'LOST'
+			self.gameOver = True
+		#player 2 goes 
+		if self.gameOver != True:
+			action = abs(int(action))
+			print("THE QNN is guessing" + str(action))
+			self.getAction(action, pturn=False)
+			print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
+			print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
+			if(self.p2.getBoard().numberActive() <= 1):
+				self.p2.setScore(self.p2.getScore() + 1)
+				print("PLAYER 2 WINS")
+				self.status = 'WON'
+				self.gameOver = True
+		self.numTurns += 1
+		print("TOTAL TURNS: " + str(self.numTurns))
+
+
+	def binaryasP1(self, action): 
+		print("BINARY SEARCH BOT is guessing 13")
+		#for debug
+		if(action == -100):
+			quit()
+		else:
+			self.getAction(13, pturn=True)
+			print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
+			print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
+			if(self.p1.getBoard().numberActive() <= 1):
+				self.p1.setScore(self.p1.getScore() + 1)
+				print("PLAYER 1 WINS")
+				self.status = 'LOST'
+				self.gameOver = True
+		if(self.gameOver != True):
+			#player 1 goes 
+			action = abs(int(action))
+			print("THE QNN is guessing" + str(action))
+			if(action == -100):
+				quit()
+			else:
+				self.getAction(action, pturn=False)
+				print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
+				print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
+				if(self.p2.getBoard().numberActive() <= 1):
+					self.p2.setScore(self.p2.getScore() + 1)
+					print("PLAYER 2 WINS")
+					self.status = 'WON'
+					self.gameOver = True
+		self.numTurns += 1
+		print("TOTAL TURNS: " + str(self.numTurns))
+
+	def selfPlay(self, action): 
 		#the bot/player goes 
 		if(self.numTurns % 2 == 0):
 			action = abs(int(action))
@@ -259,3 +356,15 @@ class Game:
 					self.gameOver = True
 		self.numTurns += 1
 		print("TOTAL TURNS: " + str(self.numTurns))
+
+
+
+	def oneTurn(self, action):
+		if(self.agentType == 'none'):
+			self.selfPlay(action)
+		elif(self.agentType == 'binaryp1'):
+			self.binaryasP1(action)
+		elif(self.agentType == 'randomp1'):
+			self.randomasP1(action)
+		else:
+			self.agentPlay(action)
