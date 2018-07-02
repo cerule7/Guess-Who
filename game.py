@@ -66,12 +66,17 @@ class Game:
 	def getState(self):
 		self.selTraits[18] = self.p1.getBoard().numberActive()
 		self.selTraits[19] = self.p2.getBoard().numberActive()
-		if self.p1.getBoard().numberActive() > self.p2.getBoard().numberActive():
+		n = int(self.p1.getBoard().numberActive())
+		m = int(self.p2.getBoard().numberActive())
+
+		#in the weeds (player one)
+		if (n >= (2**(self.numTurns + 1)) + 1) and ((2**self.numTurns) + 1 <= m) and (m <= (2**(self.numTurns + 1))):
 			self.selTraits[20] = 1
-		elif self.p1.getBoard().numberActive() == self.p2.getBoard().numberActive():
-			self.selTraits[20] = 0
-		else:
+		#upper hand (player one)
+		elif ((2**self.numTurns) + 1 <= n) and (n <= (2**(self.numTurns + 1))) and (m >= (2**(self.numTurns)) + 1):
 			self.selTraits[20] = -1
+		else:
+			self.selTraits[20] = 0
 		return self.selTraits
 
 	def getAction(self, i, pturn):
@@ -225,9 +230,6 @@ class Game:
 		if(self.numTurns % 2 == 0):
 			action = abs(int(action))
 			print(self.p1.getName() + " is guessing " + str(action))
-			#if(action >= 0 and action < 24):
-			#	self.getAction(action, pturn=True)
-			#	self.gameOver = True
 			#for debug
 			if(action == -100):
 				quit()
@@ -244,7 +246,7 @@ class Game:
 			#player 2 goes 
 			action = abs(int(action))
 			print(self.p2.getName() + " is guessing" + str(action))
-			if(action == -1):
+			if(action == -100):
 				quit()
 			else:
 				self.getAction(action, pturn=False)
