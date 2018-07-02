@@ -28,7 +28,7 @@ class Game:
 		self.numTurns = 0
 		self.gameOver = False
 		#isFemale to hasButtchin + the five hair colors + m + n 
-		self.selTraits = np.zeros(20)
+		self.selTraits = np.zeros(21)
 
 	def updateSelTraits(self, i, correct):
 		if correct is False:
@@ -52,7 +52,7 @@ class Game:
 		self.status = 'START'
 		self.numFlipped = 0
 		self.gameOver = False
-		self.selTraits = np.zeros(20)
+		self.selTraits = np.zeros(21)
 		print("RESET BOARD")
 
 
@@ -66,6 +66,12 @@ class Game:
 	def getState(self):
 		self.selTraits[18] = self.p1.getBoard().numberActive()
 		self.selTraits[19] = self.p2.getBoard().numberActive()
+		if self.p1.getBoard().numberActive() > self.p2.getBoard().numberActive():
+			self.selTraits[20] = 1
+		elif self.p1.getBoard().numberActive() == self.p2.getBoard().numberActive():
+			self.selTraits[20] = 0
+		else:
+			self.selTraits[20] = -1
 		return self.selTraits
 
 	def getAction(self, i, pturn):
@@ -80,23 +86,6 @@ class Game:
 		#auto quit (debug only)
 		if i == -100:
 			quit()
-		#guess specific character
-		# elif i >= 0 and i < 24:
-		# 	if(i == otherplayer.getBoard().getSelected()):
-		# 		print("CORRECT GUESS")
-		# 		player.setScore(player.getScore() + 1)
-		# 		if pturn:
-		# 			self.status = 'WON'
-		# 		else:
-		# 			self.status = 'LOST'
-		# 	else:
-		# 		print("INCORRECT GUESS")
-		# 		otherplayer.setScore(otherplayer.getScore() + 1)
-		# 		if pturn:
-		# 			self.status = 'LOST'
-		# 		else:
-		# 			self.status = 'WON'
-		# 	return 
 		#y/n questions
 		elif i == 0:
 			characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
@@ -233,32 +222,28 @@ class Game:
 
 	def oneTurn(self, action): 
 		#the bot/player goes 
-		print(str(action))
-		action = abs(int(action))
-		print(self.p1.getName() + " is guessing " + str(action))
-		#if(action >= 0 and action < 24):
-		#	self.getAction(action, pturn=True)
-		#	self.gameOver = True
-		#for debug
-		if(action == -100):
-			quit()
-		else:
-			self.getAction(action, pturn=True)
-			print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
-			print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
-			if(self.p1.getBoard().numberActive() <= 1):
-				self.p1.setScore(self.p1.getScore() + 1)
-				print("PLAYER 1 WINS")
-				self.status = 'WON'
-				self.gameOver = True
-		if(not self.gameOver):
-			#the agent goes 
-			action = 13
-			print(self.p2.getName() + " is guessing" + str(action))
+		if(self.numTurns % 2 == 0):
+			action = abs(int(action))
+			print(self.p1.getName() + " is guessing " + str(action))
 			#if(action >= 0 and action < 24):
-			#	self.getAction(action, pturn=False)
+			#	self.getAction(action, pturn=True)
 			#	self.gameOver = True
 			#for debug
+			if(action == -100):
+				quit()
+			else:
+				self.getAction(action, pturn=True)
+				print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
+				print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
+				if(self.p1.getBoard().numberActive() <= 1):
+					self.p1.setScore(self.p1.getScore() + 1)
+					print("PLAYER 1 WINS")
+					self.status = 'WON'
+					self.gameOver = True
+		else:
+			#player 2 goes 
+			action = abs(int(action))
+			print(self.p2.getName() + " is guessing" + str(action))
 			if(action == -1):
 				quit()
 			else:
@@ -270,5 +255,5 @@ class Game:
 					print("PLAYER 2 WINS")
 					self.status = 'LOST'
 					self.gameOver = True
-			self.numTurns += 1
-			print("TOTAL TURNS: " + str(self.numTurns))
+		self.numTurns += 1
+		print("TOTAL TURNS: " + str(self.numTurns))

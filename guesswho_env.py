@@ -10,14 +10,14 @@ class GuesswhoEnv(gym.Env):
 
     def __init__(self):
         self.action_space = spaces.Discrete(19) #the 20 questions 
-        low = np.zeros(20, dtype=int)
+        low = np.zeros(21, dtype=int)
         for i in range(0, 18): 
             low[i] = -1
-        high = np.zeros(20, dtype=int)
+        high = np.zeros(21, dtype=int)
         for i in range(0, 18): 
             high[i] = 1
-        high[18] = 24
         high[19] = 24
+        high[20] = 24
         self.observation_space = spaces.Box(low, high)
         self.status = 'START' #inital status 
         self.game = Game() #game object 
