@@ -16,6 +16,7 @@ TARGET_REPLACE_ITER = 100   # target update frequency
 MEMORY_CAPACITY = 2000
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
+env.game.setAgentType('none')
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(), int) else env.action_space.sample().shape     # to confirm the shape
@@ -105,7 +106,11 @@ def loadDQN():
         infile.close()
         
         return deeQueEnn
-        
+
+status = ['up', 'down']
+risk = ['safe', 'risky']
+actions = np.array([[0, 0], [0, 0]])
+
 def simulate(i):
     x_axis = []
     wins = 0
@@ -115,6 +120,17 @@ def simulate(i):
         ep_r = 0
         while True:
             a = dqn.choose_action(s)
+
+            if(s[20] == 1):
+                if(a != 13):
+                    actions[1,0] += 1
+                else:
+                    actions[0,0] += 1
+            else:
+                if(a != 13):
+                    actions[1,1] += 1
+                else:
+                    actions[0,1] += 1
 
             # take action
             s_, r, done, info = env.step(a)
@@ -132,9 +148,11 @@ def simulate(i):
                 break
 
             s = s_
+
         if i_episode != 0:
-            y_axis.append((wins / i_episode))
-            x_axis.append(i_episode) 
+            y_axis.append((wins / i_episode) * 100)
+            x_axis.append(i_episode)
+
     return x_axis, y_axis
 
 keyIn = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
@@ -143,15 +161,30 @@ if keyIn == 1:
 else:
     dqn = DQN()
 
-for j in range(0, 1):#0):
-    x_axis, y_axis = simulate(10000)
+p, k = simulate(10000)
+
+for j in range(1, 11):
+    x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis,label=l)
 
+# fig, ax = plt.subplots()
+# im = ax.imshow(actions)
+# ax.set_xticks(np.arange(len(status)))
+# ax.set_yticks(np.arange(len(risk)))
+# ax.set_xticklabels(status)
+# ax.set_yticklabels(risk)
+# plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+# for i in range(len(risk)):
+#     for j in range(len(status)):
+#         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
+# ax.set_title("Distribution of Actions")
+# fig.tight_layout()
+# plt.show()
+
 thread.start_new_thread(saveDQN, (dqn,))
-#saveDQN(dqn)
 
 plt.legend()
-plt.ylabel('win-loss ratio')
+plt.ylabel('Win-loss ratio (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
