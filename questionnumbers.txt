@@ -1,0 +1,20 @@
+-100 quit
+0 is female?
+1 has hat?
+2 has glasses?
+3 has beard?
+4 has mustache?
+5 has rosy cheeks?
+6 is smiling?
+7 is bald?
+8 has blue eyes?
+9 has big nose?
+10 has big mouth?
+11 has earrings?
+12 has butt chin?
+13 binary search
+14 black hair?
+15 red hair?
+16 white hair?
+17 blond hair?
+18 brown hair?
