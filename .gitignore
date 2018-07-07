@@ -2,4 +2,3 @@
 *.project
 *.pyc
 *__pycache__/*
-gameboard.py
