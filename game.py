@@ -13,6 +13,28 @@ class Game:
     numFlipped = 0
     agentType = ''
 
+    questions = {
+        "0": "Is your character female?",
+        "1": "Does your character have a hat?",
+        "2": "Does your character have glasses?",
+        "3": "Does your character have a beard?",
+        "4": "Does your character have a mustache?",
+        "5": "Does your character have rosy cheeks?",
+        "6": "Is your character smiling?",
+        "7": "Is your character bald?",
+        "8": "Does your character have blue eyes?",
+        "9": "Does your character have a big nose?",
+        "10": "Does your character have a big mouth?",
+        "11": "Does your character have earrings?",
+        "12": "Does your character have a cleft chin?",
+        "13": "[binary search]",
+        "14": "Does your character have black hair?",
+        "15": "Does your character have red hair?",
+        "16": "Does your character have white hair?",
+        "17": "Does your character have blond hair?",
+        "18": "Does your character have brown hair?"
+    }
+
     def __init__(self):
         sel = np.random.randint(0, 24)
         g1 = gameBoard(sel)
@@ -240,7 +262,7 @@ class Game:
 
     def agentPlay(self, action):
         action = abs(int(action))
-        print("THE QNN is guessing " + str(action))
+        print("THE QNN asks: " +  self.questions.get(str(action)))
         #for debug
         self.getAction(action, pturn=True)
         print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
@@ -256,9 +278,11 @@ class Game:
                 action = random.randint(0, 18)
             elif(self.agentType == 'demo'):
                 action = int(input('enter a # (0-18): '))
+                while(action > 18 or action < 0):
+                    action = int(input('enter a # (0-18): '))  
             else:
                 action = 13
-            print(self.p2.getName() + " is guessing" + str(action))
+            print(self.p2.getName() + " asks: " + self.questions.get(str(action)))
             self.getAction(action, pturn=False)
             print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
             print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
@@ -272,7 +296,7 @@ class Game:
 
     def randomasP1(self, action):
         a = random.randint(0, 18)
-        print("RANDOM BOT is guessing " + str(a))
+        print("RANDOM BOT asks: " + self.questions.get(str(a)))
         #for debug
         self.getAction(a, pturn=True)
         print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
@@ -285,7 +309,7 @@ class Game:
         #player 2 goes 
         if self.gameOver != True:
             action = abs(int(action))
-            print("THE QNN is guessing" + str(action))
+            print("THE QNN asks: " +  self.questions.get(str(action)))
             self.getAction(action, pturn=False)
             print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
             print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
@@ -299,7 +323,7 @@ class Game:
 
 
     def binaryasP1(self, action): 
-        print("BINARY SEARCH BOT is guessing 13")
+        print("BINARY SEARCH BOT asks: " + self.questions.get(str(13)))
         #for debug
         if(action == -100):
             quit()
@@ -315,7 +339,7 @@ class Game:
         if(self.gameOver != True):
             #player 1 goes 
             action = abs(int(action))
-            print("THE QNN is guessing" + str(action))
+            print("THE QNN asks: " +  self.questions.get(str(action)))
             if(action == -100):
                 quit()
             else:
@@ -334,7 +358,7 @@ class Game:
         #the bot/player goes 
         if(self.numTurns % 2 == 0):
             action = abs(int(action))
-            print(self.p1.getName() + " is guessing " + str(action))
+            print(self.p1.getName() + " asks: " + self.questions.get(str(action)))
             #for debug
             if(action == -100):
                 quit()
@@ -350,7 +374,7 @@ class Game:
         else:
             #player 2 goes 
             action = abs(int(action))
-            print(self.p2.getName() + " is guessing" + str(action))
+            print(self.p2.getName() + " asks: " + self.questions.get(str(action)))
             if(action == -100):
                 quit()
             else:
@@ -364,7 +388,6 @@ class Game:
                     self.gameOver = True
         self.numTurns += 1
         print("TOTAL TURNS: " + str(self.numTurns))
-
 
 
     def oneTurn(self, action):
