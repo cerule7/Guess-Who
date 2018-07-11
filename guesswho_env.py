@@ -34,6 +34,9 @@ class GuesswhoEnv(gym.Env):
     def getState(self):
         return self.game.getState()
 
+    def getNumTurns(self):
+        return self.game.getNumTurns()
+
     def _seed(self, seed):
         np.random.seed
 
@@ -60,7 +63,7 @@ class GuesswhoEnv(gym.Env):
         else:
             i = int(self.status)
             if(i <= 0):
-                return -10
+                return -25
             else:
                 return i
 
