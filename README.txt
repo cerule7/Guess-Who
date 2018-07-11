@@ -10,7 +10,7 @@ WINDOWS 64-BIT INSTRUCTIONS
 	-- Download the GitHub repo at https://github.com/cerule7/Guess-Who
 
 	-- Find your Anaconda folder and navigate to the 'envs' folder e.g. ("D:\Anaconda\Lib\site-packages\gym\envs)
-		-- Edit __init__.py and add this code:
+		-- Edit __init__.py and add this code at the bottom:
 			register(
 	    		id='Guesswho-v0',
 	    		entry_point='gym.envs.guesswho:GuesswhoEnv',
