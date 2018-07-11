@@ -15,7 +15,7 @@ import _thread as thread
 lr = 3e-4
 num_steps = 3
 hidden_size = 256
-device   = torch.device("cpu")
+device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
 env.game.setAgentType('demo')
@@ -24,6 +24,7 @@ N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 
 FILENAME = 'AAC'
+
 
 class A3C(nn.Module):
     def __init__(self, std=0.0):
@@ -48,6 +49,7 @@ class A3C(nn.Module):
         dist = Categorical(probs)
         return dist, value
 
+
 def test_env():
     state = env.reset()
     done = False
@@ -60,6 +62,7 @@ def test_env():
         total_reward += reward
     return total_reward
 
+
 def compute_returns(next_value, rewards, masks, gamma=0.99):
     R = next_value
     returns = []
@@ -68,21 +71,46 @@ def compute_returns(next_value, rewards, masks, gamma=0.99):
         returns.insert(0, R)
     return returns
 
+
 def saveDQN(deeQueEnn):
+    menuKey = int(input("Save Neural Network?\n1) Yes\n2) No\nInput: "))
+    if menuKey == 1:
+        savedName = str(input("Filename to save as (enter -1 for default): "))
+        if savedName == "-1":
+            outfile = open(FILENAME, 'wb')
 
-        outfile = open(FILENAME, 'wb')
+            pickle.dump(deeQueEnn, outfile)
+            outfile.close()
+        else:
+            outfile = open(savedName, 'wb')
 
-        pickle.dump(deeQueEnn, outfile)
-        outfile.close()
+            pickle.dump(deeQueEnn, outfile)
+            outfile.close()
+
 
 def loadDQN():
+    menuKey = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
+    if menuKey == 1:
+        loadName = str(input("Filename to load (enter -1 for default): "))
+        if loadName == "-1":
+            infile = open(FILENAME, 'rb')
 
-        infile = open(FILENAME, 'rb')
+            deeQueEnn = pickle.load(infile)
+            infile.close()
+        else:
+            try:
+                infile = open(loadName, 'rb')
+            except IOError:
+                print("File not found, opening default file.\n")
+                infile = open(FILENAME, 'rb')
+            deeQueEnn = pickle.load(infile)
+            infile.close()
 
-        deeQueEnn = pickle.load(infile)
-        infile.close()
+    else:
+        deeQueEnn = A3C()
 
-        return deeQueEnn
+    return deeQueEnn
+
 
 def simulate(i):
     x_axis = []
@@ -94,9 +122,9 @@ def simulate(i):
         while True:
 
             log_probs = []
-            values    = []
-            rewards   = []
-            masks     = []
+            values = []
+            rewards = []
+            masks = []
             entropy = 0
 
             for _ in range(num_steps):
@@ -123,7 +151,7 @@ def simulate(i):
             if env.status == 'WON':
                 wins += 1
                 break
-            elif env.status == 'LOST' or env.getNumTurns() > 30: #time out
+            elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
                 break
             else:
                 next_state = torch.FloatTensor(next_state).to(device)
@@ -131,12 +159,12 @@ def simulate(i):
                 returns = compute_returns(next_value, rewards, masks)
 
                 log_probs = torch.cat(log_probs)
-                returns   = torch.cat(returns).detach()
-                values    = torch.cat(values)
+                returns = torch.cat(returns).detach()
+                values = torch.cat(values)
 
                 advantage = returns - values
 
-                actor_loss  = -(log_probs * advantage.detach()).mean()
+                actor_loss = -(log_probs * advantage.detach()).mean()
                 critic_loss = advantage.pow(2).mean()
 
                 loss = actor_loss + 0.5 * critic_loss - 0.001 * entropy
@@ -150,22 +178,18 @@ def simulate(i):
 
     return x_axis, y_axis
 
+
 model = A3C().to(device)
 optimizer = optim.Adam(model.parameters())
 
-keyIn = int(input("Load Neural Network?\n1) Yes\n2) No\nInput: "))
-if keyIn == 1:
-    a3c = loadDQN()
-else:
-    a3c = A3C()
+a3c = loadDQN()
 
 for j in range(1, 11):
     x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
-    plt.plot(x_axis, y_axis,label=l)
+    plt.plot(x_axis, y_axis, label=l)
 
-thread.start_new_thread(saveDQN, (a3c,))
-
+saveDQN(a3c)
 
 plt.legend()
 plt.ylabel('Win-loss ratio (%)')

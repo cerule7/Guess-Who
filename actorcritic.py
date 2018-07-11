@@ -102,8 +102,8 @@ def loadDQN():
             except IOError:
                 print("File not found, opening default file.\n")
                 infile = open(FILENAME, 'rb')
-
-        deeQueEnn = pickle.load(infile)
+            deeQueEnn = pickle.load(infile)
+            infile.close()
 
     else:
         deeQueEnn = A3C()
@@ -182,12 +182,12 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
-    x_axis, y_axis = simulate(5000)
+for j in range(1, 2):
+    x_axis, y_axis = simulate(50)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
-thread.start_new_thread(saveDQN, (a3c,))
+saveDQN(a3c)
 
 plt.legend()
 plt.ylabel('Win-loss ratio (%)')
