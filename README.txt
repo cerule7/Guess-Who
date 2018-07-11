@@ -6,15 +6,15 @@ WINDOWS 64-BIT INSTRUCTIONS
 		-- pip3 install matplotlib
 		-- pip3 install http://download.pytorch.org/whl/cpu/torch-0.4.0-cp36-cp36m-win_amd64.whl
 		-- pip3 install torchvision
-		-- pip install gym (if this doesn't work do pip3 or pip install gym[all] this will cause errors but install more than the barebones gym. The gym installation is finicky)
+		-- pip install gym (if this doesn't work do pip3 or pip install gym[all]. This will cause errors but install more than the barebones gym. The gym installation is finicky)
 	-- Download the GitHub repo at https://github.com/cerule7/Guess-Who
 
-	-- Find your Anaconda folder and navigate to the 'envs folder e.g. ("D:\Anaconda\Lib\site-packages\gym\envs)
+	-- Find your Anaconda folder and navigate to the 'envs' folder e.g. ("D:\Anaconda\Lib\site-packages\gym\envs)
 		-- Edit __init__.py and add this code:
 			register(
 	    		id='Guesswho-v0',
 	    		entry_point='gym.envs.guesswho:GuesswhoEnv',
 	    		)
-		-- Also create a folder called 'guesswho' and copy the contents of the GitHub repo to it
+		-- Create a folder called 'guesswho' and copy the contents of the GitHub repo into it
 
-	After doing all these steps, you should be able to run the tutorial.py in the original GitHub repo folder. Doing this will run the training/data collection
+	After doing all these steps, run tdlearning.py or qnn.py by opening the Anaconda command prompt, navigating to the GuessWho Github folder and then running the file (using 'python tdlearning.py'). Doing this will run the training/data collection.
