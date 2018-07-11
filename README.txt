@@ -1,11 +1,9 @@
 WINDOWS 64-BIT INSTRUCTIONS
 	-- Install Python 3.6 at https://www.python.org/ftp/python/3.6.6/python-3.6.6-amd64.exe
-	-- Install CMake at https://cmake.org/files/v3.12/cmake-3.12.0-rc2-win64-x64.msi
 	-- Install Anaconda 5.2 for Python 3.6 at https://repo.anaconda.com/archive/Anaconda3-5.2.0-Windows-x86_64.exe
 	-- Open Anaconda Prompt and enter the following commands:
 		-- pip3 install matplotlib
-		-- pip3 install http://download.pytorch.org/whl/cpu/torch-0.4.0-cp36-cp36m-win_amd64.whl
-		-- pip3 install torchvision
+		-- conda install pytorch-cpu -c pytorch 
 		-- pip install gym (if this doesn't work do pip3 or pip install gym[all]. This will cause errors but install more than the barebones gym. The gym installation is finicky)
 	-- Download the GitHub repo at https://github.com/cerule7/Guess-Who
 
@@ -17,4 +15,4 @@ WINDOWS 64-BIT INSTRUCTIONS
 	    		)
 		-- Create a folder called 'guesswho' and copy the contents of the GitHub repo into it
 
-	After doing all these steps, run tdlearning.py or qnn.py by opening the Anaconda command prompt, navigating to the GuessWho Github folder and then running the file (using 'python tdlearning.py'). Doing this will run the training/data collection.
+	After doing all these steps, run actorcritic.py, qnn.py, or asyncac.py (asynchronous actor-critic) by opening the Anaconda command prompt, navigating to the GuessWho Github folder and then running the file (using 'python tdlearning.py'). Doing this will run the training/data collection.
