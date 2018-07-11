@@ -2,3 +2,10 @@
 *.project
 *.pyc
 *__pycache__/*
+gameboard.py
+.idea/libraries/R_User_Library.xml
+.idea/Guess-Who.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
