@@ -196,7 +196,10 @@ for j in range(1, 11):
 
 saveDQN(a3c)
 
-plt.legend()
-plt.ylabel('Win-loss ratio (%)')
+plt.xlim(0, 5000)
+plt.ylim(0, 100)
+plt.tight_layout()
+
+plt.ylabel('Wins (%)')
 plt.xlabel('Number of Episodes')
 plt.show()

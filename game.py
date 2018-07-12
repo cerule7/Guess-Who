@@ -1,8 +1,10 @@
 import numpy as np
 import random
+import math
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
 from gym.envs.guesswho.agent import Agent
+from gym.envs.guesswho.optimalAgent import OptimalAgent
 
 class Game:
 
@@ -11,7 +13,8 @@ class Game:
     numTurns = 0
     status = ''
     numFlipped = 0
-    agentType = ''
+    agentType = '' #agent types: binary, binaryp1, random, randomp1, demo, 
+                    #none (self play), optimal (the paper agent) 
 
     questions = {
         "0": "Is your character female?",
@@ -39,12 +42,10 @@ class Game:
         sel = np.random.randint(0, 24)
         g1 = gameBoard(sel)
         self.p1 = Player("PLAYER 1", g1, sel)
-        #self.p1 = Agent("Charlie", g1, sel)
         print(self.p1.getName() + " selected " + self.p1.getBoard().getCharacter(self.p1.getBoard().getSelected()).getName())
         j = np.random.randint(0, 24)
         g2 = gameBoard(j)
-        #self.p2 = Player("PLAYER 2", g2, j)
-        self.p2 = Agent("Alex", g2, j)
+        self.p2 = OptimalAgent("OPTIMAL ALEX", g2, j)
         print(self.p2.getName() + " selected " + self.p2.getBoard().getCharacter(self.p2.getBoard().getSelected()).getName())
         self.status = 'START'
         self.numFlipped = 0
@@ -97,16 +98,19 @@ class Game:
         self.selTraits[18] = self.p1.getBoard().numberActive()
         self.selTraits[19] = self.p2.getBoard().numberActive()
         n = int(self.p1.getBoard().numberActive())
-        m = int(self.p2.getBoard().numberActive()) 
+        m = int(self.p2.getBoard().numberActive())
 
-        #in the weeds (player one)
-        if n > m:
-            self.selTraits[20] = -1
-        #upper hand (player one)
-        elif m > n:
-            self.selTraits[20] = 1
+        # 2**k = 2**(log2(m-1))
+        if (m - 1) > 0:
+            k = math.log((m - 1), 2)
+            #player 1 is "in the weeds"
+            if 2**(k + 1) < n and 2**k < m and m <= 2**(k + 1):
+                self.selTraits[20] = -1
+            else:
+                self.selTraits[20] = 1
         else:
             self.selTraits[20] = 0
+
         return self.selTraits
 
     def getAction(self, i, pturn):
@@ -276,6 +280,9 @@ class Game:
         if self.gameOver != True:
             if(self.agentType == 'random'):
                 action = random.randint(0, 18)
+            elif(self.agentType == 'optimal'):
+                action = int(self.p2.makeOptimalGuess(self.p2.getBoard().numberActive(), self.p1.getBoard().numberActive()))
+                print(action)
             elif(self.agentType == 'demo'):
                 action = int(input('enter a # (0-18): '))
                 while(action > 18 or action < 0):
