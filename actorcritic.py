@@ -18,7 +18,7 @@ hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('randomp1')
+env.game.setAgentType('random')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -115,6 +115,8 @@ def simulate(i):
     y_axis = []
     wins = 0
 
+    saveCSV = open("ACData.csv", 'w')
+
     for i_ep in range(1, i):
         state = env.reset()
         while True:
@@ -174,6 +176,11 @@ def simulate(i):
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
 
+            saveCSV.write(str(str(wins) + ","))
+            saveCSV.write(str(str(i_ep) + "\n"))
+
+    saveCSV.close()
+
     return x_axis, y_axis
 
 
@@ -182,8 +189,8 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 2):
-    x_axis, y_axis = simulate(50)
+for j in range(1, 11):
+    x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
