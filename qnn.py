@@ -16,7 +16,7 @@ TARGET_REPLACE_ITER = 100  # target update frequency
 MEMORY_CAPACITY = 2000
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('none')
+env.game.setAgentType('randomp1')
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(),
@@ -128,7 +128,7 @@ def loadDQN():
             infile.close()
 
     else:
-        deeQueEnn = A3C()
+        deeQueEnn = DQN()
 
     return deeQueEnn
 
@@ -209,6 +209,10 @@ for j in range(1, 11):
 saveDQN(dqn)
 
 plt.legend()
-plt.ylabel('Win-loss ratio (%)')
+plt.xlim(0, 5000)
+plt.ylim(0, 100)
+plt.tight_layout()
+
+plt.ylabel('Wins (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
