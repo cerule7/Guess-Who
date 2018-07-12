@@ -1,65 +1,77 @@
 from gym.envs.guesswho.player import Player
-
+import math
 
 class OptimalAgent(Player):
-    gameboard = ''
-    score = 0
-    name = 'GT_Agent: '
-    selectedCharacter = 0
-    binaryPositions = [0, 23]  # left, right
 
-    def __init__(self, name, gameboard, selectedCharacter):
-        self.gameboard = gameboard
-        self.selectedCharacter = selectedCharacter
-        self.name += name
-        self.binaryPositions = [0, 23]
+	gameboard = ''
+	score = 0 
+	name = 'GT_Agent: '
+	selectedCharacter = 0
+	binaryPositions = [0, 23] #left, right
 
-    def makeOptimalGuess(self, turnNum, agentNum, opponentNum):
-        # Risky case
-        if (agentNum > 2 ** (turnNum + 1) and (opponentNum > 2 ** (turnNum) and opponentNum < 2 ** (turnNum + 1))):
-            return self.getRiskiestGuess(self, self.compileTraitList(self))
-        # Safe Case
-        elif (opponentNum > 2 ** (turnNum) and (agentNum > 2 ** (turnNum) and agentNum < 2 ** (turnNum + 1))):
-            return 13
-        # Debug case, shouldn't hit this
-        else:
-            return -100
+	def __init__(self, name, gameboard, selectedCharacter):
+		self.gameboard = gameboard
+		self.selectedCharacter = selectedCharacter
+		self.name += name
+		self.binaryPositions = [0, 23] 
+	
 
-    def getRiskiestGuess(self, traitList):
-        lowestTrait = 0
+			
+	def getRiskiestGuess(self, traitList):
+		lowestTrait = 0
+		
+		for i in range(19):
+			if int(traitList[i]) != 0:
+				if int(traitList[lowestTrait]) == 0:
+					lowestTrait = i
+				else:
+					if int(traitList[i]) < int(traitList[lowestTrait]):
+						lowestTrait = i 
+	
+		return lowestTrait
+	
+	def compileTraitList(self):
+		listTraits = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] 
+		
+		for character in self.gameboard.characterList:
+			if character.isitActive():
+				listTraits[0] += int(bool(character.isFemale))
+				listTraits[1] += int(bool(character.hasHat))
+				listTraits[2] += int(bool(character.hasGlasses))
+				listTraits[3] += int(bool(character.hasBeard))
+				listTraits[4] += int(bool(character.hasMustache))
+				listTraits[5] += int(bool(character.hasRosyCheeks))
+				listTraits[6] += int(bool(character.isSmiling))
+				listTraits[7] += int(bool(character.isBald))
+				listTraits[8] += int(bool(character.hasBlueEyes))
+				listTraits[9] += int(bool(character.hasBigNose))
+				listTraits[10] += int(bool(character.hasBigMouth))
+				listTraits[11] += int(bool(character.hasEarrings))
+				listTraits[12] += int(bool(character.hasButtchin))
+				listTraits[14] += int(bool(character.hairColor == 'black'))
+				listTraits[15] += int(bool(character.hairColor == 'red'))
+				listTraits[16] += int(bool(character.hairColor == 'white'))
+				listTraits[17] += int(bool(character.hairColor == 'blonde'))
+				listTraits[18] += int(bool(character.hairColor == 'brown'))
 
-        for i in range(19):
+		listTraits[13] = 30
 
-            if int(traitList[i]) < int(traitList[lowestTrait]):
-                lowestTrait = i
+		return listTraits
 
-        return lowestTrait
+	def makeOptimalGuess(self, agentNum, opponentNum):
+		# 2**k = 2**(log2(n-1))
+		if agentNum - 1 > 0:
+			k = math.log((agentNum - 1), 2)
+			#"in the weeds"
+			if 2**(k + 1) < opponentNum and 2**k < agentNum and agentNum <= 2**(k+1):
+				return self.getRiskiestGuess(self.compileTraitList())
+			else:
+				return 13
+		else:
+			return 13
+		
 
-    def compileTraitList(self):
-        listTraits = [19]
-        listTraits[13] = 30
-
-        for character in self.gameboard.characterList:
-            listTraits[0] += int(character.isFemale)
-            listTraits[1] += int(character.hasHat)
-            listTraits[2] += int(character.hasGlasses)
-            listTraits[3] += int(character.hasBeard)
-            listTraits[4] += int(character.hasMustache)
-            listTraits[5] += int(character.hasRosyCheeks)
-            listTraits[6] += int(character.isSmiling)
-            listTraits[7] += int(character.isBald)
-            listTraits[8] += int(character.hasBlueEyes)
-            listTraits[9] += int(character.hasBigNose)
-            listTraits[10] += int(character.hasBigMouth)
-            listTraits[11] += int(character.hasEarrings)
-            listTraits[12] += int(character.hasButtchin)
-            listTraits[14] += int(character.hairColor == 'black')
-            listTraits[15] += int(character.hairColor == 'red')
-            listTraits[16] += int(character.hairColor == 'white')
-            listTraits[17] += int(character.hairColor == 'blonde')
-            listTraits[18] += int(character.hairColor == 'brown')
-
-# ===============================================================================
+#===============================================================================
 #	Unmodified methods
 #
 #	def getBinaryPositions(self):
@@ -85,4 +97,4 @@ class OptimalAgent(Player):
 # 
 # 	def setSelected(num):
 # 		selectedCharacter = num 
-# ===============================================================================
+#===============================================================================
