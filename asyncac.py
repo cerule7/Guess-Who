@@ -13,7 +13,7 @@ import _thread as thread
 
 # Hyper Parameters
 lr = 3e-4
-num_steps = 3
+num_steps = 2
 hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
