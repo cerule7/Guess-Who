@@ -13,7 +13,8 @@ class Game:
     numTurns = 0
     status = ''
     numFlipped = 0
-    agentType = ''
+    agentType = '' #agent types: binary, binaryp1, random, randomp1, demo, 
+                    #none (self play), optimal (the paper agent) 
 
     questions = {
         "0": "Is your character female?",
