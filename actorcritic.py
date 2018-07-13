@@ -189,7 +189,7 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
+for j in range(1, 2):
     x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)

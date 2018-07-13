@@ -9,7 +9,7 @@ class GuesswhoEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        self.action_space = spaces.Discrete(19) #the 20 questions 
+        self.action_space = spaces.Discrete(42) #the 43 questions
         low = np.zeros(21, dtype=int)
         for i in range(0, 18): 
             low[i] = -1

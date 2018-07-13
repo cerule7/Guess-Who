@@ -150,6 +150,27 @@ class Game:
         # auto quit (debug only)
         if i == -100:
             quit()
+
+        # guessing specific characters
+        elif i >= 19 and i <= 42:
+            tempI = i - 25
+
+            if tempI == otherplayer.getBoard().getSelected():
+                print("CORRECT CHARACTER GUESS")
+                # player.setScore(player.getScore() + 1) - maybe dont need this
+                if pturn:
+                    self.status = 'WON'
+                else:
+                    self.status = 'LOST'
+            else:
+                print("INCORRECT CHARACTER GUESS")
+                # otherplayer.setScroe(otherplayer.getScore() + 1) - maybe dont need this
+                if pturn:
+                    self.status = 'LOST'
+                else:
+                    self.status = 'WON'
+            return
+
         # y/n questions
         elif i == 0:
             characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())

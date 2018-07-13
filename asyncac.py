@@ -179,8 +179,8 @@ def simulate(i):
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
 
-            saveCSV.write(str(str(wins) + ","))
-            saveCSV.write(str(str(i_ep) + "\n"))
+            # saveCSV.write(str(str(wins) + ","))
+            # saveCSV.write(str(str(i_ep) + "\n"))
 
     saveCSV.close()
     return x_axis, y_axis
@@ -191,8 +191,8 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
-    x_axis, y_axis = simulate(5000)
+for j in range(1, 2):
+    x_axis, y_axis = simulate(1000000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
