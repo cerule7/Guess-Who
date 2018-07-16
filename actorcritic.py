@@ -115,6 +115,8 @@ def simulate(i):
     # y_axis = []
     wins = 0
 
+    saveCSV = open("ACData.csv", 'w')
+
     for i_ep in range(1, i):
         state = env.reset()
         while True:
@@ -183,7 +185,12 @@ def simulate(i):
             # y_axis.append((wins / i_ep) * 100)
             # x_axis.append(i_ep)
 
-    # return x_axis, y_axis
+            saveCSV.write(str(str(wins) + ","))
+            saveCSV.write(str(str(i_ep) + "\n"))
+
+    saveCSV.close()
+
+    return x_axis, y_axis
 
 
 model = A3C().to(device)
@@ -195,8 +202,6 @@ a3c = loadDQN()
 #     x_axis, y_axis = simulate(5000)
 #     l = "number = " + str(j)
 #     plt.plot(x_axis, y_axis, label=l)
-
-
 
 # plt.xlim(0, 5000)
 # plt.ylim(0, 100)
