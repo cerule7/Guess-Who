@@ -1,25 +1,19 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
 from torch.distributions import Categorical
 import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import math
-import random
-import _thread as thread
 
 # Hyper Parameters
 lr = 3e-4
 num_steps = 3
-hidden_size = 256
+hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
 env.game.setAgentType('random')
-
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -191,10 +185,28 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
+<<<<<<< HEAD
 for j in range(1, 2):
     x_axis, y_axis = simulate(1000000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
+=======
+env.game.setAgentType('none')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus self')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent 2')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent 3')
+env.game.setAgentType('none')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus self 2')
+>>>>>>> master
 
 saveDQN(a3c)
 
@@ -203,6 +215,6 @@ plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
-plt.ylabel('Wins (%)')
+plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()

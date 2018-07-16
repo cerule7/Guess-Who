@@ -5,7 +5,6 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import _thread as thread
 
 # Hyper Parameters
 BATCH_SIZE = 32
@@ -133,12 +132,6 @@ def loadDQN():
 
     return deeQueEnn
 
-
-status = ['up', 'down']
-risk = ['safe', 'risky']
-actions = np.array([[0, 0], [0, 0]])
-
-
 def simulate(i):
     x_axis = []
     wins = 0
@@ -151,17 +144,6 @@ def simulate(i):
         ep_r = 0
         while True:
             a = dqn.choose_action(s)
-
-            if (s[20] == 1):
-                if (a != 13):
-                    actions[1, 0] += 1
-                else:
-                    actions[0, 0] += 1
-            else:
-                if (a != 13):
-                    actions[1, 1] += 1
-                else:
-                    actions[0, 1] += 1
 
             # take action
             s_, r, done, info = env.step(a)
@@ -188,7 +170,6 @@ def simulate(i):
             saveCSV.write(str(str(i_ep) + "\n"))
 
     saveCSV.close()
-
     return x_axis, y_axis
 
 
@@ -198,22 +179,8 @@ p, k = simulate(10000)
 
 for j in range(1, 11):
     x_axis, y_axis = simulate(5000)
-    l = "number = " + str(j)
+    l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
-
-# fig, ax = plt.subplots()
-# im = ax.imshow(actions)
-# ax.set_xticks(np.arange(len(status)))
-# ax.set_yticks(np.arange(len(risk)))
-# ax.set_xticklabels(status)
-# ax.set_yticklabels(risk)
-# plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
-# for i in range(len(risk)):
-#     for j in range(len(status)):
-#         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
-# ax.set_title("Distribution of Actions")
-# fig.tight_layout()
-# plt.show()
 
 saveDQN(dqn)
 

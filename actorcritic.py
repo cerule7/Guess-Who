@@ -1,20 +1,14 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
 from torch.distributions import Categorical
 import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import math
-import random
-import _thread as thread
 
 # Hyper Parameters
 lr = 3e-4
-num_steps = 1
-hidden_size = 256
+hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
@@ -24,7 +18,6 @@ N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 
 FILENAME = 'AC'
-
 
 class A3C(nn.Module):
     def __init__(self, std=0.0):
@@ -127,26 +120,22 @@ def simulate(i):
             masks = []
             entropy = 0
 
-            for _ in range(num_steps):
+            state = torch.FloatTensor(state).to(device)
+            dist, value = model(state)
 
-                if env.status == 'WON' or env.status == 'LOST':
-                    break
+            action = dist.sample()
 
-                state = torch.FloatTensor(state).to(device)
-                dist, value = model(state)
+            next_state, reward, done, _ = env.step(action.cpu().numpy())
 
-                action = dist.sample()
-                next_state, reward, done, _ = env.step(action.cpu().numpy())
+            log_prob = dist.log_prob(action)
+            entropy += dist.entropy().mean()
 
-                log_prob = dist.log_prob(action)
-                entropy += dist.entropy().mean()
+            log_probs.append(log_prob.view(1))
+            values.append(value)
+            rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
+            masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
 
-                log_probs.append(log_prob.view(1))
-                values.append(value)
-                rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
-                masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
-
-                state = next_state
+            state = next_state
 
             if env.status == 'WON':
                 wins += 1
@@ -175,12 +164,10 @@ def simulate(i):
 
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
-
             saveCSV.write(str(str(wins) + ","))
             saveCSV.write(str(str(i_ep) + "\n"))
 
     saveCSV.close()
-
     return x_axis, y_axis
 
 
@@ -189,7 +176,24 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
+<<<<<<< HEAD
 for j in range(1, 2):
+=======
+# for j in range(1, 11):
+#     x_axis, y_axis = simulate(5000)
+#     l = "number = " + str(j)
+#     plt.plot(x_axis, y_axis, label=l)
+
+# plt.xlim(0, 5000)
+# plt.ylim(0, 100)
+# plt.tight_layout()
+
+# plt.ylabel('Wins (%)')
+# plt.xlabel('Number of Episodes')
+# plt.show()
+
+for j in range(1, 11):
+>>>>>>> master
     x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)
@@ -200,6 +204,8 @@ plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
-plt.ylabel('Wins (%)')
+plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
+
+saveDQN(a3c)
