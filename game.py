@@ -3,7 +3,6 @@ import random
 import math
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
-from gym.envs.guesswho.agent import Agent
 from gym.envs.guesswho.optimalAgent import OptimalAgent
 
 
@@ -150,21 +149,17 @@ class Game:
         # auto quit (debug only)
         if i == -100:
             quit()
-
         # guessing specific characters
         elif i >= 19 and i <= 42:
-            tempI = i - 25
-
-            if tempI == otherplayer.getBoard().getSelected():
+            self.gameOver = True
+            if i - 25 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
-                # player.setScore(player.getScore() + 1) - maybe dont need this
                 if pturn:
                     self.status = 'WON'
                 else:
                     self.status = 'LOST'
             else:
                 print("INCORRECT CHARACTER GUESS")
-                # otherplayer.setScroe(otherplayer.getScore() + 1) - maybe dont need this
                 if pturn:
                     self.status = 'LOST'
                 else:
@@ -303,13 +298,13 @@ class Game:
             if self.agentType != 'randomp1' and self.agentType != 'binaryp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
-                self.state = self.numFlipped
+                self.status = self.numFlipped
         else:
             self.p2 = player
             if self.agentType == 'randomp1' or self.agentType == 'binaryp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
-                self.state = self.numFlipped
+                self.status = self.numFlipped
 
     def agentPlay(self, action):
         action = abs(int(action))
@@ -323,6 +318,10 @@ class Game:
             print("PLAYER 1 WINS")
             self.status = 'WON'
             self.gameOver = True
+            return
+        elif self.status == 'WON' or self.status == 'LOST':
+            self.gameOver = True
+            return
         # player 2 goes
         if self.gameOver != True:
             if (self.agentType == 'random'):

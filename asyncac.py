@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import pickle
 
 # Hyper Parameters
-lr = 3e-4
-num_steps = 3
-hidden_size = 50
+lr = 1e-3
+num_steps = 1
+hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('random')
+env.game.setAgentType('optimal')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -147,8 +147,12 @@ def simulate(i):
 
             if env.status == 'WON':
                 wins += 1
+                y_axis.append((wins / i_ep) * 100)
+                x_axis.append(i_ep)
                 break
             elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
+                y_axis.append((wins / i_ep) * 100)
+                x_axis.append(i_ep)
                 break
             else:
                 next_state = torch.FloatTensor(next_state).to(device)
@@ -170,9 +174,6 @@ def simulate(i):
                 loss.backward()
                 optimizer.step()
 
-            y_axis.append((wins / i_ep) * 100)
-            x_axis.append(i_ep)
-
             # saveCSV.write(str(str(wins) + ","))
             # saveCSV.write(str(str(i_ep) + "\n"))
 
@@ -185,33 +186,15 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-<<<<<<< HEAD
-for j in range(1, 2):
-    x_axis, y_axis = simulate(1000000)
+for j in range(1, 10):
+    x_axis, y_axis = simulate(25000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
-=======
-env.game.setAgentType('none')
-x_axis, y_axis = simulate(5000)
-plt.plot(x_axis, y_axis, label='Versus self')
-env.game.setAgentType('optimal')
-x_axis, y_axis = simulate(5000)
-plt.plot(x_axis, y_axis, label='Versus optimal agent')
-env.game.setAgentType('optimal')
-x_axis, y_axis = simulate(5000)
-plt.plot(x_axis, y_axis, label='Versus optimal agent 2')
-env.game.setAgentType('optimal')
-x_axis, y_axis = simulate(5000)
-plt.plot(x_axis, y_axis, label='Versus optimal agent 3')
-env.game.setAgentType('none')
-x_axis, y_axis = simulate(5000)
-plt.plot(x_axis, y_axis, label='Versus self 2')
->>>>>>> master
 
 saveDQN(a3c)
 
 plt.legend()
-plt.xlim(0, 5000)
+plt.xlim(0, 25000)
 plt.ylim(0, 100)
 plt.tight_layout()
 

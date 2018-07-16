@@ -36,6 +36,7 @@ class A3C(nn.Module):
             nn.Softmax(-1),
         )
 
+
     def forward(self, x):
         value = self.critic(x)
         probs = self.actor(x)
@@ -164,8 +165,8 @@ def simulate(i):
 
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
-            saveCSV.write(str(str(wins) + ","))
-            saveCSV.write(str(str(i_ep) + "\n"))
+            # saveCSV.write(str(str(wins) + ","))
+            # saveCSV.write(str(str(i_ep) + "\n"))
 
     saveCSV.close()
     return x_axis, y_axis
@@ -176,24 +177,7 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-<<<<<<< HEAD
-for j in range(1, 2):
-=======
-# for j in range(1, 11):
-#     x_axis, y_axis = simulate(5000)
-#     l = "number = " + str(j)
-#     plt.plot(x_axis, y_axis, label=l)
-
-# plt.xlim(0, 5000)
-# plt.ylim(0, 100)
-# plt.tight_layout()
-
-# plt.ylabel('Wins (%)')
-# plt.xlabel('Number of Episodes')
-# plt.show()
-
 for j in range(1, 11):
->>>>>>> master
     x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)
