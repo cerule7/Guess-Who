@@ -5,7 +5,6 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import _thread as thread
 
 # Hyper Parameters
 BATCH_SIZE = 32
