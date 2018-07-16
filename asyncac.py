@@ -18,11 +18,7 @@ hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-<<<<<<< HEAD
-=======
 env.game.setAgentType('random')
-
->>>>>>> master
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -217,6 +213,6 @@ plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
-plt.ylabel('Wins (%)')
+plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
