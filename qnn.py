@@ -16,7 +16,12 @@ TARGET_REPLACE_ITER = 100  # target update frequency
 MEMORY_CAPACITY = 2000
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
+<<<<<<< HEAD
 env.game.setAgentType('none')
+=======
+env.game.setAgentType('random')
+
+>>>>>>> master
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(),
@@ -142,6 +147,9 @@ def simulate(i):
     x_axis = []
     wins = 0
     y_axis = []
+
+    saveCSV = open("QNNData.csv", 'w')
+
     for i_episode in range(i):
         s = env.reset()
         ep_r = 0
@@ -179,6 +187,11 @@ def simulate(i):
         if i_episode != 0:
             y_axis.append((wins / i_episode) * 100)
             x_axis.append(i_episode)
+
+            saveCSV.write(str(str(wins) + ","))
+            saveCSV.write(str(str(i_ep) + "\n"))
+
+    saveCSV.close()
 
     return x_axis, y_axis
 

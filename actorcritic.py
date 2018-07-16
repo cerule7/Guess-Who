@@ -14,7 +14,11 @@ hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
+<<<<<<< HEAD
 env.game.setAgentType('binary')
+=======
+env.game.setAgentType('random')
+>>>>>>> master
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -115,6 +119,8 @@ def simulate(i):
     # y_axis = []
     wins = 0
 
+    saveCSV = open("ACData.csv", 'w')
+
     for i_ep in range(1, i):
         state = env.reset()
         while True:
@@ -183,7 +189,16 @@ def simulate(i):
             # y_axis.append((wins / i_ep) * 100)
             # x_axis.append(i_ep)
 
+<<<<<<< HEAD
     # return x_axis, y_axis
+=======
+            saveCSV.write(str(str(wins) + ","))
+            saveCSV.write(str(str(i_ep) + "\n"))
+
+    saveCSV.close()
+
+    return x_axis, y_axis
+>>>>>>> master
 
 
 model = A3C().to(device)
@@ -191,6 +206,7 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
+<<<<<<< HEAD
 # for j in range(1, 11):
 #     x_axis, y_axis = simulate(5000)
 #     l = "number = " + str(j)
@@ -222,6 +238,21 @@ for i in range(len(risk)):
         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
 ax.set_title("Distribution of Actions")
 fig.tight_layout()
+=======
+for j in range(1, 11):
+    x_axis, y_axis = simulate(5000)
+    l = "number = " + str(j)
+    plt.plot(x_axis, y_axis, label=l)
+
+saveDQN(a3c)
+
+plt.xlim(0, 5000)
+plt.ylim(0, 100)
+plt.tight_layout()
+
+plt.ylabel('Wins (%)')
+plt.xlabel('Number of Episodes')
+>>>>>>> master
 plt.show()
 
 saveDQN(a3c)

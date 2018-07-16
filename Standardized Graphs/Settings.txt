@@ -1,0 +1,7 @@
+X-Left 0
+X-Right 5000
+Y-Bottom 0
+Y-Top 100
+Do full screen
+Do 'Tight Layout'
+Add a title
