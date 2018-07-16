@@ -9,7 +9,7 @@ class GuesswhoEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        self.action_space = spaces.Discrete(19) #the 20 questions 
+        self.action_space = spaces.Discrete(42) #the 43 questions
         low = np.zeros(21, dtype=int)
         for i in range(0, 18): 
             low[i] = -1
@@ -57,15 +57,15 @@ class GuesswhoEnv(gym.Env):
         if self.status == 'WON':
             return 50
         elif self.status == 'LOST':
-            return -50
+            return -10000
         elif self.status == 'START':
             return 0
         else:
             i = int(self.status)
             if(i <= 0):
-                return -25
+                return -100
             else:
-                return i
+                return i * 2
 
     def close(self):
         quit()
