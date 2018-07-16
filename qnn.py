@@ -198,7 +198,7 @@ p, k = simulate(10000)
 
 for j in range(1, 11):
     x_axis, y_axis = simulate(5000)
-    l = "number = " + str(j)
+    l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 # fig, ax = plt.subplots()

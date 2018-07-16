@@ -7,18 +7,14 @@ import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import math
-import random
-import _thread as thread
 
 # Hyper Parameters
 lr = 3e-4
-num_steps = 1
-hidden_size = 256
+hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('random')
+env.game.setAgentType('binary')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -110,9 +106,13 @@ def loadDQN():
 
     return deeQueEnn
 
+status = ['up', 'down']
+risk = ['safe', 'risky']
+actions = np.array([[0, 0], [0, 0]])
+
 def simulate(i):
-    x_axis = []
-    y_axis = []
+    # x_axis = []
+    # y_axis = []
     wins = 0
 
     saveCSV = open("ACData.csv", 'w')
@@ -127,26 +127,35 @@ def simulate(i):
             masks = []
             entropy = 0
 
-            for _ in range(num_steps):
+            state = torch.FloatTensor(state).to(device)
+            dist, value = model(state)
 
-                if env.status == 'WON' or env.status == 'LOST':
-                    break
+            action = dist.sample()
 
-                state = torch.FloatTensor(state).to(device)
-                dist, value = model(state)
+            s = state
+            a = action
+            if (s[20] == 1):
+                if (a != 13):
+                    actions[1, 0] += 1
+                else:
+                    actions[0, 0] += 1
+            else:
+                if (a != 13):
+                    actions[1, 1] += 1
+                else:
+                    actions[0, 1] += 1
 
-                action = dist.sample()
-                next_state, reward, done, _ = env.step(action.cpu().numpy())
+            next_state, reward, done, _ = env.step(action.cpu().numpy())
 
-                log_prob = dist.log_prob(action)
-                entropy += dist.entropy().mean()
+            log_prob = dist.log_prob(action)
+            entropy += dist.entropy().mean()
 
-                log_probs.append(log_prob.view(1))
-                values.append(value)
-                rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
-                masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
+            log_probs.append(log_prob.view(1))
+            values.append(value)
+            rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
+            masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
 
-                state = next_state
+            state = next_state
 
             if env.status == 'WON':
                 wins += 1
@@ -173,8 +182,8 @@ def simulate(i):
                 loss.backward()
                 optimizer.step()
 
-            y_axis.append((wins / i_ep) * 100)
-            x_axis.append(i_ep)
+            # y_axis.append((wins / i_ep) * 100)
+            # x_axis.append(i_ep)
 
             saveCSV.write(str(str(wins) + ","))
             saveCSV.write(str(str(i_ep) + "\n"))
@@ -189,17 +198,35 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
-    x_axis, y_axis = simulate(5000)
-    l = "number = " + str(j)
-    plt.plot(x_axis, y_axis, label=l)
+# for j in range(1, 11):
+#     x_axis, y_axis = simulate(5000)
+#     l = "number = " + str(j)
+#     plt.plot(x_axis, y_axis, label=l)
+
+# plt.xlim(0, 5000)
+# plt.ylim(0, 100)
+# plt.tight_layout()
+
+# plt.ylabel('Wins (%)')
+# plt.xlabel('Number of Episodes')
+# plt.show()
+
+simulate(10000)
+actions = np.array([[0, 0], [0, 0]])
+simulate(5000)
+
+fig, ax = plt.subplots()
+im = ax.imshow(actions)
+ax.set_xticks(np.arange(len(status)))
+ax.set_yticks(np.arange(len(risk)))
+ax.set_xticklabels(status)
+ax.set_yticklabels(risk)
+plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+for i in range(len(risk)):
+    for j in range(len(status)):
+        text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
+ax.set_title("Distribution of Actions")
+fig.tight_layout()
+plt.show()
 
 saveDQN(a3c)
-
-plt.xlim(0, 5000)
-plt.ylim(0, 100)
-plt.tight_layout()
-
-plt.ylabel('Wins (%)')
-plt.xlabel('Number of Episodes')
-plt.show()
