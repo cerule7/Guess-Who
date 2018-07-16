@@ -1,15 +1,10 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
 from torch.distributions import Categorical
 import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
-import math
-import random
-import _thread as thread
 
 # Hyper Parameters
 lr = 3e-4
@@ -213,6 +208,6 @@ plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
-plt.ylabel('Wins (%)')
+plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
