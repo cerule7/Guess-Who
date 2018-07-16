@@ -18,7 +18,6 @@ hidden_size = 50
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('random')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -184,10 +183,21 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
-    x_axis, y_axis = simulate(5000)
-    l = "Run #" + str(j)
-    plt.plot(x_axis, y_axis, label=l)
+env.game.setAgentType('none')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus self')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent 2')
+env.game.setAgentType('optimal')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus optimal agent 3')
+env.game.setAgentType('none')
+x_axis, y_axis = simulate(5000)
+plt.plot(x_axis, y_axis, label='Versus self 2')
 
 saveDQN(a3c)
 
