@@ -7,15 +7,15 @@ import matplotlib.pyplot as plt
 import pickle
 
 # Hyper Parameters
-BATCH_SIZE = 32
-LR = 0.91  # learning rate
+BATCH_SIZE = 1000
+LR = 2e-3  # learning rate
 EPSILON = 0.9  # greedy policy
 GAMMA = 0.9  # reward discount
 TARGET_REPLACE_ITER = 100  # target update frequency
-MEMORY_CAPACITY = 2000
+MEMORY_CAPACITY = 30000
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('random')
+env.game.setAgentType('optimal')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -27,9 +27,9 @@ FILENAME = 'DQN'
 class Net(nn.Module):
     def __init__(self, ):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(N_STATES, 50)
+        self.fc1 = nn.Linear(N_STATES, 512)
         self.fc1.weight.data.normal_(0, 0.1)  # initialization
-        self.out = nn.Linear(50, N_ACTIONS)
+        self.out = nn.Linear(512, N_ACTIONS)
         self.out.weight.data.normal_(0, 0.1)  # initialization
 
     def forward(self, x):
@@ -137,12 +137,13 @@ def simulate(i):
     wins = 0
     y_axis = []
 
-    saveCSV = open("QNNData.csv", 'w')
+    #saveCSV = open("QNNData.csv", 'w')
 
     for i_episode in range(i):
         s = env.reset()
         ep_r = 0
         while True:
+            print(s)
             a = dqn.choose_action(s)
 
             # take action
@@ -166,26 +167,24 @@ def simulate(i):
             y_axis.append((wins / i_episode) * 100)
             x_axis.append(i_episode)
 
-            saveCSV.write(str(str(wins) + ","))
-            saveCSV.write(str(str(i_ep) + "\n"))
+            #saveCSV.write(str(str(wins) + ","))
+            #saveCSV.write(str(str(i_ep) + "\n"))
 
-    saveCSV.close()
+    #saveCSV.close()
     return x_axis, y_axis
 
 
 dqn = loadDQN()
 
-p, k = simulate(10000)
-
-for j in range(1, 11):
-    x_axis, y_axis = simulate(5000)
+for j in range(1, 6):
+    x_axis, y_axis = simulate(10000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 saveDQN(dqn)
 
 plt.legend()
-plt.xlim(0, 5000)
+plt.xlim(0, 10000)
 plt.ylim(0, 100)
 plt.tight_layout()
 

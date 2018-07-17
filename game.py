@@ -151,21 +151,16 @@ class Game:
             quit()
         # guessing specific characters
         elif i >= 19 and i <= 42:
-            self.gameOver = True
             if i - 25 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
-                if pturn:
-                    self.status = 'WON'
-                else:
-                    self.status = 'LOST'
+                self.status = 'WON'
+                self.numFlipped = 23
+                self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
-                if pturn:
-                    self.status = 'LOST'
-                else:
-                    self.status = 'WON'
+                self.numFlipped = 0
+                self.status = self.numFlipped
             return
-
         # y/n questions
         elif i == 0:
             characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
@@ -293,13 +288,13 @@ class Game:
                     self.updateSelTraits(17, True)
                 elif pturn:
                     self.updateSelTraits(17, False)
-        if pturn:
+        if pturn and not self.gameOver:
             self.p1 = player
             if self.agentType != 'randomp1' and self.agentType != 'binaryp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
                 self.status = self.numFlipped
-        else:
+        elif not pturn and not self.gameOver:
             self.p2 = player
             if self.agentType == 'randomp1' or self.agentType == 'binaryp1':
                 self.numFlipped = numFlipped

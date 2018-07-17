@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import pickle
 
 # Hyper Parameters
-lr = 1e-3
-num_steps = 1
+lr = 2e-3
+num_steps = 3
 hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
@@ -26,9 +26,11 @@ class A3C(nn.Module):
         super(A3C, self).__init__()
 
         self.critic = nn.Sequential(
-            nn.Linear(N_STATES, hidden_size),
+            nn.Linear(N_STATES, 256),
             nn.ReLU(),
-            nn.Linear(hidden_size, 1)
+            nn.Linear(256, 512),
+            nn.ReLU(),
+            nn.Linear(512, 1)
         )
 
         self.actor = nn.Sequential(
