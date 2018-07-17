@@ -57,13 +57,13 @@ class GuesswhoEnv(gym.Env):
         if self.status == 'WON':
             return 50
         elif self.status == 'LOST':
-            return -10000
+            return -50
         elif self.status == 'START':
             return 0
         else:
             i = int(self.status)
             if(i <= 0):
-                return -100
+                return -10000
             else:
                 return i * 2
 

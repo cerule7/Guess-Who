@@ -8,11 +8,11 @@ import pickle
 
 # Hyper Parameters
 lr = 3e-4
-hidden_size = 50
+hidden_size = 512
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('random')
+env.game.setAgentType('optimal')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -177,13 +177,14 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
+for j in range(1, 6):
     x_axis, y_axis = simulate(5000)
     l = "number = " + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 saveDQN(a3c)
 
+plt.legend()
 plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
