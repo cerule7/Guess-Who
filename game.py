@@ -332,7 +332,7 @@ class Game:
                 print(action)
             elif (self.agentType == 'demo'):
                 action = int(input('enter a # (0-18): '))
-                while (action > 18 or action < 0):
+                while (action > 42 or action < 0):
                     action = int(input('enter a # (0-18): '))
             else:
                 action = 13
