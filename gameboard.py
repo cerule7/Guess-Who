@@ -103,14 +103,14 @@ class gameBoard:
                 hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
                 if bool(hasAttribute is False) and self.characterList[i].isitActive():
                     print("FLIPPED " + self.characterList[i].getName())
-                    self.characterList[i].toggleActive()
+                    self.characterList[i].setInactive()
                     numFlipped += 1
         else: 
             for i in range(0, 24):
                 hasAttribute = bool(self.characterList[i].hasAttribute(attribute))
                 if bool(hasAttribute is True) and self.characterList[i].isitActive():
                     print("FLIPPED " + self.characterList[i].getName())
-                    self.characterList[i].toggleActive()
+                    self.characterList[i].setInactive()
                     numFlipped += 1
         print("ASKQ NUMFLIPPED " + str(numFlipped))
         return self.characterList, numFlipped
@@ -124,20 +124,20 @@ class gameBoard:
             for i in range(0, 24):
                 if i != selPos and self.characterList[i].isitActive():
                     print("FLIPPED " + self.characterList[i].getName())
-                    self.characterList[i].toggleActive()
+                    self.characterList[i].setInactive()
                     numFlipped += 1
         elif m > selPos:
             for i in range(m, 24):
                 if self.characterList[i].isitActive():
                     print("FLIPPED " + self.characterList[i].getName())
-                    self.characterList[i].toggleActive()
+                    self.characterList[i].setInactive()
                     numFlipped += 1
             binaryPositions[1] = m - 1
         else:
             for i in range(0, m):
                 if self.characterList[i].isitActive():
                     print("FLIPPED " + self.characterList[i].getName())
-                    self.characterList[i].toggleActive()
+                    self.characterList[i].setInactive()
                     numFlipped += 1
             binaryPositions[0] = m + 1
         return binaryPositions, self.characterList, numFlipped
