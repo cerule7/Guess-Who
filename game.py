@@ -1,6 +1,8 @@
 import numpy as np
 import random
 import math
+import gameboard
+import character
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
 from gym.envs.guesswho.optimalAgent import OptimalAgent
@@ -154,6 +156,7 @@ class Game:
             if i - 25 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
                 self.status = 'WON'
+
                 self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
@@ -164,6 +167,7 @@ class Game:
                     self.numFlipped = 1
                 else:
                     self.numFlipped = 0
+
                 self.status = self.numFlipped
             return
         # y/n questions
