@@ -35,19 +35,19 @@ class OptimalAgent(Player):
 		
 		for character in self.gameboard.characterList:
 			if character.isitActive():
-				listTraits[0] += int(bool(character.isFemale))
-				listTraits[1] += int(bool(character.hasHat))
-				listTraits[2] += int(bool(character.hasGlasses))
-				listTraits[3] += int(bool(character.hasBeard))
-				listTraits[4] += int(bool(character.hasMustache))
-				listTraits[5] += int(bool(character.hasRosyCheeks))
-				listTraits[6] += int(bool(character.isSmiling))
-				listTraits[7] += int(bool(character.isBald))
-				listTraits[8] += int(bool(character.hasBlueEyes))
-				listTraits[9] += int(bool(character.hasBigNose))
-				listTraits[10] += int(bool(character.hasBigMouth))
-				listTraits[11] += int(bool(character.hasEarrings))
-				listTraits[12] += int(bool(character.hasButtchin))
+				listTraits[0] += int(eval(character.isFemale))
+				listTraits[1] += int(eval(character.hasHat))
+				listTraits[2] += int(eval(character.hasGlasses))
+				listTraits[3] += int(eval(character.hasBeard))
+				listTraits[4] += int(eval(character.hasMustache))
+				listTraits[5] += int(eval(character.hasRosyCheeks))
+				listTraits[6] += int(eval(character.isSmiling))
+				listTraits[7] += int(eval(character.isBald))
+				listTraits[8] += int(eval(character.hasBlueEyes))
+				listTraits[9] += int(eval(character.hasBigNose))
+				listTraits[10] += int(eval(character.hasBigMouth))
+				listTraits[11] += int(eval(character.hasEarrings))
+				listTraits[12] += int(eval(character.hasButtchin))
 				listTraits[14] += int(bool(character.hairColor == 'black'))
 				listTraits[15] += int(bool(character.hairColor == 'red'))
 				listTraits[16] += int(bool(character.hairColor == 'white'))
@@ -61,9 +61,9 @@ class OptimalAgent(Player):
 	def makeOptimalGuess(self, agentNum, opponentNum):
 		# 2**k = 2**(log2(n-1))
 		if agentNum - 1 > 0:
-			k = math.log((agentNum - 1), 2)
+			k = math.floor(math.log((agentNum - 1), 2))
 			#"in the weeds"
-			if 2**(k + 1) < opponentNum and 2**k < agentNum and agentNum <= 2**(k+1):
+			if 2**(k + 1) <= opponentNum and 2**k <= agentNum and agentNum <= 2**(k+1):
 				return self.getRiskiestGuess(self.compileTraitList())
 			else:
 				return 13
