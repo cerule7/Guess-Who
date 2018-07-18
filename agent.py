@@ -1,62 +1,62 @@
 from gym.envs.guesswho.player import Player
 from numpy import random
 
+
 class Agent(Player):
+    gameboard = ''
+    score = 0
+    name = 'Randbot: '
+    selectedCharacter = 0
+    listGuesses = 0
+    binaryPositions = [0, 23]  # left, right
 
-	gameboard = ''
-	score = 0 
-	name = 'Randbot: '
-	selectedCharacter = 0
-	listGuesses = 0
-	binaryPositions = [0, 23] #left, right
+    def __init__(self, name, gameboard, selectedCharacter):
+        self.gameboard = gameboard
+        self.selectedCharacter = selectedCharacter
+        self.name += name
+        self.listGuesses = []
+        self.binaryPositions = [0, 23]
 
-	def __init__(self, name, gameboard, selectedCharacter):
-		self.gameboard = gameboard
-		self.selectedCharacter = selectedCharacter
-		self.name += name
-		self.listGuesses = []
-		self.binaryPositions = [0, 23] 
-	
-	# Makes a random choice
-	# 24 < choice > -1 for random character
-	# 37 < choice > 23 for random trait
-	def guessRandom(self):
-		choice = -1
-		
-		action = self.chooseRandom()
-		
-		if action == "trait":
-			choice = random.randint(24, 42)
-			
-			newChoice = False
-			if choice not in self.listGuesses:
-				newChoice = True
-				
-			while not newChoice:
-				choice = random.randint(24, 42)
-				
-				if choice not in self.listGuesses:
-					newChoice = True
-			
-		else:
-			choice = random.randint(0, 24)
-			
-			newChoice = False
-			if choice not in self.listGuesses:
-				newChoice = True
-				
-			while not newChoice:
-				choice = random.randint(0, 24)
-				
-				if choice not in self.listGuesses:
-					newChoice = True
-		
-		self.listGuesses.append(choice)
-		return choice
-	
-	# Makes a random number to make a binary choice 
-	def chooseRandom(self):
-		return "trait"
+    # Makes a random choice
+    # 24 < choice > -1 for random character
+    # 37 < choice > 23 for random trait
+    def guessRandom(self):
+        choice = -1
+
+        action = self.chooseRandom()
+
+        if action == "trait":
+            choice = random.randint(24, 42)
+
+            newChoice = False
+            if choice not in self.listGuesses:
+                newChoice = True
+
+            while not newChoice:
+                choice = random.randint(24, 42)
+
+                if choice not in self.listGuesses:
+                    newChoice = True
+
+        else:
+            choice = random.randint(0, 24)
+
+            newChoice = False
+            if choice not in self.listGuesses:
+                newChoice = True
+
+            while not newChoice:
+                choice = random.randint(0, 24)
+
+                if choice not in self.listGuesses:
+                    newChoice = True
+
+        self.listGuesses.append(choice)
+        return choice
+
+    # Makes a random number to make a binary choice
+    def chooseRandom(self):
+        return "trait"
 # 		action = ""
 #    		
 # 		if random.randint(0, 2) == 1:
@@ -67,7 +67,7 @@ class Agent(Player):
 # 		return action
 
 
-#===============================================================================
+# ===============================================================================
 #	Unmodified methods
 #
 #	def getBinaryPositions(self):
@@ -93,4 +93,4 @@ class Agent(Player):
 # 
 # 	def setSelected(num):
 # 		selectedCharacter = num 
-#===============================================================================
+# ===============================================================================
