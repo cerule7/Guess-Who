@@ -1,6 +1,8 @@
 import numpy as np
 import random
 import math
+import gameboard
+import character
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
 from gym.envs.guesswho.optimalAgent import OptimalAgent
@@ -126,9 +128,9 @@ class Game:
 
         # 2**k = 2**(log2(m-1))
         if (m - 1) > 0:
-            k = math.log((m - 1), 2)
+            k = math.floor(math.log((m - 1), 2))
             # player 1 is "in the weeds"
-            if 2 ** (k + 1) < n and 2 ** k < m and m <= 2 ** (k + 1):
+            if 2 ** (k + 1) <= n and 2 ** k <= m and m <= 2 ** (k + 1):
                 self.selTraits[20] = -1
             else:
                 self.selTraits[20] = 1
@@ -154,11 +156,13 @@ class Game:
             if i - 25 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
                 self.status = 'WON'
-                self.numFlipped = 23
+                self.numFlipped = int(player.getBoard().numberActive()) - 1
                 self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
-                self.numFlipped = 0
+                if player.getBoard().getCharacter(i - 25).isitActive():
+                    self.numFlipped = 1
+                player.getBoard().getCharacter(i - 25).setInactive()
                 self.status = self.numFlipped
             return
         # y/n questions
