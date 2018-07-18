@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pickle
 
 # Hyper Parameters
-lr = 2e-3
+lr = 0.001
 num_steps = 3
 hidden_size = 256
 device = torch.device("cpu")
@@ -188,15 +188,15 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 10):
-    x_axis, y_axis = simulate(25000)
+for j in range(1, 11):
+    x_axis, y_axis = simulate(5000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 saveDQN(a3c)
 
 plt.legend()
-plt.xlim(0, 25000)
+plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 

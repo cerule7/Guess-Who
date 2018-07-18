@@ -54,6 +54,7 @@ class OptimalAgent(Player):
 
         listTraits[13] = 30
 
+
         # Trait debug
         # print("\n\n\n\nLIST TRAITS DEBUG:")
         # for i in range (0,19):
@@ -61,6 +62,7 @@ class OptimalAgent(Player):
         # print("\n\n\n\n")
 
         return listTraits
+
 
     def makeOptimalGuess(self, agentNum, opponentNum):
         # 2**k = 2**(log2(n-1))

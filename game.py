@@ -156,13 +156,18 @@ class Game:
             if i - 25 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
                 self.status = 'WON'
-                self.numFlipped = int(player.getBoard().numberActive()) - 1
+
                 self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
-                if player.getBoard().getCharacter(i - 25).isitActive():
+                cl = player.getBoard().getCharacterList()
+                if cl[i - 25].isitActive():
+                    cl[i - 25].toggleActive()
+                    player.getBoard().updateList(cl)
                     self.numFlipped = 1
-                player.getBoard().getCharacter(i - 25).setInactive()
+                else:
+                    self.numFlipped = 0
+
                 self.status = self.numFlipped
             return
         # y/n questions
@@ -292,13 +297,13 @@ class Game:
                     self.updateSelTraits(17, True)
                 elif pturn:
                     self.updateSelTraits(17, False)
-        if pturn and not self.gameOver:
+        if pturn:
             self.p1 = player
             if self.agentType != 'randomp1' and self.agentType != 'binaryp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
                 self.status = self.numFlipped
-        elif not pturn and not self.gameOver:
+        elif not pturn:
             self.p2 = player
             if self.agentType == 'randomp1' or self.agentType == 'binaryp1':
                 self.numFlipped = numFlipped
@@ -344,8 +349,8 @@ class Game:
                 print("PLAYER 2 WINS")
                 self.status = 'LOST'
                 self.gameOver = True
-            self.numTurns += 1
-            print("TOTAL TURNS: " + str(self.numTurns))
+        self.numTurns += 1
+        print("TOTAL TURNS: " + str(self.numTurns))
 
     def randomasP1(self, action):
         a = random.randint(0, 18)

@@ -8,7 +8,7 @@ import pickle
 
 # Hyper Parameters
 BATCH_SIZE = 1000
-LR = 2e-3  # learning rate
+LR = 0.001 # learning rate
 EPSILON = 0.9  # greedy policy
 GAMMA = 0.9  # reward discount
 TARGET_REPLACE_ITER = 100  # target update frequency
@@ -176,15 +176,15 @@ def simulate(i):
 
 dqn = loadDQN()
 
-for j in range(1, 6):
-    x_axis, y_axis = simulate(10000)
+for j in range(1, 11):
+    x_axis, y_axis = simulate(5000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 saveDQN(dqn)
 
 plt.legend()
-plt.xlim(0, 10000)
+plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
