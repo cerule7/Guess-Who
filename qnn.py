@@ -139,7 +139,7 @@ def simulate(i):
 
     saveCSV = open("QNNData.csv", 'w')
 
-    for i_episode in range(i):
+    for i_episode in range(i + 1):
         s = env.reset()
         ep_r = 0
         while True:

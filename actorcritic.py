@@ -113,7 +113,7 @@ def simulate(i):
 
     saveCSV = open("ACData.csv", 'w')
 
-    for i_ep in range(1, i):
+    for i_ep in range(i):
         state = env.reset()
         while True:
 
@@ -164,9 +164,11 @@ def simulate(i):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                
+        if i_ep != 0:
+            y_axis.append((wins / i_ep) * 100)
+            x_axis.append(i_ep)
 
-        y_axis.append((wins / i_ep) * 100)
-        x_axis.append(i_ep)
         saveCSV.write(str(str(wins) + ","))
         saveCSV.write(str(str(i_ep) + "\n"))
 

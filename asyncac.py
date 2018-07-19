@@ -116,7 +116,7 @@ def simulate(i):
 
     saveCSV = open("A2CData.csv", 'w')
 
-    for i_ep in range(1, i):
+    for i_ep in range(i):
         state = env.reset()
         while True:
 
@@ -172,8 +172,10 @@ def simulate(i):
                 loss.backward()
                 optimizer.step()
 
-        y_axis.append((wins / i_ep) * 100)
-        x_axis.append(i_ep)
+        if i_ep != 0:
+            y_axis.append((wins / i_ep) * 100)
+            x_axis.append(i_ep)
+            
         saveCSV.write(str(str(wins) + ","))
         saveCSV.write(str(str(i_ep) + "\n"))
 
