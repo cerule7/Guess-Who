@@ -137,7 +137,7 @@ def simulate(i):
     wins = 0
     y_axis = []
 
-    #saveCSV = open("QNNData.csv", 'w')
+    saveCSV = open("QNNData.csv", 'w')
 
     for i_episode in range(i):
         s = env.reset()
@@ -167,10 +167,10 @@ def simulate(i):
             y_axis.append((wins / i_episode) * 100)
             x_axis.append(i_episode)
 
-            #saveCSV.write(str(str(wins) + ","))
-            #saveCSV.write(str(str(i_ep) + "\n"))
+        saveCSV.write(str(str(wins) + ","))
+        saveCSV.write(str(str(i_episode) + "\n"))
 
-    #saveCSV.close()
+    saveCSV.close()
     return x_axis, y_axis
 
 

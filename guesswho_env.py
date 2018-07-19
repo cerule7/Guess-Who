@@ -55,17 +55,23 @@ class GuesswhoEnv(gym.Env):
     def _get_reward(self):
         #Reward given for flipping tiles or winning
         if self.status == 'WON':
-            return 50
+            if self.getNumTurns() > 5:
+                return 1
+            else:
+                return 2
         elif self.status == 'LOST':
-            return -50
+            if self.getNumTurns() < 3:
+                return -1
+            else:
+                return -2
         elif self.status == 'START':
             return 0
         else:
             i = int(self.status)
             if(i <= 0):
-                return -10000
+                return -1
             else:
-                return i * 2
+                return i
 
     def close(self):
         quit()
