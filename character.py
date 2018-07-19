@@ -31,7 +31,7 @@ class Character:
         self.hasBigNose = hasBigNose
         self.hasBigMouth = hasBigMouth
         self.hasEarrings = hasEarrings
-        self.hasButtchin = hasButtchin
+        self.hasButtchin = hasButtch-1in
         self.hairColor = hairColor
         self.isActive = True
 

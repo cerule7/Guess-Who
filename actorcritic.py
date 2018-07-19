@@ -12,7 +12,7 @@ hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('demo')
+env.game.setAgentType('optimal')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
@@ -144,8 +144,6 @@ def simulate(i):
                 wins += 1
                 break
             elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
-                y_axis.append((wins / i_ep) * 100)
-                x_axis.append(i_ep)
                 break
             else:
                 next_state = torch.FloatTensor(next_state).to(device)
@@ -167,10 +165,10 @@ def simulate(i):
                 loss.backward()
                 optimizer.step()
 
-            y_axis.append((wins / i_ep) * 100)
-            x_axis.append(i_ep)
-            saveCSV.write(str(str(wins) + ","))
-            saveCSV.write(str(str(i_ep) + "\n"))
+        y_axis.append((wins / i_ep) * 100)
+        x_axis.append(i_ep)
+        saveCSV.write(str(str(wins) + ","))
+        saveCSV.write(str(str(i_ep) + "\n"))
 
     saveCSV.close()
     return x_axis, y_axis
