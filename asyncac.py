@@ -13,7 +13,7 @@ hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('optimal')
+env.game.setAgentType('demo')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
