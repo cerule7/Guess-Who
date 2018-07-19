@@ -162,7 +162,7 @@ class Game:
                 print("INCORRECT CHARACTER GUESS")
                 cl = player.getBoard().getCharacterList()
                 if cl[i - 19].isitActive():
-                    cl[i - 19].toggleActive()
+                    cl[i - 19].setInactive()
                     player.getBoard().updateList(cl)
                     if pturn:
                         self.numFlipped = 1

@@ -19,6 +19,11 @@ N_STATES = env.observation_space.shape[0]
 
 FILENAME = 'AC'
 
+saveCSV = open("ACData.csv", 'w')
+totWins = 0
+totEps = 0
+
+
 class A3C(nn.Module):
     def __init__(self, std=0.0):
         super(A3C, self).__init__()
@@ -111,9 +116,10 @@ def simulate(i):
     y_axis = []
     wins = 0
 
-    saveCSV = open("ACData.csv", 'w')
+    global totWins
+    global totEps
 
-    for i_ep in range(1, i):
+    for i_ep in range(i):
         state = env.reset()
         while True:
 
@@ -142,6 +148,7 @@ def simulate(i):
 
             if env.status == 'WON':
                 wins += 1
+                totWins += 1
                 break
             elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
                 break
@@ -165,12 +172,14 @@ def simulate(i):
                 loss.backward()
                 optimizer.step()
 
-        y_axis.append((wins / i_ep) * 100)
-        x_axis.append(i_ep)
-        saveCSV.write(str(str(wins) + ","))
-        saveCSV.write(str(str(i_ep) + "\n"))
+        if i_ep is not 0:
+            y_axis.append((wins / i_ep) * 100)
+            x_axis.append(i_ep)
 
-    saveCSV.close()
+        saveCSV.write(str(str(totWins) + ","))
+        saveCSV.write(str(str(totEps) + "\n"))
+        totEps += 1
+
     return x_axis, y_axis
 
 
@@ -179,7 +188,7 @@ optimizer = optim.Adam(model.parameters())
 
 a3c = loadDQN()
 
-for j in range(1, 11):
+for j in range(1, 3):
     x_axis, y_axis = simulate(5000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
@@ -196,3 +205,4 @@ plt.xlabel('Number of Episodes')
 plt.show()
 
 saveDQN(a3c)
+saveCSV.close()

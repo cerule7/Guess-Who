@@ -23,6 +23,10 @@ ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(),
                               int) else env.action_space.sample().shape  # to confirm the shape
 FILENAME = 'DQN'
 
+saveCSV = open("QNNData.csv", 'w')
+totWins = 0
+totEps = 0
+
 
 class Net(nn.Module):
     def __init__(self, ):
@@ -133,11 +137,14 @@ def loadDQN():
     return deeQueEnn
 
 def simulate(i):
+    global totWins
+    global totEps
+
     x_axis = []
     wins = 0
     y_axis = []
 
-    saveCSV = open("QNNData.csv", 'w')
+
 
     for i_episode in range(i):
         s = env.reset()
@@ -157,6 +164,7 @@ def simulate(i):
 
             if env.status == 'WON':
                 wins += 1
+                totWins += 1
 
             if done:
                 break
@@ -167,16 +175,18 @@ def simulate(i):
             y_axis.append((wins / i_episode) * 100)
             x_axis.append(i_episode)
 
-        saveCSV.write(str(str(wins) + ","))
-        saveCSV.write(str(str(i_episode) + "\n"))
+        saveCSV.write(str(str(totWins) + ","))
+        saveCSV.write(str(str(totEps) + "\n"))
+        totEps += 1
 
-    saveCSV.close()
+    #saveCSV.close()
     return x_axis, y_axis
 
 
 dqn = loadDQN()
 
-for j in range(1, 11):
+
+for j in range(1, 3):
     x_axis, y_axis = simulate(5000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
@@ -191,3 +201,5 @@ plt.tight_layout()
 plt.ylabel('Wins (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
+
+saveCSV.close()
