@@ -1,8 +1,6 @@
 import numpy as np
 import random
 import math
-import gameboard
-import character
 from gym.envs.guesswho.player import Player
 from gym.envs.guesswho.gameboard import gameBoard
 from gym.envs.guesswho.optimalAgent import OptimalAgent
@@ -153,22 +151,26 @@ class Game:
             quit()
         # guessing specific characters
         elif i >= 19 and i <= 42:
-            if i - 25 == otherplayer.getBoard().getSelected():
+            if i - 19 == otherplayer.getBoard().getSelected():
                 print("CORRECT CHARACTER GUESS")
-                self.status = 'WON'
-
+                if pturn:
+                    self.status = 'WON'
+                else:
+                    self.status - 'LOST'
                 self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
                 cl = player.getBoard().getCharacterList()
-                if cl[i - 25].isitActive():
-                    cl[i - 25].toggleActive()
+                if cl[i - 19].isitActive():
+                    cl[i - 19].toggleActive()
                     player.getBoard().updateList(cl)
-                    self.numFlipped = 1
+                    if pturn:
+                        self.numFlipped = 1
                 else:
-                    self.numFlipped = 0
-
-                self.status = self.numFlipped
+                    if pturn:
+                        self.numFlipped = 0
+                if pturn:
+                    self.status = self.numFlipped
             return
         # y/n questions
         elif i == 0:
