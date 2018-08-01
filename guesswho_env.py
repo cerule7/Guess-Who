@@ -31,6 +31,9 @@ class GuesswhoEnv(gym.Env):
         print("OVER? " + str(episode_over)) #end episode if game over 
         return ob, reward, episode_over, {} #the {} is a dictionary that can contain debug info 
 
+    def getNumFlipped(self):
+        return self.game.numFlipped 
+
     def getState(self):
         return self.game.getState()
 
@@ -56,20 +59,20 @@ class GuesswhoEnv(gym.Env):
         #Reward given for flipping tiles or winning
         if self.status == 'WON':
             if self.getNumTurns() > 5:
-                return 1
+                return 10
             else:
-                return 2
+                return 50
         elif self.status == 'LOST':
             if self.getNumTurns() < 3:
-                return -1
+                return -10
             else:
-                return -2
+                return -50
         elif self.status == 'START':
             return 0
         else:
             i = int(self.status)
             if(i <= 0):
-                return -1
+                return -24
             else:
                 return i
 
