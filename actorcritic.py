@@ -5,9 +5,10 @@ import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
+import numpy as np
 
 # Hyper Parameters
-lr = 0.001
+lr = 1
 hidden_size = 256
 device = torch.device("cpu")
 env = gym.make('Guesswho-v0')
@@ -111,13 +112,17 @@ def loadDQN():
 
     return deeQueEnn
 
+# status = ['up', 'down']
+# risk = ['safe', 'risky']
+# actions = np.array([[0, 0], [0, 0]])
+
 def simulate(i):
     x_axis = []
     y_axis = []
     wins = 0
 
-    global totWins
-    global totEps
+    # global totWins
+    # global totEps
 
     for i_ep in range(i):
         state = env.reset()
@@ -129,26 +134,44 @@ def simulate(i):
             masks = []
             entropy = 0
 
-            state = torch.FloatTensor(state).to(device)
-            dist, value = model(state)
+            for _ in range(0, 1):
 
-            action = dist.sample()
+                if env.status == 'WON' or env.status == 'LOST':
+                    break
 
-            next_state, reward, done, _ = env.step(action.cpu().numpy())
+                state = torch.FloatTensor(state).to(device)
+                dist, value = model(state)
 
-            log_prob = dist.log_prob(action)
-            entropy += dist.entropy().mean()
+                action = dist.sample()
 
-            log_probs.append(log_prob.view(1))
-            values.append(value)
-            rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
-            masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
+                next_state, reward, done, _ = env.step(action.cpu().numpy())
 
-            state = next_state
+                # if(s[20] == 1):
+                #     if(env.getNumFlipped() >= int(s[18] / 2) or action != 13):
+                #         actions[1,0] += 1
+                #     else:
+                #         actions[0,0] += 1
+                # elif(s[20] == -1):
+                #     if(env.getNumFlipped() >= int(s[18] / 2) or action != 13):
+                #         actions[1,1] += 1
+                #     else:
+                #         actions[0,1] += 1
+
+                log_prob = dist.log_prob(action)
+                entropy += dist.entropy().mean()
+
+                log_probs.append(log_prob.view(1))
+                values.append(value)
+                rewards.append(torch.tensor(reward, dtype=torch.float).to(device))
+                masks.append(torch.tensor(1 - done, dtype=torch.float).to(device))
+
+                state = next_state
+
+            print(env.status)
 
             if env.status == 'WON':
                 wins += 1
-                totWins += 1
+                # totWins += 1
                 break
             elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
                 break
@@ -176,27 +199,41 @@ def simulate(i):
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
 
-        saveCSV.write(str(str(totWins) + ","))
-        saveCSV.write(str(str(totEps) + "\n"))
-        totEps += 1
+        # saveCSV.write(str(str(totWins) + ","))
+        # saveCSV.write(str(str(totEps) + "\n"))
+        #totEps += 1
 
     return x_axis, y_axis
 
 
-model = A3C().to(device)
-optimizer = optim.Adam(model.parameters())
 
-a3c = loadDQN()
+model = loadDQN()
 
-for j in range(1, 3):
-    x_axis, y_axis = simulate(5000)
+
+# simulate(10000)
+
+# fig, ax = plt.subplots()
+# im = ax.imshow(actions)
+# ax.set_xticks(np.arange(len(status)))
+# ax.set_yticks(np.arange(len(risk)))
+# ax.set_xticklabels(status)
+# ax.set_yticklabels(risk)
+# plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+# for i in range(len(risk)):
+#     for j in range(len(status)):
+#         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
+# ax.set_title("Distribution of Actions")
+# fig.tight_layout()
+# plt.show()
+
+for j in range(1, 6):
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    x_axis, y_axis = simulate(20000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
-saveDQN(a3c)
-
 plt.legend()
-plt.xlim(0, 5000)
+plt.xlim(0, 20000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
@@ -204,5 +241,6 @@ plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
 
-saveDQN(a3c)
-saveCSV.close()
+saveDQN(model)
+
+# saveCSV.close()

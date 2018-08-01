@@ -64,12 +64,16 @@ class Game:
     def __init__(self):
         sel = np.random.randint(0, 24)
         g1 = gameBoard(sel)
-        self.p1 = Player("PLAYER 1", g1, sel)
+        if self.agentType != 'optimalp1':
+            self.p1 = Player("PLAYER 1", g1, sel)
+        else:
+            print("ITS OPT")
+            self.p1 = OptimalAgent("OPTIMAL AGENT", g1, sel)
         print(self.p1.getName() + " selected " + self.p1.getBoard().getCharacter(
             self.p1.getBoard().getSelected()).getName())
         j = np.random.randint(0, 24)
         g2 = gameBoard(j)
-        self.p2 = OptimalAgent("OPTIMAL ALEX", g2, j)
+        self.p2 = OptimalAgent("PLAYER 2", g2, j)
         print(self.p2.getName() + " selected " + self.p2.getBoard().getCharacter(
             self.p2.getBoard().getSelected()).getName())
         self.status = 'START'
@@ -381,6 +385,32 @@ class Game:
         self.numTurns += 1
         print("TOTAL TURNS: " + str(self.numTurns))
 
+    def optimalasP1(self, action):
+        a = int(self.p1.makeOptimalGuess(self.p1.getBoard().numberActive(), self.p1.getBoard().numberActive()))
+        print("OPTIMAL ALEX BOT 5000 asks: " + self.questions.get(str(a)))
+        self.getAction(a, pturn=True)
+        print('P1 ACTIVE: ' + str(self.p1.getBoard().numberActive()))
+        print('P2 ACTIVE: ' + str(self.p2.getBoard().numberActive()))
+        if (self.p1.getBoard().numberActive() <= 1):
+            self.p1.setScore(self.p1.getScore() + 1)
+            print("PLAYER 1 WINS")
+            self.status = 'LOST'
+            self.gameOver = True
+        if (self.gameOver != True):
+            # player 2 goes
+            action = abs(int(action))
+            print("THE QNN asks: " + self.questions.get(str(action)))
+            self.getAction(action, pturn=False)
+            print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))
+            print("P2 ACTIVE: " + str(self.p2.getBoard().numberActive()))
+            if (self.p2.getBoard().numberActive() <= 1):
+                self.p2.setScore(self.p2.getScore() + 1)
+                print("PLAYER 2 WINS")
+                self.status = 'WON'
+                self.gameOver = True
+        self.numTurns += 1
+        print("TOTAL TURNS: " + str(self.numTurns))
+
     def binaryasP1(self, action):
         print("BINARY SEARCH BOT asks: " + self.questions.get(str(13)))
         # for debug
@@ -396,7 +426,7 @@ class Game:
                 self.status = 'LOST'
                 self.gameOver = True
         if (self.gameOver != True):
-            # player 1 goes
+            # player 2 goes
             action = abs(int(action))
             print("THE QNN asks: " + self.questions.get(str(action)))
             if (action == -100):
@@ -455,5 +485,7 @@ class Game:
             self.binaryasP1(action)
         elif (self.agentType == 'randomp1'):
             self.randomasP1(action)
+        elif (self.agentType == 'optimalp1'):
+            self.optimalasP1(action)
         else:
             self.agentPlay(action)

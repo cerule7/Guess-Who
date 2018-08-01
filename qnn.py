@@ -8,20 +8,20 @@ import pickle
 
 # Hyper Parameters
 BATCH_SIZE = 1000
-LR = 0.001 # learning rate
-EPSILON = 0.9  # greedy policy
+LR = 0.1  # learning rate
+EPSILON = 0.2  # greedy policy
 GAMMA = 0.9  # reward discount
 TARGET_REPLACE_ITER = 100  # target update frequency
 MEMORY_CAPACITY = 30000
 env = gym.make('Guesswho-v0')
 env = env.unwrapped
-env.game.setAgentType('optimal')
+env.game.setAgentType('random')
 
 N_ACTIONS = env.action_space.n
 N_STATES = env.observation_space.shape[0]
 ENV_A_SHAPE = 0 if isinstance(env.action_space.sample(),
                               int) else env.action_space.sample().shape  # to confirm the shape
-FILENAME = 'DQN'
+FILENAME = 'optimal'
 
 saveCSV = open("QNNData.csv", 'w')
 totWins = 0
@@ -50,7 +50,7 @@ class DQN(object):
         self.learn_step_counter = 0  # for target updating
         self.memory_counter = 0  # for storing memory
         self.memory = np.zeros((MEMORY_CAPACITY, N_STATES * 2 + 2))  # initialize memory
-        self.optimizer = torch.optim.Adam(self.eval_net.parameters(), lr=LR)
+        self.optimizer = torch.optim.Adamax(self.eval_net.parameters(), lr=LR)
         self.loss_func = nn.MSELoss()
 
     def choose_action(self, x):
@@ -136,15 +136,17 @@ def loadDQN():
 
     return deeQueEnn
 
+# status = ['up', 'down']
+# risk = ['safe', 'risky']
+# actions = np.array([[0, 0], [0, 0]])
+
 def simulate(i):
-    global totWins
-    global totEps
+    # global totWins
+    # global totEps
 
     x_axis = []
     wins = 0
     y_axis = []
-
-
 
     for i_episode in range(i):
         s = env.reset()
@@ -152,6 +154,17 @@ def simulate(i):
         while True:
             print(s)
             a = dqn.choose_action(s)
+
+            # if(s[20] == 1):
+            #     if(a != 13):
+            #         actions[1,0] += 1
+            #     else:
+            #         actions[0,0] += 1
+            # elif(s[20] == -1):
+            #     if(a != 13):
+            #         actions[1,1] += 1
+            #     else:
+            #        actions[0,1] += 1
 
             # take action
             s_, r, done, info = env.step(a)
@@ -164,9 +177,9 @@ def simulate(i):
 
             if env.status == 'WON':
                 wins += 1
-                totWins += 1
-
-            if done:
+                break
+                #totWins += 1
+            elif env.status == 'LOST' or env.getNumTurns() > 30 or done:  # time out
                 break
 
             s = s_
@@ -175,26 +188,38 @@ def simulate(i):
             y_axis.append((wins / i_episode) * 100)
             x_axis.append(i_episode)
 
-        saveCSV.write(str(str(totWins) + ","))
-        saveCSV.write(str(str(totEps) + "\n"))
-        totEps += 1
+        # saveCSV.write(str(str(totWins) + ","))
+        # saveCSV.write(str(str(totEps) + "\n"))
+        # totEps += 1
 
-    #saveCSV.close()
     return x_axis, y_axis
-
 
 dqn = loadDQN()
 
+# simulate(10000)
 
-for j in range(1, 3):
-    x_axis, y_axis = simulate(5000)
+# fig, ax = plt.subplots()
+# im = ax.imshow(actions)
+# ax.set_xticks(np.arange(len(status)))
+# ax.set_yticks(np.arange(len(risk)))
+# ax.set_xticklabels(status)
+# ax.set_yticklabels(risk)
+# plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+# for i in range(len(risk)):
+#     for j in range(len(status)):
+#         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
+# ax.set_title("Distribution of Actions")
+# fig.tight_layout()
+# plt.show()
+
+for j in range(1, 2):
+    x_axis, y_axis = simulate(10000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
-saveDQN(dqn)
 
 plt.legend()
-plt.xlim(0, 5000)
+plt.xlim(0, 10000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
@@ -202,4 +227,6 @@ plt.ylabel('Wins (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
 
-saveCSV.close()
+saveDQN(dqn)
+
+# saveCSV.close()

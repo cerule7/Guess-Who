@@ -5,6 +5,7 @@ import torch.optim as optim
 import gym
 import matplotlib.pyplot as plt
 import pickle
+import numpy as np
 
 # Hyper Parameters
 lr = 0.001
@@ -20,7 +21,7 @@ N_STATES = env.observation_space.shape[0]
 
 FILENAME = 'AAC'
 
-saveCSV = open("A2CData.csv", 'w')
+#saveCSV = open("A2CData.csv", 'w')
 totWins = 0
 totEps = 0
 
@@ -111,14 +112,17 @@ def loadDQN():
 
     return deeQueEnn
 
+# status = ['up', 'down']
+# risk = ['safe', 'risky']
+# actions = np.array([[0, 0], [0, 0]])
 
 def simulate(i):
     x_axis = []
     y_axis = []
     wins = 0
 
-    global totWins
-    global totEps
+    # global totWins
+    # global totEps
 
     for i_ep in range(i):
         state = env.reset()
@@ -135,11 +139,25 @@ def simulate(i):
                 if env.status == 'WON' or env.status == 'LOST':
                     break
 
+                # s = state
+
                 state = torch.FloatTensor(state).to(device)
                 dist, value = model(state)
 
                 action = dist.sample()
+
                 next_state, reward, done, _ = env.step(action.cpu().numpy())
+
+                # if(s[20] == 1):
+                #     if(env.getNumFlipped() >= int(s[18] / 2) or action != 13):
+                #         actions[1,0] += 1
+                #     else:
+                #         actions[0,0] += 1
+                # elif(s[20] == -1):
+                #     if(env.getNumFlipped() >= int(s[18] / 2) or action != 13):
+                #         actions[1,1] += 1
+                #     else:
+                #         actions[0,1] += 1
 
                 log_prob = dist.log_prob(action)
                 entropy += dist.entropy().mean()
@@ -151,9 +169,11 @@ def simulate(i):
 
                 state = next_state
 
+            print(env.status)
+
             if env.status == 'WON':
                 wins += 1
-                totWins += 1
+                # totWins += 1
                 break
             elif env.status == 'LOST' or env.getNumTurns() > 30:  # time out
                 break
@@ -180,27 +200,22 @@ def simulate(i):
         if i_ep is not 0:
             y_axis.append((wins / i_ep) * 100)
             x_axis.append(i_ep)
-        saveCSV.write(str(str(totWins) + ","))
-        saveCSV.write(str(str(totEps) + "\n"))
-        totEps += 1
+        # saveCSV.write(str(str(totWins) + ","))
+        # saveCSV.write(str(str(totEps) + "\n"))
+        # totEps += 1
 
     return x_axis, y_axis
 
-
-model = A3C().to(device)
+model = loadDQN()
 optimizer = optim.Adam(model.parameters())
 
-a3c = loadDQN()
-
-for j in range(1, 3):
-    x_axis, y_axis = simulate(5000)
+for j in range(1, 2):
+    x_axis, y_axis = simulate(10000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
-saveDQN(a3c)
-
 plt.legend()
-plt.xlim(0, 5000)
+plt.xlim(0, 10000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
@@ -209,3 +224,19 @@ plt.xlabel('Number of Episodes')
 plt.show()
 
 saveCSV.close()
+
+# fig, ax = plt.subplots()
+# im = ax.imshow(actions)
+# ax.set_xticks(np.arange(len(status)))
+# ax.set_yticks(np.arange(len(risk)))
+# ax.set_xticklabels(status)
+# ax.set_yticklabels(risk)
+# plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+# for i in range(len(risk)):
+#     for j in range(len(status)):
+#         text = ax.text(j, i, actions[i, j], ha="center", va="center", color="w")
+# ax.set_title("Distribution of Actions")
+# fig.tight_layout()
+# plt.show()
+
+saveDQN(model)
