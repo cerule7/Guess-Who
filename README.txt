@@ -1,3 +1,19 @@
+A machine learning development environment. Created by Charles Rule and William (Alex) Fallin for the Texas State University REUSSA 2018.
+Refer to characters.png for the gameboard, code diagram.png for our code structure and questionnumbers.txt for available actions. 
+
+There are seven modes:
+- 'binary': play against a bot that only choses binary search as player one
+- 'binaryp1': play against a bot that only choses binary search as player two
+- 'random': play against a bot that randomly choses actions as player one
+- 'randomp1': play against a bot that randomly choses actions as player two
+- 'optimal': play against the optimal agent as player one 
+- 'demo': play as a human against the neural network
+- 'none': the NN plays against itself 
+
+You can switch between modes by changing agentType in the neural network files.
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
 WINDOWS 64-BIT INSTRUCTIONS
 	-- Install Python 3.6 at https://www.python.org/ftp/python/3.6.6/python-3.6.6-amd64.exe
 	-- Install Anaconda 5.2 for Python 3.6 at https://repo.anaconda.com/archive/Anaconda3-5.2.0-Windows-x86_64.exe
