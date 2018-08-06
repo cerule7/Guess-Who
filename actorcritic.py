@@ -207,7 +207,6 @@ def simulate(i):
 
 
 
-model = loadDQN()
 
 
 # simulate(10000)
@@ -227,13 +226,14 @@ model = loadDQN()
 # plt.show()
 
 for j in range(1, 6):
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
-    x_axis, y_axis = simulate(20000)
+    model = A3C()
+    optimizer = optim.Adam(model.parameters())
+    x_axis, y_axis = simulate(50000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 plt.legend()
-plt.xlim(0, 20000)
+plt.xlim(0, 50000)
 plt.ylim(0, 100)
 plt.tight_layout()
 

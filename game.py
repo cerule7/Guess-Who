@@ -64,11 +64,7 @@ class Game:
     def __init__(self):
         sel = np.random.randint(0, 24)
         g1 = gameBoard(sel)
-        if self.agentType != 'optimalp1':
-            self.p1 = Player("PLAYER 1", g1, sel)
-        else:
-            print("ITS OPT")
-            self.p1 = OptimalAgent("OPTIMAL AGENT", g1, sel)
+        self.p1 = Player("PLAYER 1", g1, sel)
         print(self.p1.getName() + " selected " + self.p1.getBoard().getCharacter(
             self.p1.getBoard().getSelected()).getName())
         j = np.random.randint(0, 24)
@@ -86,6 +82,8 @@ class Game:
     def setAgentType(self, agentType):
         self.agentType = agentType
         print("AGENT TYPE IS " + self.agentType)
+        if agentType == 'optimalp1':
+            self.p1 = OptimalAgent("OPTIMAL AGENT", self.p1.getBoard(), self.p1.getSelected())
 
     def updateSelTraits(self, i, correct):
         if correct is False:
@@ -160,7 +158,7 @@ class Game:
                 if pturn:
                     self.status = 'WON'
                 else:
-                    self.status - 'LOST'
+                    self.status = 'LOST'
                 self.gameOver = True
             else:
                 print("INCORRECT CHARACTER GUESS")
@@ -180,93 +178,93 @@ class Game:
         elif i == 0:
             characterList, numFlipped = player.getBoard().askQ('isFemale', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isFemale'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isFemale'):
                 self.updateSelTraits(0, True)
-            elif pturn:
+            elif pturn or (pturn == False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(0, False)
         elif i == 1:
             characterList, numFlipped = player.getBoard().askQ('hasHat', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasHat'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasHat'):
                 self.updateSelTraits(1, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(1, False)
         elif i == 2:
             characterList, numFlipped = player.getBoard().askQ('hasGlasses', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasGlasses'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasGlasses'):
                 self.updateSelTraits(2, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(2, False)
         elif i == 3:
             characterList, numFlipped = player.getBoard().askQ('hasBeard', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBeard'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBeard'):
                 self.updateSelTraits(3, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(3, False)
         elif i == 4:
             characterList, numFlipped = player.getBoard().askQ('hasMustache', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasMustache'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasMustache'):
                 self.updateSelTraits(4, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(4, False)
         elif i == 5:
             characterList, numFlipped = player.getBoard().askQ('hasRosyCheeks', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasRosyCheeks'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasRosyCheeks'):
                 self.updateSelTraits(5, True)
-            elif pturn:
+            elif pturn or (pturn == False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(5, False)
         elif i == 6:
             characterList, numFlipped = player.getBoard().askQ('isSmiling', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isSmiling'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isSmiling'):
                 self.updateSelTraits(6, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(6, False)
         elif i == 7:
             characterList, numFlipped = player.getBoard().askQ('isBald', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isBald'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('isBald'):
                 self.updateSelTraits(7, True)
-            elif pturn:
+            elif pturn or (pturn==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(7, False)
         elif i == 8:
             characterList, numFlipped = player.getBoard().askQ('hasBlueEyes', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBlueEyes'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBlueEyes'):
                 self.updateSelTraits(8, True)
-            elif pturn:
+            elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(8, False)
         elif i == 9:
             characterList, numFlipped = player.getBoard().askQ('hasBigNose', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigNose'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigNose'):
                 self.updateSelTraits(9, True)
-            elif pturn:
+            elif pturn or (pturn==  False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(9, False)
         elif i == 10:
             characterList, numFlipped = player.getBoard().askQ('hasBigMouth', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigMouth'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasBigMouth'):
                 self.updateSelTraits(10, True)
-            elif pturn:
+            elif pturn or (pturn == False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(10, False)
         elif i == 11:
             characterList, numFlipped = player.getBoard().askQ('hasEarrings', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasEarrings'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasEarrings'):
                 self.updateSelTraits(11, True)
-            elif pturn:
+            elif pturn or (pturn == False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(11, False)
         elif i == 12:
             characterList, numFlipped = player.getBoard().askQ('hasButtchin', otherplayer.getBoard())
             player.getBoard().updateList(characterList)
-            if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasButtchin'):
+            if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('hasButtchin'):
                 self.updateSelTraits(12, True)
-            elif pturn:
+            elif pturn or (pturn == False and self.agentType == 'optimalp1'):
                 self.updateSelTraits(12, False)
         # binary search
         elif i == 13:
@@ -279,39 +277,39 @@ class Game:
             characterlist, numFlipped = player.getBoard().askHairColor(i, otherplayer.getBoard())
             player.getBoard().updateList(characterlist)
             if i == 14:
-                if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('black'):
+                if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('black'):
                     self.updateSelTraits(13, True)
-                elif pturn:
+                elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                     self.updateSelTraits(13, False)
             if i == 15:
-                if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('red'):
+                if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('red'):
                     self.updateSelTraits(14, True)
-                elif pturn:
+                elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                     self.updateSelTraits(14, False)
             if i == 16:
-                if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('white'):
+                if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('white'):
                     self.updateSelTraits(15, True)
-                elif pturn:
+                elif pturn or (pturn==  False and self.agentType == 'optimalp1'):
                     self.updateSelTraits(15, False)
             if i == 17:
-                if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('blonde'):
+                if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('blonde'):
                     self.updateSelTraits(16, True)
-                elif pturn:
+                elif pturn or (pturn ==  False and self.agentType == 'optimalp1'):
                     self.updateSelTraits(16, False)
             else:
-                if pturn and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('brown'):
+                if (pturn or (pturn ==  False and self.agentType == 'optimalp1')) and otherplayer.getBoard().getCharacter(otherplayer.getSelected()).hasAttribute('brown'):
                     self.updateSelTraits(17, True)
-                elif pturn:
+                elif pturn or (pturn==  False and self.agentType == 'optimalp1'):
                     self.updateSelTraits(17, False)
         if pturn:
             self.p1 = player
-            if self.agentType != 'randomp1' and self.agentType != 'binaryp1':
+            if self.agentType != 'randomp1' and self.agentType != 'binaryp1' and self.agentType != 'optimalp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
                 self.status = self.numFlipped
         elif not pturn:
             self.p2 = player
-            if self.agentType == 'randomp1' or self.agentType == 'binaryp1':
+            if self.agentType == 'randomp1' or self.agentType == 'binaryp1' or self.agentType == 'optimalp1':
                 self.numFlipped = numFlipped
                 print("NUMFLIPPED : " + str(self.numFlipped))
                 self.status = self.numFlipped
@@ -399,6 +397,7 @@ class Game:
         if (self.gameOver != True):
             # player 2 goes
             action = abs(int(action))
+            #action = int(input('enter a #: '))
             print("THE QNN asks: " + self.questions.get(str(action)))
             self.getAction(action, pturn=False)
             print("P1 ACTIVE: " + str(self.p1.getBoard().numberActive()))

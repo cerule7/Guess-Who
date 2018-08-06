@@ -1,20 +1,43 @@
--100 quit
-0 is female?
-1 has hat?
-2 has glasses?
-3 has beard?
-4 has mustache?
-5 has rosy cheeks?
-6 is smiling?
-7 is bald?
-8 has blue eyes?
-9 has big nose?
-10 has big mouth?
-11 has earrings?
-12 has butt chin?
-13 binary search
-14 black hair?
-15 red hair?
-16 white hair?
-17 blond hair?
-18 brown hair?
+"0": "Is your character female?" 
+"1": "Does your character have a hat?" 
+"2": "Does your character have glasses?" 
+"3": "Does your character have a beard?" 
+"4": "Does your character have a mustache?" 
+"5": "Does your character have rosy cheeks?" 
+"6": "Is your character smiling?" 
+"7": "Is your character bald?" 
+"8": "Does your character have blue eyes?" 
+"9": "Does your character have a big nose?" 
+"10": "Does your character have a big mouth?" 
+"11": "Does your character have earrings?" 
+"12": "Does your character have a cleft chin?" 
+"13": "[binary search]" 
+"14": "Does your character have black hair?" 
+"15": "Does your character have red hair?" 
+"16": "Does your character have white hair?" 
+"17": "Does your character have blond hair?" 
+"18": "Does your character have brown hair?" 
+"19": "Is your character Alex?" 
+"20": "Is your character Alfred?" 
+"21": "Is your character Anita?" 
+"22": "Is your character Anne?" 
+"23": "Is your character Bernard?" 
+"24": "Is your character Bill?" 
+"25": "Is your character Charles?" 
+"26": "Is your character Claire?" 
+"27": "Is your character David?" 
+"28": "Is your character Eric?" 
+"29": "Is your character Frans?" 
+"30": "Is your character George?" 
+"31": "Is your character Herman?" 
+"32": "Is your character Joe?" 
+"33": "Is your character Maria?" 
+"34": "Is your character Max?" 
+"35": "Is your character Paul?" 
+"36": "Is your character Peter?" 
+"37": "Is your character Philip?" 
+"38": "Is your character Richard?" 
+"39": "Is your character Robert?" 
+"40": "Is your character Sam?" 
+"41": "Is your character Susan?" 
+"42": "Is your character Tom?"

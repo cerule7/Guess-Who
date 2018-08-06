@@ -212,8 +212,8 @@ dqn = loadDQN()
 # fig.tight_layout()
 # plt.show()
 
-for j in range(1, 2):
-    x_axis, y_axis = simulate(10000)
+for j in range(1, 6):
+    x_axis, y_axis = simulate(50000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 

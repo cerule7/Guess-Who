@@ -209,13 +209,13 @@ def simulate(i):
 model = loadDQN()
 optimizer = optim.Adam(model.parameters())
 
-for j in range(1, 2):
-    x_axis, y_axis = simulate(10000)
+for j in range(1, 21):
+    x_axis, y_axis = simulate(5000)
     l = "Run #" + str(j)
     plt.plot(x_axis, y_axis, label=l)
 
 plt.legend()
-plt.xlim(0, 10000)
+plt.xlim(0, 5000)
 plt.ylim(0, 100)
 plt.tight_layout()
 
@@ -223,7 +223,7 @@ plt.ylabel('Win (%)')
 plt.xlabel('Number of Episodes')
 plt.show()
 
-saveCSV.close()
+#saveCSV.close()
 
 # fig, ax = plt.subplots()
 # im = ax.imshow(actions)
