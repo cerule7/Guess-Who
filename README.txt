@@ -12,7 +12,7 @@ There are seven modes:
 
 You can switch between modes by changing agentType in the neural network files.
 
-------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
 
 WINDOWS 64-BIT INSTRUCTIONS
 	-- Install Python 3.6 at https://www.python.org/ftp/python/3.6.6/python-3.6.6-amd64.exe
