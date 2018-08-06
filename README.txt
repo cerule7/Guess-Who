@@ -1,5 +1,7 @@
-A machine learning development environment. Created by Charles Rule and William (Alex) Fallin for the Texas State University REUSSA 2018.
-Refer to characters.png for the gameboard, code diagram.png for our code structure and questionnumbers.txt for available actions. 
+A machine learning development environment. Created by Charles Rule and William (Alex) Fallin for the Texas State University REUSSA 2018. Refer to characters.png for the gameboard, code diagram.png for our code structure and questionnumbers.txt for available actions. 
+Three neural networks are provided -- QNN, actor-critic and asynchronous actor-critic -- as well as neural network files trained for 50,000 games against the optimal agent. 
+
+You can switch between game modes by changing agentType in the neural network files.
 
 There are seven modes:
 - 'binary': play against a bot that only choses binary search as player one
@@ -10,7 +12,7 @@ There are seven modes:
 - 'demo': play as a human against the neural network
 - 'none': the NN plays against itself 
 
-You can switch between modes by changing agentType in the neural network files.
+The optimal agent is based off the strategy proposed by Dr. Mihai Nica in the paper "Optimal Strategy in "Guess Who?": Beyond Binary Search", available at https://arxiv.org/abs/1509.03327. 
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
