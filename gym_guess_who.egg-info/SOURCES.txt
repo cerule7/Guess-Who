@@ -1,0 +1,6 @@
+README.txt
+gym_guess_who.egg-info/PKG-INFO
+gym_guess_who.egg-info/SOURCES.txt
+gym_guess_who.egg-info/dependency_links.txt
+gym_guess_who.egg-info/requires.txt
+gym_guess_who.egg-info/top_level.txt
