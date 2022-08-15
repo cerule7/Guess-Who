@@ -1,4 +1,4 @@
-A machine learning development environment. Created by Charles Rule and William (Alex) Fallin for the Texas State University REUSSA 2018. Refer to characters.png for the gameboard, code diagram.png for our code structure and questionnumbers.txt for available actions. 
+A machine learning development environment. Created by Charles Rule and Alex Fallin for the Texas State University REUSSA 2018. Refer to characters.png for the gameboard, code diagram.png for our code structure and questionnumbers.txt for available actions. 
 Three neural networks are provided -- QNN, actor-critic and asynchronous actor-critic -- as well as neural network files trained for 50,000 games against the optimal agent. 
 
 You can switch between game modes by changing agentType in the neural network files.
